@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact | Kestrel</title>
+  <meta name="description" content="Contact the Kestrel team for demo requests, pilot interest, outdoor partnerships, B2G collaboration and academic presentation inquiries." />
+
+  <style>
+    :root {
+      --bg: #07110f;
+      --surface: rgba(255, 255, 255, 0.08);
+      --surface-strong: rgba(255, 255, 255, 0.13);
+      --text: #f5f7ef;
+      --muted: #b9c7bd;
+      --soft: #eaf1df;
+      --accent: #b7f36b;
+      --accent-2: #74d6ff;
+      --gold: #efc86a;
+      --danger: #ff7a6e;
+      --line: rgba(255, 255, 255, 0.16);
+      --shadow: 0 30px 80px rgba(0, 0, 0, 0.42);
+      --radius-lg: 34px;
+      --radius-md: 22px;
+      --font-scale: 1;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 8% 0%, rgba(183, 243, 107, 0.22), transparent 31%),
+        radial-gradient(circle at 92% 8%, rgba(116, 214, 255, 0.18), transparent 34%),
+        radial-gradient(circle at 48% 94%, rgba(239, 200, 106, 0.10), transparent 38%),
+        linear-gradient(135deg, var(--bg), #020403 62%, #0e130c);
+      color: var(--text);
+      font-size: calc(16px * var(--font-scale));
+      overflow-x: hidden;
+    }
+
+    body.light {
+      --bg: #f5f7ef;
+      --surface: rgba(10, 35, 26, 0.07);
+      --surface-strong: rgba(10, 35, 26, 0.12);
+      --text: #0b1a15;
+      --muted: #506258;
+      --soft: #123126;
+      --line: rgba(6, 25, 19, 0.15);
+      --shadow: 0 24px 70px rgba(16, 38, 29, 0.16);
+      background:
+        radial-gradient(circle at 8% 0%, rgba(183, 243, 107, 0.31), transparent 32%),
+        radial-gradient(circle at 92% 8%, rgba(116, 214, 255, 0.18), transparent 34%),
+        linear-gradient(135deg, #f7faef, #edf4e8 62%, #e2ead9);
+    }
+
+    body.high-contrast {
+      --bg: #000;
+      --surface: rgba(255, 255, 255, 0.15);
+      --surface-strong: rgba(255, 255, 255, 0.24);
+      --text: #fff;
+      --muted: #fff;
+      --accent: #d7ff00;
+      --accent-2: #00e5ff;
+      --gold: #ffe600;
+      --danger: #ff2b2b;
+      --line: rgba(255, 255, 255, 0.42);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { font: inherit; }
+    h1, h2, h3, p { margin-top: 0; }
+
+    .page-shell {
+      width: min(1180px, calc(100% - 36px));
+      margin: 0 auto;
+    }
+
+    .announcement {
+      display: flex;
+      justify-content: center;
+      padding: 12px 18px;
+      background: linear-gradient(90deg, rgba(183, 243, 107, 0.18), rgba(116, 214, 255, 0.14));
+      border-bottom: 1px solid var(--line);
+      color: var(--soft);
+      font-size: 0.92rem;
+      text-align: center;
+    }
+
+    .announcement strong { color: var(--accent); }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(20px);
+      background: rgba(5, 14, 11, 0.72);
+      border-bottom: 1px solid var(--line);
+    }
+
+    body.light header { background: rgba(245, 247, 239, 0.78); }
+
+    .nav {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 190px;
+    }
+
+    .logo-mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 16px;
+      background: linear-gradient(145deg, rgba(183, 243, 107, 0.96), rgba(116, 214, 255, 0.88));
+      position: relative;
+      box-shadow: 0 14px 30px rgba(183, 243, 107, 0.21);
+      overflow: hidden;
+    }
+
+    .logo-mark::before {
+      content: "";
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      border: 3px solid rgba(7, 17, 15, 0.72);
+      border-left: 0;
+      border-bottom: 0;
+      transform: rotate(-23deg);
+      top: 9px;
+      left: 7px;
+      border-radius: 3px 14px 3px 3px;
+    }
+
+    .logo-mark::after {
+      content: "";
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: #07110f;
+      top: 15px;
+      left: 15px;
+    }
+
+    .brand-text b {
+      display: block;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 1rem;
+    }
+
+    .brand-text span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.74rem;
+      margin-top: 2px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 6px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: 999px;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: 0.88rem;
+      padding: 10px 13px;
+      border-radius: 999px;
+      transition: 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--text);
+      background: var(--surface-strong);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .icon-btn, .pill-btn {
+      border: 1px solid var(--line);
+      color: var(--text);
+      background: var(--surface);
+      border-radius: 999px;
+      min-height: 42px;
+      cursor: pointer;
+      transition: transform 0.18s ease, background 0.18s ease, border 0.18s ease;
+    }
+
+    .icon-btn {
+      width: 42px;
+      display: grid;
+      place-items: center;
+    }
+
+    .pill-btn {
+      padding: 0 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      font-weight: 750;
+    }
+
+    .icon-btn:hover, .pill-btn:hover {
+      transform: translateY(-2px);
+      background: var(--surface-strong);
+      border-color: rgba(183, 243, 107, 0.42);
+    }
+
+    .primary-btn {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #06100d;
+      border: 0;
+      box-shadow: 0 18px 40px rgba(116, 214, 255, 0.12);
+    }
+
+    .menu-toggle { display: none; }
+
+    .hero {
+      padding: 90px 0 70px;
+      position: relative;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(390px, 0.9fr);
+      gap: 46px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(183, 243, 107, 0.34);
+      background: rgba(183, 243, 107, 0.1);
+      color: var(--accent);
+      font-weight: 850;
+      font-size: 0.86rem;
+      margin-bottom: 18px;
+    }
+
+    .pulse-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 0 rgba(183, 243, 107, 0.72);
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(183, 243, 107, 0.72); }
+      70% { box-shadow: 0 0 0 12px rgba(183, 243, 107, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(183, 243, 107, 0); }
+    }
+
+    h1 {
+      font-size: clamp(3rem, 7vw, 6.6rem);
+      line-height: 0.9;
+      letter-spacing: -0.075em;
+      margin-bottom: 22px;
+    }
+
+    .gradient-text {
+      display: block;
+      background: linear-gradient(135deg, var(--text), var(--accent) 42%, var(--accent-2));
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-copy {
+      color: var(--muted);
+      font-size: 1.13rem;
+      line-height: 1.78;
+      margin-bottom: 28px;
+      max-width: 760px;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .contact-dashboard {
+      min-height: 560px;
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 50% 0, rgba(116, 214, 255, 0.18), transparent 34%),
+        linear-gradient(180deg, var(--surface), rgba(255,255,255,0.035));
+      border-radius: 38px;
+      box-shadow: var(--shadow);
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-dashboard::before {
+      content: "";
+      position: absolute;
+      inset: 22px;
+      border-radius: 30px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background-image:
+        linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px);
+      background-size: 32px 32px;
+      opacity: 0.8;
+    }
+
+    .dashboard-inner {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      gap: 16px;
+    }
+
+    .dashboard-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 4px;
+    }
+
+    .dashboard-title h3 {
+      margin: 0;
+      font-size: 1.18rem;
+      letter-spacing: -0.02em;
+    }
+
+    .dashboard-title span {
+      color: var(--accent);
+      font-weight: 900;
+      font-size: 0.82rem;
+    }
+
+    .status-card {
+      border: 1px solid var(--line);
+      background: rgba(2,6,5,0.62);
+      backdrop-filter: blur(18px);
+      border-radius: 26px;
+      padding: 22px;
+    }
+
+    body.light .status-card { background: rgba(255,255,255,0.7); }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--line);
+      background: rgba(183,243,107,0.09);
+      color: var(--accent);
+      border-radius: 999px;
+      padding: 8px 11px;
+      font-weight: 950;
+      margin-bottom: 16px;
+    }
+
+    .status-card h3 {
+      font-size: clamp(1.6rem, 3vw, 2.8rem);
+      letter-spacing: -0.06em;
+      margin-bottom: 10px;
+    }
+
+    .status-card p {
+      color: var(--muted);
+      line-height: 1.62;
+      margin-bottom: 0;
+    }
+
+    .contact-metrics {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .metric-tile {
+      border: 1px solid var(--line);
+      background: rgba(2,6,5,0.58);
+      backdrop-filter: blur(18px);
+      border-radius: 22px;
+      padding: 16px;
+    }
+
+    body.light .metric-tile { background: rgba(255,255,255,0.7); }
+
+    .metric-tile span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.84rem;
+      margin-bottom: 8px;
+    }
+
+    .metric-tile b {
+      display: block;
+      font-size: 1.55rem;
+      letter-spacing: -0.055em;
+      line-height: 1;
+    }
+
+    .section { padding: 78px 0; }
+
+    .section-head {
+      max-width: 790px;
+      margin-bottom: 34px;
+    }
+
+    .section-kicker {
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-weight: 950;
+      font-size: 0.76rem;
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 4vw, 4rem);
+      letter-spacing: -0.055em;
+      line-height: 1.02;
+      margin-bottom: 16px;
+    }
+
+    .section-head p, .lead {
+      color: var(--muted);
+      line-height: 1.75;
+      font-size: 1.04rem;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, var(--surface), rgba(255,255,255,0.035));
+      border-radius: var(--radius-md);
+      padding: 24px;
+      box-shadow: 0 16px 55px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+
+    .icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      background: rgba(183, 243, 107, 0.12);
+      color: var(--accent);
+      margin-bottom: 18px;
+      font-size: 1.25rem;
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+      font-size: 1.22rem;
+      letter-spacing: -0.02em;
+    }
+
+    .card p, .card li {
+      color: var(--muted);
+      line-height: 1.64;
+    }
+
+    .card ul { padding-left: 18px; margin-bottom: 0; }
+
+    .split {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .contact-form {
+      display: grid;
+      gap: 16px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    .field label {
+      color: var(--soft);
+      font-weight: 850;
+      font-size: 0.92rem;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255,255,255,0.065);
+      color: var(--text);
+      padding: 14px 15px;
+      outline: none;
+      transition: border 0.18s ease, background 0.18s ease, transform 0.18s ease;
+    }
+
+    .field select option { color: #06100d; }
+
+    .field textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: rgba(183,243,107,0.54);
+      background: rgba(255,255,255,0.095);
+    }
+
+    .field small {
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .radio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .radio-card {
+      position: relative;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255,255,255,0.045);
+      padding: 14px;
+      cursor: pointer;
+      transition: 0.18s ease;
+    }
+
+    .radio-card input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .radio-card b {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--text);
+    }
+
+    .radio-card span {
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.42;
+    }
+
+    .radio-card:has(input:checked) {
+      border-color: rgba(183,243,107,0.58);
+      background: rgba(183,243,107,0.10);
+      transform: translateY(-2px);
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-top: 4px;
+    }
+
+    .helper-note {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.045);
+      border-radius: 20px;
+      padding: 16px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .contact-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .contact-item {
+      display: grid;
+      grid-template-columns: 52px 1fr auto;
+      align-items: center;
+      gap: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.045);
+      border-radius: 22px;
+      padding: 16px;
+    }
+
+    .contact-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      color: #06100d;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      font-weight: 950;
+    }
+
+    .contact-item b { display: block; margin-bottom: 5px; }
+    .contact-item span { display: block; color: var(--muted); line-height: 1.45; }
+
+    .copy-btn {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 9px 12px;
+      cursor: pointer;
+      font-weight: 850;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 18px;
+    }
+
+    .mini-pill {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 10px;
+      color: var(--muted);
+      background: rgba(255,255,255,0.04);
+      font-weight: 750;
+      font-size: 0.9rem;
+    }
+
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      counter-reset: process;
+    }
+
+    .process-card {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: 24px;
+      padding: 20px;
+    }
+
+    .process-card::before {
+      counter-increment: process;
+      content: "0" counter(process);
+      color: var(--accent);
+      font-weight: 950;
+      display: block;
+      margin-bottom: 14px;
+    }
+
+    .process-card h3 { font-size: 1.02rem; margin-bottom: 8px; }
+    .process-card p { color: var(--muted); line-height: 1.55; margin: 0; font-size: 0.93rem; }
+
+    .faq-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .faq-item {
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(255,255,255,0.045);
+      overflow: hidden;
+    }
+
+    .faq-question {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      border: 0;
+      background: transparent;
+      color: var(--text);
+      text-align: left;
+      padding: 18px;
+      cursor: pointer;
+      font-weight: 900;
+    }
+
+    .faq-question span:last-child {
+      color: var(--accent);
+      font-size: 1.2rem;
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.22s ease;
+    }
+
+    .faq-answer p {
+      color: var(--muted);
+      line-height: 1.62;
+      margin: 0;
+      padding: 0 18px 18px;
+    }
+
+    .faq-item.open .faq-answer { max-height: 260px; }
+
+    .map-card {
+      min-height: 340px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background:
+        radial-gradient(circle at 18% 20%, rgba(183,243,107,0.16), transparent 26%),
+        radial-gradient(circle at 82% 62%, rgba(116,214,255,0.16), transparent 30%),
+        linear-gradient(135deg, rgba(255,255,255,0.09), rgba(255,255,255,0.035));
+      position: relative;
+      overflow: hidden;
+      padding: 24px;
+      display: grid;
+      align-content: end;
+    }
+
+    .map-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.055) 1px, transparent 1px);
+      background-size: 38px 38px;
+      opacity: 0.7;
+    }
+
+    .map-marker {
+      position: absolute;
+      left: 52%;
+      top: 36%;
+      width: 26px;
+      height: 26px;
+      border-radius: 999px 999px 999px 3px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      transform: rotate(45deg);
+      box-shadow: 0 0 0 12px rgba(183,243,107,0.10);
+      animation: markerPulse 2.5s infinite;
+    }
+
+    .map-marker::after {
+      content: "";
+      position: absolute;
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: #07110f;
+      left: 8px;
+      top: 8px;
+    }
+
+    @keyframes markerPulse {
+      0%, 100% { box-shadow: 0 0 0 10px rgba(183,243,107,0.12); }
+      50% { box-shadow: 0 0 0 22px rgba(183,243,107,0.02); }
+    }
+
+    .map-content {
+      position: relative;
+      z-index: 2;
+      border: 1px solid var(--line);
+      background: rgba(2,6,5,0.62);
+      backdrop-filter: blur(18px);
+      border-radius: 24px;
+      padding: 18px;
+    }
+
+    body.light .map-content { background: rgba(255,255,255,0.72); }
+
+    .map-content h3 { margin-bottom: 8px; }
+    .map-content p { color: var(--muted); line-height: 1.55; margin-bottom: 0; }
+
+    .cta { padding: 86px 0 34px; }
+
+    .cta-box {
+      border: 1px solid rgba(183,243,107,0.28);
+      background:
+        radial-gradient(circle at 25% 0%, rgba(183,243,107,0.2), transparent 30%),
+        radial-gradient(circle at 85% 40%, rgba(116,214,255,0.15), transparent 34%),
+        var(--surface);
+      border-radius: 42px;
+      padding: clamp(28px, 6vw, 64px);
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .cta-box h2 { max-width: 850px; margin-left: auto; margin-right: auto; }
+    .cta-box p { color: var(--muted); line-height: 1.75; max-width: 720px; margin: 0 auto 26px; }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 28px 0;
+      color: var(--muted);
+    }
+
+    .footer-grid {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .toast {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 30;
+      max-width: 380px;
+      border: 1px solid rgba(183,243,107,0.42);
+      background: rgba(7,17,15,0.92);
+      color: var(--text);
+      backdrop-filter: blur(18px);
+      border-radius: 22px;
+      padding: 16px 18px;
+      box-shadow: var(--shadow);
+      transform: translateY(18px);
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.22s ease;
+    }
+
+    body.light .toast { background: rgba(247,250,239,0.96); }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast b { display: block; margin-bottom: 5px; }
+    .toast span { color: var(--muted); line-height: 1.45; }
+
+    .hidden-el {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: 0.7s ease;
+    }
+
+    .hidden-el.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1120px) {
+      .hero-grid, .split { grid-template-columns: 1fr; }
+      .cards-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .process-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .contact-dashboard { min-height: auto; }
+    }
+
+    @media (max-width: 880px) {
+      .menu-toggle { display: grid; }
+
+      .nav-links {
+        position: fixed;
+        left: 18px;
+        right: 18px;
+        top: 138px;
+        flex-direction: column;
+        align-items: stretch;
+        border-radius: 26px;
+        padding: 12px;
+        transform: translateY(-12px);
+        opacity: 0;
+        pointer-events: none;
+        transition: 0.2s ease;
+      }
+
+      .nav-links.open {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
+
+      .nav-links a { padding: 13px 14px; }
+      .nav-actions .hide-mobile { display: none; }
+      .cards-grid, .process-grid, .contact-metrics, .form-row, .radio-grid { grid-template-columns: 1fr; }
+      .contact-item { grid-template-columns: 1fr; }
+      .section { padding: 58px 0; }
+      .hero { padding-top: 58px; }
+    }
+
+    @media (max-width: 560px) {
+      .page-shell { width: min(100% - 24px, 1180px); }
+      .brand-text span { display: none; }
+      .brand { min-width: auto; }
+      .nav { min-height: 72px; }
+      .hero-actions .pill-btn, .form-actions .pill-btn { width: 100%; }
+      .contact-dashboard { padding: 16px; }
+      .toast { left: 12px; right: 12px; bottom: 12px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="announcement">
+    <span><strong>Kestrel Contact</strong> · Demo requests, pilot interest, academic presentation and partnership inquiries.</span>
+  </div>
+
+  <header>
+    <div class="page-shell nav">
+      <a class="brand" href="index.html" aria-label="Kestrel home">
+        <span class="logo-mark" aria-hidden="true"></span>
+        <span class="brand-text">
+          <b>Kestrel</b>
+          <span>Balance till the skies</span>
+        </span>
+      </a>
+
+      <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="technology.html">Technology</a>
+        <a href="app.html">App</a>
+        <a href="business.html">Business</a>
+        <a href="validation.html">Validation</a>
+        <a class="active" href="contact.html">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="icon-btn" id="themeBtn" title="Toggle light/dark mode" aria-label="Toggle theme">◐</button>
+        <button class="icon-btn" id="contrastBtn" title="High contrast" aria-label="High contrast">◩</button>
+        <button class="icon-btn hide-mobile" id="fontDown" title="Decrease font" aria-label="Decrease font">A−</button>
+        <button class="icon-btn hide-mobile" id="fontUp" title="Increase font" aria-label="Increase font">A+</button>
+        <a class="pill-btn primary-btn hide-mobile" href="#contact-form">Request demo</a>
+        <button class="icon-btn menu-toggle" id="menuBtn" aria-label="Open menu">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="page-shell hero-grid">
+        <div class="hidden-el">
+          <div class="eyebrow"><span class="pulse-dot"></span> Start the conversation</div>
+          <h1>Let’s move from concept to <span class="gradient-text">collaboration.</span></h1>
+          <p class="hero-copy">
+            Η σελίδα επικοινωνίας λειτουργεί ως επαγγελματικό σημείο εισόδου για όσους θέλουν να μάθουν περισσότερα για το Kestrel, να ζητήσουν demo, να συμμετάσχουν σε πιλοτική δοκιμή ή να εξετάσουν συνεργασία σε outdoor, B2G ή ακαδημαϊκό επίπεδο.
+          </p>
+          <div class="hero-actions">
+            <a class="pill-btn primary-btn" href="#contact-form">Send request →</a>
+            <a class="pill-btn" href="#faq">Read FAQ</a>
+          </div>
+        </div>
+
+        <aside class="contact-dashboard hidden-el" aria-label="Kestrel contact dashboard">
+          <div class="dashboard-inner">
+            <div class="dashboard-title">
+              <h3>Contact center</h3>
+              <span>Project stage · Concept</span>
+            </div>
+
+            <div class="status-card">
+              <div class="status-badge"><span class="pulse-dot"></span> Open for validation</div>
+              <h3>Demo · Pilot · Partnership</h3>
+              <p>Το Kestrel βρίσκεται σε στάδιο επιχειρηματικής και τεχνολογικής τεκμηρίωσης. Η επικοινωνία αφορά παρουσιάσεις, feedback, πιλοτικές δοκιμές και πιθανές συνεργασίες.</p>
+            </div>
+
+            <div class="contact-metrics">
+              <div class="metric-tile"><span>Response target</span><b>24–48h</b></div>
+              <div class="metric-tile"><span>Best for</span><b>Pilots</b></div>
+              <div class="metric-tile"><span>Core markets</span><b>B2C/B2G</b></div>
+              <div class="metric-tile"><span>Product type</span><b>Smart pack</b></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="contact-options">
+      <div class="page-shell">
+        <div class="section-head hidden-el">
+          <div class="section-kicker">Contact paths</div>
+          <h2>Διάλεξε τον κατάλληλο λόγο επικοινωνίας.</h2>
+          <p>Η επικοινωνία οργανώνεται ανάλογα με το ενδιαφέρον: demo, pilot, συνεργασία, επένδυση ή ακαδημαϊκή παρουσίαση.</p>
+        </div>
+
+        <div class="cards-grid">
+          <article class="card hidden-el"><div class="icon">▶</div><h3>Demo request</h3><p>Για παρουσίαση του concept, της τεχνολογικής λογικής, του app flow και του επιχειρηματικού μοντέλου.</p></article>
+          <article class="card hidden-el"><div class="icon">⛰</div><h3>Pilot interest</h3><p>Για χρήστες ή ομάδες που θέλουν να συμμετάσχουν σε δοκιμή με outdoor σενάρια και feedback.</p></article>
+          <article class="card hidden-el"><div class="icon">🤝</div><h3>Partnership</h3><p>Για outdoor stores, brands, οργανισμούς, εκπαιδευτικά projects ή φορείς με πιθανό ενδιαφέρον συνεργασίας.</p></article>
+          <article class="card hidden-el"><div class="icon">🎓</div><h3>Academic inquiry</h3><p>Για παρουσίαση στο πλαίσιο μαθήματος, εργασίας, pitch deck, innovation project ή ερευνητικής συζήτησης.</p></article>
+          <article class="card hidden-el"><div class="icon">🎖</div><h3>B2G discussion</h3><p>Για πιθανή εφαρμογή σε tactical περιβάλλοντα, οργανωμένες ομάδες ή προμήθειες ειδικού εξοπλισμού.</p></article>
+          <article class="card hidden-el"><div class="icon">💡</div><h3>Feedback</h3><p>Για σχόλια πάνω στο product concept, το website, την εφαρμογή, την τιμή ή την αξία του Kestrel.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact-form">
+      <div class="page-shell split">
+        <div class="panel hidden-el">
+          <div class="section-kicker">Request form</div>
+          <h2>Στείλε αίτημα ενδιαφέροντος.</h2>
+          <p class="lead">Η φόρμα είναι demo για την ιστοσελίδα. Δεν αποστέλλει πραγματικό email από μόνη της, αλλά δείχνει πώς θα λειτουργούσε επαγγελματικά η επικοινωνία.</p>
+
+          <form class="contact-form" id="kestrelForm">
+            <div class="form-row">
+              <div class="field">
+                <label for="fullName">Ονοματεπώνυμο</label>
+                <input id="fullName" name="fullName" type="text" placeholder="π.χ. Athina Karatosiou" required />
+              </div>
+              <div class="field">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" placeholder="name@example.com" required />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="field">
+                <label for="role">Ρόλος / Ιδιότητα</label>
+                <select id="role" name="role" required>
+                  <option value="">Επίλεξε κατηγορία</option>
+                  <option>Outdoor user</option>
+                  <option>Student / academic</option>
+                  <option>Business partner</option>
+                  <option>Investor / mentor</option>
+                  <option>B2G / organization</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="priority">Προτεραιότητα</label>
+                <select id="priority" name="priority" required>
+                  <option value="">Επίλεξε επίπεδο</option>
+                  <option>General information</option>
+                  <option>Demo request</option>
+                  <option>Pilot participation</option>
+                  <option>Partnership discussion</option>
+                  <option>Academic presentation</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>Τύπος ενδιαφέροντος</label>
+              <div class="radio-grid">
+                <label class="radio-card">
+                  <input type="radio" name="interest" value="B2C" checked />
+                  <b>B2C</b>
+                  <span>Outdoor users, πεζοπόροι, early adopters.</span>
+                </label>
+                <label class="radio-card">
+                  <input type="radio" name="interest" value="B2G" />
+                  <b>B2G</b>
+                  <span>Οργανισμοί, tactical use, pilots.</span>
+                </label>
+                <label class="radio-card">
+                  <input type="radio" name="interest" value="Academic" />
+                  <b>Academic</b>
+                  <span>Παρουσίαση, εργασία, feedback.</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="message">Μήνυμα</label>
+              <textarea id="message" name="message" placeholder="Γράψε σύντομα τι σε ενδιαφέρει σχετικά με το Kestrel..." required></textarea>
+              <small>Πρότεινε συγκεκριμένα αν θέλεις demo, pilot, feedback ή συνεργασία.</small>
+            </div>
+
+            <div class="form-actions">
+              <button class="pill-btn primary-btn" type="submit">Submit request →</button>
+              <button class="pill-btn" type="button" id="clearForm">Clear form</button>
+            </div>
+          </form>
+        </div>
+
+        <aside class="panel hidden-el">
+          <div class="section-kicker">Direct information</div>
+          <h2>Στοιχεία επικοινωνίας και project identity.</h2>
+          <p class="lead">Μπορείς να χρησιμοποιήσεις αυτά τα στοιχεία σαν placeholder ή να τα αλλάξεις με τα πραγματικά στοιχεία της ομάδας σου.</p>
+
+          <div class="contact-list">
+            <div class="contact-item">
+              <div class="contact-icon">@</div>
+              <div><b>Email</b><span id="emailText">hello@kestrelconcept.com</span></div>
+              <button class="copy-btn" data-copy="hello@kestrelconcept.com">Copy</button>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">K</div>
+              <div><b>Project</b><span id="projectText">Kestrel · Balance till the skies</span></div>
+              <button class="copy-btn" data-copy="Kestrel · Balance till the skies">Copy</button>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">↗</div>
+              <div><b>Website path</b><span id="siteText">index.html → contact.html</span></div>
+              <button class="copy-btn" data-copy="index.html → contact.html">Copy</button>
+            </div>
+          </div>
+
+          <div class="pill-row">
+            <span class="mini-pill">Smart backpack</span>
+            <span class="mini-pill">Ergo-Score</span>
+            <span class="mini-pill">Outdoor safety</span>
+            <span class="mini-pill">B2C/B2G</span>
+            <span class="mini-pill">Pilot-ready concept</span>
+          </div>
+
+          <div class="helper-note" style="margin-top:18px;">
+            Για πραγματική αποστολή email, αργότερα μπορείς να συνδέσεις τη φόρμα με Formspree, Netlify Forms, Google Forms ή custom backend. Για GitHub Pages, η απλή HTML φόρμα χωρίς υπηρεσία δεν στέλνει email αυτόματα.
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="process">
+      <div class="page-shell">
+        <div class="section-head hidden-el">
+          <div class="section-kicker">What happens next</div>
+          <h2>Η διαδικασία μετά το αίτημα επικοινωνίας.</h2>
+          <p>Η σελίδα δίνει την αίσθηση ότι το Kestrel έχει οργανωμένη διαδικασία και δεν είναι απλώς μια ιδέα χωρίς συνέχεια.</p>
+        </div>
+
+        <div class="process-grid">
+          <div class="process-card hidden-el"><h3>Request review</h3><p>Η ομάδα ταξινομεί το αίτημα ως demo, pilot, συνεργασία, feedback ή ακαδημαϊκή επικοινωνία.</p></div>
+          <div class="process-card hidden-el"><h3>Context call</h3><p>Ακολουθεί σύντομη συζήτηση για ανάγκες, στόχο, χρήστες και πιθανή εφαρμογή του Kestrel.</p></div>
+          <div class="process-card hidden-el"><h3>Demo package</h3><p>Παρουσιάζεται το product story, το prototype logic, το app flow και η επιχειρηματική προσέγγιση.</p></div>
+          <div class="process-card hidden-el"><h3>Pilot decision</h3><p>Αν υπάρχει ενδιαφέρον, ορίζεται μικρό pilot plan με μετρήσιμα κριτήρια αξιολόγησης.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="location">
+      <div class="page-shell split">
+        <div class="map-card hidden-el" aria-label="Concept map card">
+          <div class="map-marker" aria-hidden="true"></div>
+          <div class="map-content">
+            <h3>Concept based in Athens · Built for movement.</h3>
+            <p>Το Kestrel μπορεί να παρουσιαστεί ως ιδέα που ξεκινά από ακαδημαϊκό innovation project και στοχεύει σε διεθνή outdoor αγορά.</p>
+          </div>
+        </div>
+
+        <div class="panel hidden-el">
+          <div class="section-kicker">Presentation-ready wording</div>
+          <h2>Πώς μπορείς να παρουσιάσεις τη σελίδα Contact.</h2>
+          <p class="lead">«Η τελευταία σελίδα της ιστοσελίδας λειτουργεί ως επαγγελματικό σημείο επικοινωνίας. Δεν κλείνει απλώς την παρουσίαση, αλλά δείχνει ότι το Kestrel μπορεί να συνεχίσει σε demo, pilot testing και συνεργασίες. Έτσι η ιστοσελίδα δεν είναι μόνο ενημερωτική· λειτουργεί ως εργαλείο επιχειρηματικής ενεργοποίησης.»</p>
+          <div class="cards-grid" style="grid-template-columns:1fr;">
+            <article class="card"><h3>Why it matters</h3><p>Δείχνει επαγγελματισμό, εμπορική ετοιμότητα και δυνατότητα συνέχειας μετά την παρουσίαση.</p></article>
+            <article class="card"><h3>Best use</h3><p>Μπορεί να αξιοποιηθεί σε pitch, demo day, παρουσίαση μαθήματος ή συζήτηση με πιθανούς stakeholders.</p></article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="page-shell">
+        <div class="section-head hidden-el">
+          <div class="section-kicker">FAQ</div>
+          <h2>Συχνές ερωτήσεις για το Kestrel.</h2>
+          <p>Το FAQ βοηθά τον επισκέπτη να καταλάβει γρήγορα τι είναι το προϊόν, τι δεν είναι και πώς μπορεί να εξελιχθεί.</p>
+        </div>
+
+        <div class="panel hidden-el">
+          <div class="faq-list">
+            <div class="faq-item open">
+              <button class="faq-question" type="button"><span>Είναι το Kestrel τελικό προϊόν ή concept;</span><span>+</span></button>
+              <div class="faq-answer"><p>Σε αυτή τη φάση παρουσιάζεται ως concept/prototype idea για smart backpack, με τεχνολογική λογική, επιχειρηματικό μοντέλο και πλάνο επικύρωσης.</p></div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question" type="button"><span>Τι κάνει διαφορετικά από ένα απλό εργονομικό σακίδιο;</span><span>+</span></button>
+              <div class="faq-answer"><p>Το Kestrel δεν βασίζεται μόνο στον σχεδιασμό του σακιδίου. Μετρά πίεση, εντοπίζει ασυμμετρία και δίνει real-time καθοδήγηση στον χρήστη.</p></div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question" type="button"><span>Η εφαρμογή αντικαθιστά ιατρική συμβουλή;</span><span>+</span></button>
+              <div class="faq-answer"><p>Όχι. Η εφαρμογή παρουσιάζεται ως εργονομικό και υποστηρικτικό εργαλείο. Δεν κάνει διάγνωση, θεραπεία ή ιατρική αξιολόγηση.</p></div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question" type="button"><span>Ποιοι είναι οι βασικοί χρήστες-στόχοι;</span><span>+</span></button>
+              <div class="faq-answer"><p>Οι βασικοί χρήστες είναι outdoor enthusiasts, πεζοπόροι, ταξιδιώτες, early adopters και σε μελλοντικό επίπεδο οργανισμοί με ανάγκες μεταφοράς φορτίου.</p></div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question" type="button"><span>Μπορεί η φόρμα να στέλνει πραγματικά emails;</span><span>+</span></button>
+              <div class="faq-answer"><p>Ναι, αλλά χρειάζεται σύνδεση με εξωτερική υπηρεσία ή backend. Στο GitHub Pages η φόρμα από μόνη της λειτουργεί ως demo, όχι ως πραγματικό σύστημα αποστολής.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="page-shell">
+        <div class="cta-box hidden-el">
+          <div class="section-kicker">Project complete</div>
+          <h2>Το website του Kestrel έχει πλέον ολοκληρωμένη δομή.</h2>
+          <p>Home, About, Technology, App, Business, Validation και Contact δημιουργούν μια πλήρη ψηφιακή παρουσίαση για το προϊόν, την τεχνολογία, την αγορά και τη συνέχεια του project.</p>
+          <div class="hero-actions" style="justify-content:center;">
+            <a class="pill-btn primary-btn" href="index.html">Back to Home →</a>
+            <a class="pill-btn" href="validation.html">Back to Validation</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="page-shell footer-grid">
+      <span>© 2026 Kestrel Concept · Contact Page</span>
+      <span>Demo request · Pilot interest · Partnership inquiry</span>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">
+    <b id="toastTitle">Request received</b>
+    <span id="toastText">Your Kestrel request has been prepared.</span>
+  </div>
+
+  <script>
+    const body = document.body;
+    const navLinks = document.getElementById('navLinks');
+    const menuBtn = document.getElementById('menuBtn');
+    const themeBtn = document.getElementById('themeBtn');
+    const contrastBtn = document.getElementById('contrastBtn');
+    const fontUp = document.getElementById('fontUp');
+    const fontDown = document.getElementById('fontDown');
+    let fontScale = 1;
+
+    menuBtn.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => navLinks.classList.remove('open')));
+
+    themeBtn.addEventListener('click', () => {
+      body.classList.toggle('light');
+      if (body.classList.contains('high-contrast')) body.classList.remove('high-contrast');
+    });
+
+    contrastBtn.addEventListener('click', () => {
+      body.classList.toggle('high-contrast');
+      if (body.classList.contains('light')) body.classList.remove('light');
+    });
+
+    fontUp.addEventListener('click', () => {
+      fontScale = Math.min(1.18, fontScale + 0.06);
+      document.documentElement.style.setProperty('--font-scale', fontScale.toFixed(2));
+    });
+
+    fontDown.addEventListener('click', () => {
+      fontScale = Math.max(0.9, fontScale - 0.06);
+      document.documentElement.style.setProperty('--font-scale', fontScale.toFixed(2));
+    });
+
+    const hiddenEls = document.querySelectorAll('.hidden-el');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.12 });
+    hiddenEls.forEach(el => observer.observe(el));
+
+    const toast = document.getElementById('toast');
+    const toastTitle = document.getElementById('toastTitle');
+    const toastText = document.getElementById('toastText');
+    let toastTimer;
+
+    function showToast(title, text) {
+      toastTitle.textContent = title;
+      toastText.textContent = text;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 3600);
+    }
+
+    const form = document.getElementById('kestrelForm');
+    const clearForm = document.getElementById('clearForm');
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const name = document.getElementById('fullName').value.trim();
+      const priority = document.getElementById('priority').value;
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      showToast('Request prepared', `${name || 'Your'} ${priority || 'Kestrel'} request has been prepared successfully. Connect the form to a backend to send it.`);
+      form.reset();
+      form.querySelector('input[name="interest"][value="B2C"]').checked = true;
+    });
+
+    clearForm.addEventListener('click', () => {
+      form.reset();
+      form.querySelector('input[name="interest"][value="B2C"]').checked = true;
+      showToast('Form cleared', 'The contact form is ready for a new request.');
+    });
+
+    document.querySelectorAll('.copy-btn').forEach(button => {
+      button.addEventListener('click', async () => {
+        const text = button.dataset.copy;
+        try {
+          await navigator.clipboard.writeText(text);
+          showToast('Copied', text);
+        } catch (error) {
+          showToast('Copy unavailable', 'Your browser did not allow clipboard access.');
+        }
+      });
+    });
+
+    document.querySelectorAll('.faq-question').forEach(button => {
+      button.addEventListener('click', () => {
+        const item = button.closest('.faq-item');
+        item.classList.toggle('open');
+      });
+    });
+  </script>
+</body>
+</html>
