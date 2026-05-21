@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Technology | Kestrel</title>
+  <meta name="description" content="The technology behind Kestrel: FSR402 pressure sensors, signal conversion, microcontroller logic, buzzer alerts and mobile app guidance." />
+
+  <style>
+    :root {
+      --bg: #07110f;
+      --surface: rgba(255, 255, 255, 0.08);
+      --surface-strong: rgba(255, 255, 255, 0.13);
+      --text: #f5f7ef;
+      --muted: #b9c7bd;
+      --soft: #eaf1df;
+      --accent: #b7f36b;
+      --accent-2: #74d6ff;
+      --gold: #efc86a;
+      --danger: #ff7a6e;
+      --line: rgba(255, 255, 255, 0.16);
+      --shadow: 0 30px 80px rgba(0, 0, 0, 0.42);
+      --radius-lg: 34px;
+      --radius-md: 22px;
+      --font-scale: 1;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(183, 243, 107, 0.22), transparent 31%),
+        radial-gradient(circle at 90% 6%, rgba(116, 214, 255, 0.18), transparent 34%),
+        linear-gradient(135deg, var(--bg), #020403 62%, #0e130c);
+      color: var(--text);
+      font-size: calc(16px * var(--font-scale));
+      overflow-x: hidden;
+    }
+
+    body.light {
+      --bg: #f5f7ef;
+      --surface: rgba(10, 35, 26, 0.07);
+      --surface-strong: rgba(10, 35, 26, 0.12);
+      --text: #0b1a15;
+      --muted: #506258;
+      --soft: #123126;
+      --line: rgba(6, 25, 19, 0.15);
+      --shadow: 0 24px 70px rgba(16, 38, 29, 0.16);
+      background:
+        radial-gradient(circle at 10% 0%, rgba(183, 243, 107, 0.31), transparent 32%),
+        radial-gradient(circle at 90% 6%, rgba(116, 214, 255, 0.18), transparent 34%),
+        linear-gradient(135deg, #f7faef, #edf4e8 62%, #e2ead9);
+    }
+
+    body.high-contrast {
+      --bg: #000;
+      --surface: rgba(255, 255, 255, 0.15);
+      --surface-strong: rgba(255, 255, 255, 0.24);
+      --text: #fff;
+      --muted: #fff;
+      --accent: #d7ff00;
+      --accent-2: #00e5ff;
+      --gold: #ffe600;
+      --danger: #ff2b2b;
+      --line: rgba(255, 255, 255, 0.42);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+    h1, h2, h3, p { margin-top: 0; }
+
+    .page-shell {
+      width: min(1180px, calc(100% - 36px));
+      margin: 0 auto;
+    }
+
+    .announcement {
+      display: flex;
+      justify-content: center;
+      padding: 12px 18px;
+      background: linear-gradient(90deg, rgba(183, 243, 107, 0.18), rgba(116, 214, 255, 0.14));
+      border-bottom: 1px solid var(--line);
+      color: var(--soft);
+      font-size: 0.92rem;
+      text-align: center;
+    }
+
+    .announcement strong { color: var(--accent); }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(20px);
+      background: rgba(5, 14, 11, 0.72);
+      border-bottom: 1px solid var(--line);
+    }
+
+    body.light header { background: rgba(245, 247, 239, 0.78); }
+
+    .nav {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 190px;
+    }
+
+    .logo-mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 16px;
+      background: linear-gradient(145deg, rgba(183, 243, 107, 0.96), rgba(116, 214, 255, 0.88));
+      position: relative;
+      box-shadow: 0 14px 30px rgba(183, 243, 107, 0.21);
+      overflow: hidden;
+    }
+
+    .logo-mark::before {
+      content: "";
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      border: 3px solid rgba(7, 17, 15, 0.72);
+      border-left: 0;
+      border-bottom: 0;
+      transform: rotate(-23deg);
+      top: 9px;
+      left: 7px;
+      border-radius: 3px 14px 3px 3px;
+    }
+
+    .logo-mark::after {
+      content: "";
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: #07110f;
+      top: 15px;
+      left: 15px;
+    }
+
+    .brand-text b {
+      display: block;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 1rem;
+    }
+
+    .brand-text span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.74rem;
+      margin-top: 2px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 6px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: 999px;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: 0.88rem;
+      padding: 10px 13px;
+      border-radius: 999px;
+      transition: 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--text);
+      background: var(--surface-strong);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .icon-btn, .pill-btn {
+      border: 1px solid var(--line);
+      color: var(--text);
+      background: var(--surface);
+      border-radius: 999px;
+      min-height: 42px;
+      cursor: pointer;
+      transition: transform 0.18s ease, background 0.18s ease, border 0.18s ease;
+    }
+
+    .icon-btn {
+      width: 42px;
+      display: grid;
+      place-items: center;
+    }
+
+    .pill-btn {
+      padding: 0 18px;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      font-weight: 750;
+    }
+
+    .icon-btn:hover, .pill-btn:hover {
+      transform: translateY(-2px);
+      background: var(--surface-strong);
+      border-color: rgba(183, 243, 107, 0.42);
+    }
+
+    .primary-btn {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #06100d;
+      border: 0;
+      box-shadow: 0 18px 40px rgba(116, 214, 255, 0.12);
+    }
+
+    .menu-toggle { display: none; }
+
+    .hero { padding: 90px 0 66px; }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(380px, 0.9fr);
+      gap: 46px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(183, 243, 107, 0.34);
+      background: rgba(183, 243, 107, 0.1);
+      color: var(--accent);
+      font-weight: 850;
+      font-size: 0.86rem;
+      margin-bottom: 18px;
+    }
+
+    .pulse-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 0 rgba(183, 243, 107, 0.72);
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(183, 243, 107, 0.72); }
+      70% { box-shadow: 0 0 0 12px rgba(183, 243, 107, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(183, 243, 107, 0); }
+    }
+
+    h1 {
+      font-size: clamp(3rem, 7vw, 6.6rem);
+      line-height: 0.9;
+      letter-spacing: -0.075em;
+      margin-bottom: 22px;
+    }
+
+    .gradient-text {
+      display: block;
+      background: linear-gradient(135deg, var(--text), var(--accent) 42%, var(--accent-2));
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-copy {
+      color: var(--muted);
+      font-size: 1.13rem;
+      line-height: 1.78;
+      margin-bottom: 28px;
+      max-width: 760px;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .tech-dashboard {
+      min-height: 560px;
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 50% 0, rgba(116, 214, 255, 0.18), transparent 34%),
+        linear-gradient(180deg, var(--surface), rgba(255,255,255,0.035));
+      border-radius: 38px;
+      box-shadow: var(--shadow);
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .circuit-board {
+      position: absolute;
+      inset: 24px;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 30px;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+      background-size: 34px 34px;
+    }
+
+    .chip {
+      position: absolute;
+      width: 158px;
+      height: 118px;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 24px;
+      border: 1px solid rgba(183,243,107,0.45);
+      background: linear-gradient(180deg, rgba(183,243,107,0.2), rgba(255,255,255,0.06));
+      display: grid;
+      place-items: center;
+      text-align: center;
+      color: var(--accent);
+      font-weight: 950;
+      letter-spacing: 0.04em;
+      box-shadow: 0 0 50px rgba(183,243,107,0.12);
+    }
+
+    .chip small {
+      display: block;
+      color: var(--muted);
+      letter-spacing: 0;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+
+    .node {
+      position: absolute;
+      width: 118px;
+      min-height: 86px;
+      border: 1px solid var(--line);
+      background: rgba(2,6,5,0.65);
+      backdrop-filter: blur(18px);
+      border-radius: 22px;
+      padding: 14px;
+      display: grid;
+      align-content: center;
+      text-align: center;
+      box-shadow: 0 16px 36px rgba(0,0,0,0.24);
+    }
+
+    body.light .node { background: rgba(255,255,255,0.72); }
+    .node b { color: var(--text); display: block; margin-bottom: 5px; }
+    .node span { color: var(--muted); font-size: 0.8rem; line-height: 1.35; }
+    .node.n1 { left: 42px; top: 74px; }
+    .node.n2 { right: 42px; top: 74px; }
+    .node.n3 { left: 42px; bottom: 82px; }
+    .node.n4 { right: 42px; bottom: 82px; }
+    .node.n5 { left: calc(50% - 59px); bottom: 26px; }
+
+    .wire {
+      position: absolute;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0.62;
+      animation: wireFlow 2.4s linear infinite;
+      transform-origin: left center;
+    }
+
+    .wire.w1 { width: 190px; left: 155px; top: 130px; transform: rotate(22deg); }
+    .wire.w2 { width: 190px; right: 155px; top: 130px; transform: rotate(158deg); }
+    .wire.w3 { width: 190px; left: 155px; bottom: 150px; transform: rotate(-22deg); }
+    .wire.w4 { width: 190px; right: 155px; bottom: 150px; transform: rotate(202deg); }
+    .wire.w5 { width: 116px; left: calc(50% - 58px); bottom: 170px; transform: rotate(90deg); }
+
+    @keyframes wireFlow {
+      0% { opacity: 0.15; filter: blur(0); }
+      50% { opacity: 0.9; filter: blur(0.6px); }
+      100% { opacity: 0.15; filter: blur(0); }
+    }
+
+    .section { padding: 78px 0; }
+
+    .section-head {
+      max-width: 790px;
+      margin-bottom: 34px;
+    }
+
+    .section-kicker {
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-weight: 950;
+      font-size: 0.76rem;
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 4vw, 4rem);
+      letter-spacing: -0.055em;
+      line-height: 1.02;
+      margin-bottom: 16px;
+    }
+
+    .section-head p, .lead {
+      color: var(--muted);
+      line-height: 1.75;
+      font-size: 1.04rem;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, var(--surface), rgba(255,255,255,0.035));
+      border-radius: var(--radius-md);
+      padding: 24px;
+      box-shadow: 0 16px 55px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+
+    .icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      background: rgba(183, 243, 107, 0.12);
+      color: var(--accent);
+      margin-bottom: 18px;
+      font-size: 1.25rem;
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+      font-size: 1.22rem;
+      letter-spacing: -0.02em;
+    }
+
+    .card p, .card li {
+      color: var(--muted);
+      line-height: 1.64;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 0.96fr 1.04fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .workflow { display: grid; gap: 14px; }
+
+    .step {
+      display: grid;
+      grid-template-columns: 52px 1fr;
+      gap: 14px;
+      padding: 18px;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.045);
+    }
+
+    .step-num {
+      width: 52px;
+      height: 52px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      color: #06100d;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      font-weight: 950;
+    }
+
+    .step h3 { margin: 0 0 6px; font-size: 1.05rem; }
+    .step p { margin: 0; color: var(--muted); line-height: 1.55; }
+
+    .code-card {
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,0.28);
+      border-radius: 24px;
+      padding: 20px;
+      overflow: auto;
+    }
+
+    body.light .code-card { background: rgba(7,17,15,0.08); }
+
+    pre {
+      margin: 0;
+      color: var(--soft);
+      line-height: 1.6;
+      font-size: 0.92rem;
+      white-space: pre-wrap;
+    }
+
+    .component-table { display: grid; gap: 12px; }
+
+    .component-row {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr auto;
+      gap: 12px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 16px;
+      background: rgba(255,255,255,0.045);
+    }
+
+    .component-row b { display: block; color: var(--text); margin-bottom: 4px; }
+    .component-row span { color: var(--muted); line-height: 1.45; }
+    .component-tag { color: #06100d; background: linear-gradient(135deg, var(--accent), var(--accent-2)); padding: 8px 10px; border-radius: 999px; font-weight: 900; font-size: 0.8rem; white-space: nowrap; }
+
+    .simulator {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 22px;
+      align-items: center;
+    }
+
+    .slider-group { display: grid; gap: 18px; }
+
+    .range-line {
+      border: 1px solid var(--line);
+      padding: 16px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.045);
+    }
+
+    .range-line label {
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      margin-bottom: 10px;
+      font-weight: 750;
+      gap: 14px;
+    }
+
+    input[type="range"] { width: 100%; accent-color: var(--accent); }
+
+    .output-screen {
+      min-height: 370px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background:
+        radial-gradient(circle at 50% 0, rgba(183,243,107,0.15), transparent 42%),
+        var(--surface);
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .sensor-meter {
+      width: min(360px, 100%);
+      height: 26px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      overflow: hidden;
+      margin: 18px auto;
+    }
+
+    .sensor-meter span {
+      display: block;
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--gold), var(--danger));
+      border-radius: inherit;
+      transition: width 0.25s ease;
+    }
+
+    .alert-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.07);
+      color: var(--accent);
+      font-weight: 900;
+      margin-bottom: 14px;
+    }
+
+    .output-screen h3 {
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      letter-spacing: -0.045em;
+      margin-bottom: 10px;
+    }
+
+    .output-screen p {
+      max-width: 440px;
+      color: var(--muted);
+      line-height: 1.6;
+      margin: 0 auto;
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-bottom: 18px;
+    }
+
+    .tab-btn {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--muted);
+      padding: 11px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 850;
+    }
+
+    .tab-btn.active {
+      color: #06100d;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      border-color: transparent;
+    }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    .app-flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+      counter-reset: appflow;
+    }
+
+    .flow-item {
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 18px;
+      background: var(--surface);
+    }
+
+    .flow-item::before {
+      counter-increment: appflow;
+      content: "0" counter(appflow);
+      color: var(--accent);
+      font-weight: 950;
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .flow-item h3 { font-size: 1rem; margin-bottom: 8px; }
+    .flow-item p { color: var(--muted); line-height: 1.55; font-size: 0.92rem; margin: 0; }
+
+    .cta { padding: 86px 0 34px; }
+
+    .cta-box {
+      border: 1px solid rgba(183,243,107,0.28);
+      background:
+        radial-gradient(circle at 25% 0%, rgba(183,243,107,0.2), transparent 30%),
+        radial-gradient(circle at 85% 40%, rgba(116,214,255,0.15), transparent 34%),
+        var(--surface);
+      border-radius: 42px;
+      padding: clamp(28px, 6vw, 64px);
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .cta-box h2 { max-width: 850px; margin-left: auto; margin-right: auto; }
+    .cta-box p { color: var(--muted); line-height: 1.75; max-width: 720px; margin: 0 auto 26px; }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 28px 0;
+      color: var(--muted);
+    }
+
+    .footer-grid {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .hidden-el {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: 0.7s ease;
+    }
+
+    .hidden-el.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1100px) {
+      .hero-grid, .split, .simulator { grid-template-columns: 1fr; }
+      .cards-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .app-flow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .tech-dashboard { min-height: 530px; }
+    }
+
+    @media (max-width: 880px) {
+      .menu-toggle { display: grid; }
+
+      .nav-links {
+        position: fixed;
+        left: 18px;
+        right: 18px;
+        top: 138px;
+        flex-direction: column;
+        align-items: stretch;
+        border-radius: 26px;
+        padding: 12px;
+        transform: translateY(-12px);
+        opacity: 0;
+        pointer-events: none;
+        transition: 0.2s ease;
+      }
+
+      .nav-links.open {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
+
+      .nav-links a { padding: 13px 14px; }
+      .nav-actions .hide-mobile { display: none; }
+      .cards-grid, .app-flow { grid-template-columns: 1fr; }
+      .component-row { grid-template-columns: 1fr; }
+      .section { padding: 58px 0; }
+      .hero { padding-top: 58px; }
+      .tech-dashboard { min-height: 560px; }
+      .node { width: 104px; min-height: 78px; padding: 10px; }
+      .node.n1 { left: 20px; top: 70px; }
+      .node.n2 { right: 20px; top: 70px; }
+      .node.n3 { left: 20px; bottom: 98px; }
+      .node.n4 { right: 20px; bottom: 98px; }
+      .wire { display: none; }
+    }
+
+    @media (max-width: 560px) {
+      .page-shell { width: min(100% - 24px, 1180px); }
+      .brand-text span { display: none; }
+      .brand { min-width: auto; }
+      .nav { min-height: 72px; }
+      .hero-actions .pill-btn { width: 100%; justify-content: center; }
+      .tech-dashboard { min-height: 620px; padding: 14px; }
+      .circuit-board { inset: 14px; }
+      .chip { width: 132px; height: 104px; }
+      .node { width: 96px; font-size: 0.88rem; }
+      .step { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="announcement">
+    <span><strong>Kestrel Technology</strong> · Pressure sensing, signal conversion and real-time ergonomic guidance.</span>
+  </div>
+
+  <header>
+    <div class="page-shell nav">
+      <a class="brand" href="index.html" aria-label="Kestrel home">
+        <span class="logo-mark" aria-hidden="true"></span>
+        <span class="brand-text">
+          <b>Kestrel</b>
+          <span>Balance till the skies</span>
+        </span>
+      </a>
+
+      <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a class="active" href="technology.html">Technology</a>
+        <a href="app.html">App</a>
+        <a href="business.html">Business</a>
+        <a href="validation.html">Validation</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="icon-btn" id="themeBtn" title="Toggle light/dark mode" aria-label="Toggle theme">◐</button>
+        <button class="icon-btn" id="contrastBtn" title="High contrast" aria-label="High contrast">◩</button>
+        <button class="icon-btn hide-mobile" id="fontDown" title="Decrease font" aria-label="Decrease font">A−</button>
+        <button class="icon-btn hide-mobile" id="fontUp" title="Increase font" aria-label="Increase font">A+</button>
+        <a class="pill-btn primary-btn hide-mobile" href="app.html">View app</a>
+        <button class="icon-btn menu-toggle" id="menuBtn" aria-label="Open menu">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="page-shell hero-grid">
+        <div class="hidden-el">
+          <div class="eyebrow"><span class="pulse-dot"></span> Inside the system</div>
+          <h1>From pressure to <span class="gradient-text">actionable guidance.</span></h1>
+          <p class="hero-copy">
+            Η τεχνολογία του Kestrel βασίζεται σε ένα απλό αλλά ισχυρό σύστημα: αισθητήρες πίεσης FSR402 καταγράφουν τη φόρτιση, το κύκλωμα μετατρέπει τη μεταβολή αντίστασης σε μετρήσιμο σήμα, ο μικροελεγκτής συγκρίνει τις πλευρές και η εφαρμογή μετατρέπει την ανάλυση σε άμεση οδηγία ρύθμισης.
+          </p>
+          <div class="hero-actions">
+            <a class="pill-btn primary-btn" href="#architecture">See architecture →</a>
+            <a class="pill-btn" href="#simulator">Test sensitivity</a>
+          </div>
+        </div>
+
+        <aside class="tech-dashboard hidden-el" aria-label="Kestrel circuit architecture visualization">
+          <div class="circuit-board"></div>
+          <div class="wire w1"></div>
+          <div class="wire w2"></div>
+          <div class="wire w3"></div>
+          <div class="wire w4"></div>
+          <div class="wire w5"></div>
+          <div class="chip">MCU<small>Compare · Decide · Send</small></div>
+          <div class="node n1"><b>FSR L</b><span>Left strap pressure</span></div>
+          <div class="node n2"><b>FSR R</b><span>Right strap pressure</span></div>
+          <div class="node n3"><b>10K</b><span>Signal conversion</span></div>
+          <div class="node n4"><b>Buzzer</b><span>Instant alert</span></div>
+          <div class="node n5"><b>App</b><span>Guided correction</span></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="architecture">
+      <div class="page-shell">
+        <div class="section-head hidden-el">
+          <div class="section-kicker">System architecture</div>
+          <h2>Η αρχιτεκτονική του Kestrel σε τέσσερα τεχνολογικά επίπεδα.</h2>
+          <p>Η λειτουργία του προϊόντος δεν περιορίζεται στη μέτρηση. Ακολουθεί μια ολοκληρωμένη αλυσίδα: ανίχνευση, μετατροπή, ανάλυση και ειδοποίηση.</p>
+        </div>
+
+        <div class="cards-grid">
+          <article class="card hidden-el"><div class="icon">◎</div><h3>Pressure sensing layer</h3><p>Οι αισθητήρες FSR402 τοποθετούνται σε σημεία επαφής του σακιδίου, όπως οι ιμάντες ώμων και η περιοχή στήριξης μέσης.</p></article>
+          <article class="card hidden-el"><div class="icon">⚡</div><h3>Signal conversion layer</h3><p>Η μεταβολή αντίστασης του αισθητήρα μετατρέπεται σε αναλογικό σήμα τάσης, ώστε να μπορεί να διαβαστεί από τον μικροελεγκτή.</p></article>
+          <article class="card hidden-el"><div class="icon">▣</div><h3>Processing layer</h3><p>Ο μικροελεγκτής συγκρίνει τα δεδομένα αριστερής και δεξιάς πλευράς και υπολογίζει αν υπάρχει απόκλιση ή υπέρβαση ορίου.</p></article>
+          <article class="card hidden-el"><div class="icon">🔔</div><h3>Alert layer</h3><p>Το Piezo Buzzer παρέχει άμεση ειδοποίηση στον χρήστη όταν η πίεση ή η ασυμμετρία ξεπεράσει το προκαθορισμένο όριο.</p></article>
+          <article class="card hidden-el"><div class="icon">📲</div><h3>App intelligence layer</h3><p>Η εφαρμογή δεν εμφανίζει απλώς δεδομένα. Προτείνει συγκεκριμένη ενέργεια, όπως ρύθμιση αριστερού ή δεξιού ιμάντα.</p></article>
+          <article class="card hidden-el"><div class="icon">☁</div><h3>Future data layer</h3><p>Σε επόμενη έκδοση, τα δεδομένα μπορούν να αποθηκεύονται για ιστορικό καταπόνησης, Ergo-Scores και predictive analytics.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="flow">
+      <div class="page-shell split">
+        <div class="panel hidden-el">
+          <div class="section-kicker">Operational flow</div>
+          <h2>Από την πίεση στον ιμάντα μέχρι την οδηγία στο κινητό.</h2>
+          <p class="lead">Το Kestrel ακολουθεί μία λογική ροή που μετατρέπει τη φυσική πίεση σε ψηφιακή πληροφόρηση και τελικά σε πρακτική καθοδήγηση.</p>
+          <div class="workflow">
+            <div class="step"><div class="step-num">1</div><div><h3>Ανίχνευση πίεσης</h3><p>Ο αισθητήρας καταγράφει τη δύναμη που ασκείται στο σημείο επαφής.</p></div></div>
+            <div class="step"><div class="step-num">2</div><div><h3>Μετατροπή αντίστασης</h3><p>Όσο αυξάνεται η πίεση, μεταβάλλεται η αντίσταση και δημιουργείται αναγνώσιμο ηλεκτρικό σήμα.</p></div></div>
+            <div class="step"><div class="step-num">3</div><div><h3>Σύγκριση πλευρών</h3><p>Το σύστημα συγκρίνει αριστερό και δεξί φορτίο για να εντοπίσει ανισορροπία.</p></div></div>
+            <div class="step"><div class="step-num">4</div><div><h3>Decision threshold</h3><p>Αν η διαφορά ή η πίεση ξεπεράσει το όριο, ενεργοποιείται ειδοποίηση.</p></div></div>
+            <div class="step"><div class="step-num">5</div><div><h3>Guided correction</h3><p>Η εφαρμογή δείχνει τι πρέπει να αλλάξει ο χρήστης: ιμάντα, ζώνη μέσης ή ανακατανομή φορτίου.</p></div></div>
+          </div>
+        </div>
+
+        <div class="panel hidden-el">
+          <div class="section-kicker">Decision logic</div>
+          <h2>Η λογική πίσω από την ειδοποίηση.</h2>
+          <p class="lead">Η βασική τεχνική ιδέα είναι ότι το σύστημα διαβάζει αναλογικές τιμές, υπολογίζει διαφορά και συγκρίνει την απόκλιση με ένα όριο ευαισθησίας.</p>
+          <div class="code-card">
+<pre>leftPressure  = read(FSR_left)
+rightPressure = read(FSR_right)
+lumbarSupport = read(FSR_lumbar)
+
+asymmetry = abs(leftPressure - rightPressure)
+
+if asymmetry > threshold:
+    activateBuzzer()
+    sendToApp("Adjust strap balance")
+else:
+    sendToApp("Load distribution stable")</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="components">
+      <div class="page-shell">
+        <div class="section-head hidden-el">
+          <div class="section-kicker">Prototype components</div>
+          <h2>Τα βασικά εξαρτήματα του τεχνολογικού πρωτοτύπου.</h2>
+          <p>Η σελίδα αυτή μπορεί να λειτουργήσει σαν τεχνική τεκμηρίωση για παρουσίαση, demo ή επιχειρηματικό pitch.</p>
+        </div>
+
+        <div class="panel hidden-el">
+          <div class="component-table">
+            <div class="component-row"><div><b>FSR402 Pressure Sensor</b><span>Αισθητήρας πίεσης με μεταβολή αντίστασης ανάλογα με την εφαρμοζόμενη δύναμη.</span></div><span>Χρήση: μέτρηση πίεσης σε ιμάντες και σημεία επαφής.</span><span class="component-tag">Core sensor</span></div>
+            <div class="component-row"><div><b>10K Resistors</b><span>Αντιστάσεις για μετατροπή της μεταβολής του αισθητήρα σε μετρήσιμο σήμα τάσης.</span></div><span>Χρήση: δημιουργία κυκλώματος ανάγνωσης αναλογικής τιμής.</span><span class="component-tag">Signal</span></div>
+            <div class="component-row"><div><b>10K Potentiometer</b><span>Δυνατότητα ρύθμισης ευαισθησίας και ορίου ενεργοποίησης ειδοποίησης.</span></div><span>Χρήση: προσαρμογή threshold ανάλογα με χρήστη ή περιβάλλον.</span><span class="component-tag">Calibration</span></div>
+            <div class="component-row"><div><b>Piezo Buzzer</b><span>Ηχητική ειδοποίηση όταν εντοπιστεί υπέρβαση πίεσης ή ασυμμετρία.</span></div><span>Χρήση: άμεσο feedback χωρίς να χρειάζεται ο χρήστης να δει κινητό.</span><span class="component-tag">Alert</span></div>
+            <div class="component-row"><div><b>Breadboard & Dupont Wires</b><span>Υποδομή γρήγορης συνδεσμολογίας για δοκιμή και επίδειξη του κυκλώματος.</span></div><span>Χρήση: prototype testing πριν την ενσωμάτωση στο τελικό προϊόν.</span><span class="component-tag">Prototype</span></div>
+            <div class="component-row"><div><b>Mobile App</b><span>Ψηφιακή υπηρεσία παρακολούθησης, ειδοποίησης και εργονομικής καθοδήγησης.</span></div><span>Χρήση: visual feedback, Ergo-Score, ιστορικό και προτάσεις διόρθωσης.</span><span class="component-tag">Software</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="simulator">
+      <div class="page-shell">
+        <div class="section-head hidden-el">
+          <div class="section-kicker">Interactive sensor demo</div>
+          <h2>Δοκίμασε πώς αλλάζει η ειδοποίηση ανάλογα με πίεση και ευαισθησία.</h2>
+          <p>Το demo δείχνει απλοποιημένα πώς το Kestrel αποφασίζει πότε η κατανομή θεωρείται ασφαλής και πότε χρειάζεται διόρθωση.</p>
+        </div>
+
+        <div class="panel simulator hidden-el">
+          <div class="slider-group">
+            <div class="range-line"><label for="pressureInput"><span>Detected pressure</span><b id="pressureVal">62%</b></label><input id="pressureInput" type="range" min="0" max="100" value="62" /></div>
+            <div class="range-line"><label for="thresholdInput"><span>Alert sensitivity threshold</span><b id="thresholdVal">70%</b></label><input id="thresholdInput" type="range" min="20" max="95" value="70" /></div>
+            <div class="range-line"><label for="asymmetryInput"><span>Left-right asymmetry</span><b id="asymmetryVal">18%</b></label><input id="asymmetryInput" type="range" min="0" max="60" value="18" /></div>
+          </div>
+
+          <div class="output-screen">
+            <div>
+              <div class="alert-badge"><span class="pulse-dot"></span><span id="systemStatus">Monitoring</span></div>
+              <h3 id="systemTitle">Load under control</h3>
+              <div class="sensor-meter"><span id="pressureBar"></span></div>
+              <p id="systemAdvice">Η πίεση βρίσκεται κάτω από το όριο. Το σύστημα συνεχίζει την παρακολούθηση χωρίς ηχητική ειδοποίηση.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="app-connection">
+      <div class="page-shell">
+        <div class="section-head hidden-el">
+          <div class="section-kicker">App connection</div>
+          <h2>Η εφαρμογή κάνει την τεχνολογία κατανοητή στον χρήστη.</h2>
+          <p>Το Kestrel δεν ζητά από τον χρήστη να διαβάσει πολύπλοκα τεχνικά δεδομένα. Του δείχνει καθαρά τι συμβαίνει και τι πρέπει να κάνει.</p>
+        </div>
+
+        <div class="app-flow">
+          <div class="flow-item hidden-el"><h3>Sensor data</h3><p>Συλλογή πίεσης από αριστερό, δεξί και οσφυϊκό σημείο.</p></div>
+          <div class="flow-item hidden-el"><h3>Balance score</h3><p>Μετατροπή τιμών σε απλό Ergo-Score ισορροπίας.</p></div>
+          <div class="flow-item hidden-el"><h3>Alert priority</h3><p>Ταξινόμηση κατάστασης: stable, warning ή high imbalance.</p></div>
+          <div class="flow-item hidden-el"><h3>Correction tip</h3><p>Συγκεκριμένη οδηγία για ρύθμιση ιμάντα ή ανακατανομή φορτίου.</p></div>
+          <div class="flow-item hidden-el"><h3>History</h3><p>Μελλοντική καταγραφή διαδρομών, πίεσης και απόδοσης.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="page-shell">
+        <div class="tabs hidden-el" role="tablist" aria-label="Technical tabs">
+          <button class="tab-btn active" data-tab="prototype">Prototype</button>
+          <button class="tab-btn" data-tab="product">Product version</button>
+          <button class="tab-btn" data-tab="future">Future upgrades</button>
+        </div>
+
+        <div class="panel hidden-el">
+          <div class="tab-content active" id="tab-prototype">
+            <div class="cards-grid">
+              <article class="card"><h3>Prototype logic</h3><p>Breadboard, FSR402, αντιστάσεις 10K, ποτενσιόμετρο και buzzer για επίδειξη βασικής λειτουργίας.</p></article>
+              <article class="card"><h3>Testing goal</h3><p>Να αποδειχθεί ότι η πίεση ανιχνεύεται και ότι η ειδοποίηση ενεργοποιείται όταν ξεπεραστεί το όριο.</p></article>
+              <article class="card"><h3>Academic value</h3><p>Δείχνει ότι η ιδέα μπορεί να περάσει από θεωρητική σύλληψη σε λειτουργική επίδειξη.</p></article>
+            </div>
+          </div>
+          <div class="tab-content" id="tab-product">
+            <div class="cards-grid">
+              <article class="card"><h3>Embedded system</h3><p>Το κύκλωμα ενσωματώνεται εσωτερικά στο σακίδιο με προστασία από φθορά και υγρασία.</p></article>
+              <article class="card"><h3>Mobile experience</h3><p>Η εφαρμογή γίνεται βασικό κανάλι επικοινωνίας με τον χρήστη και παρέχει πρακτική καθοδήγηση.</p></article>
+              <article class="card"><h3>Durability</h3><p>Η τελική έκδοση χρειάζεται ανθεκτικότητα σε πεζοπορία, βροχή, σκόνη και συχνή χρήση.</p></article>
+            </div>
+          </div>
+          <div class="tab-content" id="tab-future">
+            <div class="cards-grid">
+              <article class="card"><h3>Predictive fatigue</h3><p>Μελλοντική ανάλυση για πρόβλεψη κόπωσης βάσει πίεσης, διάρκειας και διαδρομής.</p></article>
+              <article class="card"><h3>Fitness integration</h3><p>Δυνατότητα σύνδεσης με smartwatches ή fitness apps για ολιστική εικόνα καταπόνησης.</p></article>
+              <article class="card"><h3>Modular sensors</h3><p>Προσθήκη επιπλέον αισθητήρων σε ζώνη μέσης, θώρακα ή tactical εκδόσεις.</p></article>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="page-shell">
+        <div class="cta-box hidden-el">
+          <div class="section-kicker">Next page</div>
+          <h2>Αφού η τεχνολογία μετρά, η εφαρμογή εξηγεί.</h2>
+          <p>Η επόμενη σελίδα παρουσιάζει το Kestrel App: Ergo-Score, ειδοποιήσεις, ιστορικό χρήσης, προτάσεις διόρθωσης και εμπειρία χρήστη.</p>
+          <div class="hero-actions" style="justify-content:center;">
+            <a class="pill-btn primary-btn" href="app.html">Next: App →</a>
+            <a class="pill-btn" href="about.html">Back to About</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="page-shell footer-grid">
+      <span>© 2026 Kestrel Concept · Technology Page</span>
+      <span>Pressure sensing · Signal conversion · Real-time guidance</span>
+    </div>
+  </footer>
+
+  <script>
+    const body = document.body;
+    const navLinks = document.getElementById('navLinks');
+    const menuBtn = document.getElementById('menuBtn');
+    const themeBtn = document.getElementById('themeBtn');
+    const contrastBtn = document.getElementById('contrastBtn');
+    const fontUp = document.getElementById('fontUp');
+    const fontDown = document.getElementById('fontDown');
+    let fontScale = 1;
+
+    menuBtn.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => navLinks.classList.remove('open')));
+
+    themeBtn.addEventListener('click', () => {
+      body.classList.toggle('light');
+      if (body.classList.contains('high-contrast')) body.classList.remove('high-contrast');
+    });
+
+    contrastBtn.addEventListener('click', () => {
+      body.classList.toggle('high-contrast');
+      if (body.classList.contains('light')) body.classList.remove('light');
+    });
+
+    fontUp.addEventListener('click', () => {
+      fontScale = Math.min(1.18, fontScale + 0.06);
+      document.documentElement.style.setProperty('--font-scale', fontScale.toFixed(2));
+    });
+
+    fontDown.addEventListener('click', () => {
+      fontScale = Math.max(0.9, fontScale - 0.06);
+      document.documentElement.style.setProperty('--font-scale', fontScale.toFixed(2));
+    });
+
+    const hiddenEls = document.querySelectorAll('.hidden-el');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.12 });
+    hiddenEls.forEach(el => observer.observe(el));
+
+    const pressureInput = document.getElementById('pressureInput');
+    const thresholdInput = document.getElementById('thresholdInput');
+    const asymmetryInput = document.getElementById('asymmetryInput');
+    const pressureVal = document.getElementById('pressureVal');
+    const thresholdVal = document.getElementById('thresholdVal');
+    const asymmetryVal = document.getElementById('asymmetryVal');
+    const pressureBar = document.getElementById('pressureBar');
+    const systemStatus = document.getElementById('systemStatus');
+    const systemTitle = document.getElementById('systemTitle');
+    const systemAdvice = document.getElementById('systemAdvice');
+
+    function updateTechDemo() {
+      const pressure = Number(pressureInput.value);
+      const threshold = Number(thresholdInput.value);
+      const asymmetry = Number(asymmetryInput.value);
+
+      pressureVal.textContent = pressure + '%';
+      thresholdVal.textContent = threshold + '%';
+      asymmetryVal.textContent = asymmetry + '%';
+      pressureBar.style.width = pressure + '%';
+
+      if (pressure >= threshold || asymmetry >= 35) {
+        systemStatus.textContent = 'Buzzer active';
+        systemTitle.textContent = 'Immediate correction needed';
+        systemAdvice.textContent = 'Το σύστημα θα ενεργοποιούσε ηχητική ειδοποίηση. Ο χρήστης πρέπει να σταματήσει με ασφάλεια, να ελέγξει τους ιμάντες και να ανακατανείμει το φορτίο.';
+      } else if (pressure >= threshold - 12 || asymmetry >= 22) {
+        systemStatus.textContent = 'Warning';
+        systemTitle.textContent = 'Minor imbalance detected';
+        systemAdvice.textContent = 'Η πίεση ή η ασυμμετρία πλησιάζει το όριο. Η εφαρμογή θα πρότεινε μικρή προσαρμογή στον ιμάντα ή στη ζώνη μέσης.';
+      } else {
+        systemStatus.textContent = 'Monitoring';
+        systemTitle.textContent = 'Load under control';
+        systemAdvice.textContent = 'Η πίεση βρίσκεται κάτω από το όριο. Το σύστημα συνεχίζει την παρακολούθηση χωρίς ηχητική ειδοποίηση.';
+      }
+    }
+
+    [pressureInput, thresholdInput, asymmetryInput].forEach(input => input.addEventListener('input', updateTechDemo));
+    updateTechDemo();
+
+    const tabs = document.querySelectorAll('.tab-btn');
+    const contents = document.querySelectorAll('.tab-content');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        contents.forEach(c => c.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
