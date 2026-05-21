@@ -1360,4 +1360,525 @@
       <div class="nav-actions">
         <button class="icon-btn" id="themeBtn" title="Toggle light/dark mode" aria-label="Toggle theme">◐</button>
         <button class="icon-btn" id="contrastBtn" title="High contrast" aria-label="High contrast">◩</button>
-        <button class="icon-btn hide-mobile" id="fontDown" title="Decrease font" aria-label="Decr
+        <button class="icon-btn hide-mobile" id="fontDown" title="Decrease font" aria-label="Decrease font">A−</button>
+        <button class="icon-btn hide-mobile" id="fontUp" title="Increase font" aria-label="Increase font">A+</button>
+        <button class="pill-btn primary-btn hide-mobile" onclick="document.querySelector('#demo').scrollIntoView({behavior:'smooth'})">Book demo</button>
+        <button class="icon-btn menu-toggle" id="menuBtn" aria-label="Open menu">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="home">
+    <section class="hero">
+      <div class="page-shell hero-grid">
+        <div class="hero-content hidden-el">
+          <div class="eyebrow"><span class="pulse-dot"></span> Real-time ergonomic intelligence</div>
+          <h1>Kestrel <span class="gradient-text">Balance till the skies.</span></h1>
+          <p class="hero-copy">
+            Ένα έξυπνο σακίδιο που δεν μεταφέρει απλώς εξοπλισμό. Παρακολουθεί την πίεση στους ιμάντες, εντοπίζει ασύμμετρη κατανομή φορτίου και μετατρέπει τα δεδομένα σε άμεσες, απλές οδηγίες ρύθμισης. Στόχος του είναι να προστατεύει την κίνηση, την αντοχή και την εμπειρία του χρήστη σε απαιτητικά περιβάλλοντα.
+          </p>
+          <div class="hero-actions">
+            <a class="pill-btn primary-btn" href="#technology">Explore the system →</a>
+            <a class="pill-btn" href="#simulator">Try load simulator</a>
+          </div>
+          <div class="mini-proof">
+            <div class="proof-card">
+              <b>3x</b>
+              <span>Pressure sensors for shoulder and lumbar load monitoring.</span>
+            </div>
+            <div class="proof-card">
+              <b>Real-time</b>
+              <span>Immediate signal comparison between left and right side.</span>
+            </div>
+            <div class="proof-card">
+              <b>B2C + B2G</b>
+              <span>Premium outdoor users and defense/tactical applications.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-stage hidden-el" aria-label="Kestrel backpack visualization">
+          <div class="hud hud-left">
+            <h4>Live balance status</h4>
+            <b>82% Stable</b>
+            <div class="bar"><span style="width:82%"></span></div>
+          </div>
+          <div class="hud hud-right">
+            <h4>Right shoulder pressure</h4>
+            <b>+14%</b>
+            <div class="bar"><span style="width:64%"></span></div>
+          </div>
+          <div class="pack-visual">
+            <span class="pack-topline"></span>
+            <span class="sensor s1">FSR</span>
+            <span class="sensor s2">FSR</span>
+            <span class="sensor s3">FSR</span>
+            <span class="signal-line l1"></span>
+            <span class="signal-line l2"></span>
+            <span class="signal-line l3"></span>
+          </div>
+          <div class="hud hud-bottom">
+            <div class="status-pill"><span class="pulse-dot"></span> App recommendation</div>
+            <div class="mini-row"><span>Loosen right strap slightly</span><strong>2 cm</strong></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="problem">
+      <div class="page-shell">
+        <div class="section-head hidden-el">
+          <div class="section-kicker">The problem</div>
+          <h2>Το φορτίο δεν είναι πρόβλημα μόνο όταν είναι βαρύ. Είναι πρόβλημα όταν είναι άνισο.</h2>
+          <p>
+            Η κακή κατανομή φορτίου μπορεί να οδηγήσει σε μυϊκή κόπωση, λανθασμένη στάση, επιβάρυνση ώμων, αυχένα και μέσης, αλλά και μειωμένη σταθερότητα σε δύσκολες διαδρομές. Το Kestrel αντιμετωπίζει το σακίδιο ως σύστημα πρόληψης, όχι απλώς ως αποθηκευτικό αντικείμενο.
+          </p>
+        </div>
+
+        <div class="cards-grid">
+          <article class="card hidden-el">
+            <div class="icon">⚖</div>
+            <h3>Ασύμμετρη φόρτιση</h3>
+            <p>Μικρές διαφορές μεταξύ αριστερού και δεξιού ιμάντα μπορούν να αλλάξουν την αίσθηση ισορροπίας και να αυξήσουν την καταπόνηση του σώματος.</p>
+          </article>
+          <article class="card hidden-el">
+            <div class="icon">🧭</div>
+            <h3>Μετατόπιση κέντρου βάρους</h3>
+            <p>Σε ανηφορικά, κατηφορικά ή ανώμαλα εδάφη, η λανθασμένη κατανομή μπορεί να επηρεάσει τη σταθερότητα και τη σιγουριά του χρήστη.</p>
+          </article>
+          <article class="card hidden-el">
+            <div class="icon">🛡</div>
+            <h3>Πρόληψη αντί για αντίδραση</h3>
+            <p>Το Kestrel ειδοποιεί πριν η επιβάρυνση γίνει έντονη, μετατρέποντας την εργονομία από παθητικό χαρακτηριστικό σε ενεργητική προστασία.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="technology">
+      <div class="page-shell split">
+        <div class="panel hidden-el">
+          <div class="section-kicker">How it works</div>
+          <h2>Τέσσερα στάδια λειτουργίας. Μία καθαρή εμπειρία για τον χρήστη.</h2>
+          <p class="lead">Το σύστημα ενσωματώνει αισθητήρες πίεσης, μετατροπή σήματος, μικροελεγκτή και ειδοποίηση μέσω buzzer και εφαρμογής.</p>
+          <div class="workflow">
+            <div class="step">
+              <div class="step-num">1</div>
+              <div><h3>Ανίχνευση πίεσης</h3><p>Οι αισθητήρες FSR402 τοποθετούνται σε σημεία επαφής του σακιδίου με το σώμα.</p></div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div><h3>Μετατροπή σήματος</h3><p>Η μεταβολή αντίστασης μετατρέπεται σε μετρήσιμη τάση μέσω κυκλώματος με αντιστάσεις 10K.</p></div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div><h3>Σύγκριση & ανάλυση</h3><p>Ο μικροελεγκτής συγκρίνει αριστερή και δεξιά πλευρά και εντοπίζει απόκλιση φορτίου.</p></div>
+            </div>
+            <div class="step">
+              <div class="step-num">4</div>
+              <div><h3>Ειδοποίηση & καθοδήγηση</h3><p>Το Piezo Buzzer ενεργοποιείται και η εφαρμογή εμφανίζει συγκεκριμένη οδηγία προσαρμογής.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="app-mockup hidden-el">
+          <div class="phone">
+            <div class="phone-notch"></div>
+            <div class="phone-top"><span>09:41</span><span>Kestrel App</span><span>●●●</span></div>
+            <div class="ergo-score">
+              <span style="color:rgba(255,255,255,0.65); font-weight:800;">ERGO-SCORE</span>
+              <div class="score-ring"><b>86</b></div>
+              <p style="margin:0; color:rgba(255,255,255,0.72);">Good balance · minor right-side load</p>
+            </div>
+            <div class="phone-card">
+              <h4>Pressure distribution</h4>
+              <div class="pressure-row">
+                <div class="pressure-block"><small>Left</small><b>42%</b></div>
+                <div class="versus">vs</div>
+                <div class="pressure-block"><small>Right</small><b>58%</b></div>
+              </div>
+            </div>
+            <div class="phone-card">
+              <h4>Suggested action</h4>
+              <p>Χαλάρωσε ελαφρά τον δεξί ιμάντα και σφίξε τη ζώνη μέσης για πιο ουδέτερη κατανομή.</p>
+            </div>
+            <div class="phone-card">
+              <h4>Route insight</h4>
+              <p>Η σταθερότητα βελτιώθηκε κατά 12% στα τελευταία 800 μέτρα.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="page-shell">
+        <div class="section-head hidden-el">
+          <div class="section-kicker">Hardware architecture</div>
+          <h2>Το πρωτότυπο βασίζεται σε απλά, προσιτά και επεκτάσιμα εξαρτήματα.</h2>
+          <p>Η τεχνολογική λογική του Kestrel είναι σχεδιασμένη ώστε να μπορεί να ξεκινήσει ως λειτουργικό prototype και να εξελιχθεί σε modular product system.</p>
+        </div>
+        <div class="component-map">
+          <div class="component hidden-el"><b>FSR402 Pressure Sensors</b><span>Καταγράφουν μεταβολές πίεσης στα σημεία επαφής του σακιδίου με το σώμα.</span></div>
+          <div class="component hidden-el"><b>10K Resistors</b><span>Μετατρέπουν τη μεταβολή αντίστασης σε ηλεκτρικό σήμα αναγνώσιμο από τον μικροελεγκτή.</span></div>
+          <div class="component hidden-el"><b>10K Potentiometer</b><span>Ρυθμίζει την ευαισθησία του συστήματος και το όριο ειδοποίησης.</span></div>
+          <div class="component hidden-el"><b>Piezo Buzzer</b><span>Παρέχει άμεση ηχητική προειδοποίηση όταν η πίεση ξεπεράσει το επιτρεπτό όριο.</span></div>
+          <div class="component hidden-el"><b>Microcontroller</b><span>Συγκρίνει τις τιμές, υπολογίζει απόκλιση και αποστέλλει δεδομένα στην εφαρμογή.</span></div>
+          <div class="component hidden-el"><b>Mobile App</b><span>Μεταφράζει την τεχνική μέτρηση σε απλή, πρακτική οδηγία για τον χρήστη.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="markets">
+      <div class="page-shell">
+        <div class="section-head hidden-el">
+          <div class="section-kicker">Customer segments</div>
+          <h2>Δύο αγορές υψηλής αξίας: outdoor premium και tactical readiness.</h2>
+          <p>Το Kestrel έχει διπλή εμπορική κατεύθυνση: B2C για πεζοπόρους/ορειβάτες και B2G για Ένοπλες Δυνάμεις ή ειδικές μονάδες που μεταφέρουν βαρύ εξοπλισμό.</p>
+        </div>
+
+        <div class="market-grid">
+          <article class="persona-card hidden-el">
+            <div class="icon">⛰</div>
+            <h3>B2C · Ορειβάτες & πεζοπόροι</h3>
+            <p class="lead">Για χρήστες που αναζητούν premium εξοπλισμό, ασφάλεια, αυτονομία και καλύτερη εμπειρία σε ανώμαλες διαδρομές.</p>
+            <div class="persona-list">
+              <div class="persona-item"><b>Jobs</b><span>Μεταφορά εξοπλισμού, ρύθμιση σακιδίου, σταθερότητα σε απαιτητικό έδαφος.</span></div>
+              <div class="persona-item"><b>Pains</b><span>Κόπωση, πόνος στη μέση/αυχένα, αβεβαιότητα αν οι ιμάντες έχουν ρυθμιστεί σωστά.</span></div>
+              <div class="persona-item"><b>Gains</b><span>Real-time guidance, καλύτερη αντοχή, αίσθηση ασφάλειας και high-tech status.</span></div>
+            </div>
+          </article>
+
+          <article class="persona-card hidden-el">
+            <div class="icon">🎖</div>
+            <h3>B2G · Ένοπλες Δυνάμεις</h3>
+            <p class="lead">Για περιβάλλοντα όπου η μεταφορά φορτίου είναι επιχειρησιακή ανάγκη και η πρόληψη καταπόνησης επηρεάζει ετοιμότητα και κόστος.</p>
+            <div class="persona-list">
+              <div class="persona-item"><b>Jobs</b><span>Μεταφορά tactical εξοπλισμού σε μεγάλες αποστάσεις και δύσκολες συνθήκες.</span></div>
+              <div class="persona-item"><b>Pains</b><span>Μυοσκελετικές κακώσεις, απώλεια επιχειρησιακής διαθεσιμότητας, αυξημένη κόπωση.</span></div>
+              <div class="persona-item"><b>Gains</b><span>Data-driven πρόληψη, ψηφιακή καταγραφή καταπόνησης και μείωση κινδύνων.</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="simulator">
+      <div class="page-shell">
+        <div class="section-head hidden-el">
+          <div class="section-kicker">Interactive feature</div>
+          <h2>Load balance simulator</h2>
+          <p>Ένα demo στοιχείο για την ιστοσελίδα: ο χρήστης αλλάζει την πίεση αριστερού/δεξιού ιμάντα και βλέπει άμεσα προτεινόμενη ενέργεια.</p>
+        </div>
+
+        <div class="panel simulator hidden-el">
+          <div class="slider-group">
+            <div class="range-line">
+              <label for="leftLoad"><span>Left strap pressure</span><b id="leftVal">48%</b></label>
+              <input id="leftLoad" type="range" min="0" max="100" value="48" />
+            </div>
+            <div class="range-line">
+              <label for="rightLoad"><span>Right strap pressure</span><b id="rightVal">52%</b></label>
+              <input id="rightLoad" type="range" min="0" max="100" value="52" />
+            </div>
+            <div class="range-line">
+              <label for="lumbarLoad"><span>Lumbar support engagement</span><b id="lumbarVal">64%</b></label>
+              <input id="lumbarLoad" type="range" min="0" max="100" value="64" />
+            </div>
+          </div>
+
+          <div class="balance-output">
+            <div>
+              <div class="eyebrow" style="margin-bottom:10px;"><span class="pulse-dot"></span><span id="riskLabel">Balanced</span></div>
+              <h3 id="balanceTitle" style="font-size:2rem; letter-spacing:-0.04em; margin-bottom:0;">Stable distribution</h3>
+              <div class="balance-meter">
+                <span class="balance-fill" id="balanceFill"></span>
+                <span class="balance-indicator" id="balanceIndicator"></span>
+              </div>
+              <p class="advice" id="adviceText">Η κατανομή είναι σχεδόν ισορροπημένη. Διατήρησε τη ρύθμιση και έλεγξε ξανά μετά από αλλαγή εδάφους.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="business">
+      <div class="page-shell">
+        <div class="section-head hidden-el">
+          <div class="section-kicker">Business model</div>
+          <h2>Ένα προϊόν. Πολλαπλές ροές αξίας.</h2>
+          <p>Η εμπορική στρατηγική του Kestrel συνδυάζει πώληση hardware, freemium/premium software, αδειοδότηση τεχνολογίας και B2G συμβόλαια.</p>
+        </div>
+
+        <div class="tabs hidden-el" role="tablist" aria-label="Business model tabs">
+          <button class="tab-btn active" data-tab="value">Value Proposition</button>
+          <button class="tab-btn" data-tab="canvas">Business Model</button>
+          <button class="tab-btn" data-tab="innovation">Ten Types of Innovation</button>
+        </div>
+
+        <div class="panel hidden-el">
+          <div class="tab-content active" id="tab-value">
+            <div class="cards-grid">
+              <article class="card"><div class="icon">🧠</div><h3>Active ergonomics</h3><p>Το Kestrel δεν βασίζεται μόνο στον σχεδιασμό του σακιδίου. Ανιχνεύει πραγματική πίεση και παρεμβαίνει με οδηγίες.</p></article>
+              <article class="card"><div class="icon">📲</div><h3>Real-time app guidance</h3><p>Η εφαρμογή δείχνει στον χρήστη τι ακριβώς πρέπει να διορθώσει: αριστερό/δεξί ιμάντα, ζώνη μέσης, στάση.</p></article>
+              <article class="card"><div class="icon">🔁</div><h3>Expandable system</h3><p>Η τεχνολογία μπορεί να εξελιχθεί σε add-on kit, integration με fitness apps ή licensing σε κατασκευαστές σακιδίων.</p></article>
+            </div>
+          </div>
+
+          <div class="tab-content" id="tab-canvas">
+            <div class="cards-grid">
+              <article class="card"><h3>Customer Segments</h3><p>Premium πεζοπόροι, αλπινιστές, ορειβάτες μεγάλων αποστάσεων, Ένοπλες Δυνάμεις και ειδικές μονάδες.</p></article>
+              <article class="card"><h3>Revenue Streams</h3><p>Πώληση σακιδίου, Pro εφαρμογή, advanced analytics, B2G συμβόλαια και πιθανή αδειοδότηση τεχνολογίας.</p></article>
+              <article class="card"><h3>Key Resources</h3><p>Αλγόριθμος ανίχνευσης ασυμμετρίας, αισθητήρες, mobile app, R&D ομάδα, brand και δεδομένα βελτίωσης.</p></article>
+            </div>
+          </div>
+
+          <div class="tab-content" id="tab-innovation">
+            <div class="cards-grid">
+              <article class="card"><h3>Product Performance</h3><p>Ενσωμάτωση αισθητήρων, buzzer και επεξεργασίας δεδομένων για ανώτερη λειτουργικότητα.</p></article>
+              <article class="card"><h3>Customer Engagement</h3><p>Ergo-scores, badges, κοινότητα χρηστών και απλοποίηση μιας σύνθετης ανάλυσης σε άμεσο feedback.</p></article>
+              <article class="card"><h3>Network</h3><p>Συνεργασίες με outdoor brands, ορειβατικούς συλλόγους, προμηθευτές hardware και tactical equipment partners.</p></article>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="page-shell finance-board">
+        <div class="panel hidden-el">
+          <div class="section-kicker">Year 1 financial snapshot</div>
+          <h2>Σχεδιασμένο για ρεαλιστική εμπορική εκκίνηση.</h2>
+          <p class="lead">Το υποθετικό πρώτο έτος συνδυάζει B2C πωλήσεις premium σακιδίου, B2G προμήθεια και συνδρομητικά έσοδα από την εφαρμογή.</p>
+          <div class="metric-grid">
+            <div class="metric"><span>B2C price</span><b>€250</b><small>Premium backpack with basic app.</small></div>
+            <div class="metric"><span>B2G price</span><b>€400</b><small>Tactical version with enhanced requirements.</small></div>
+            <div class="metric"><span>Year 1 revenue</span><b>€462K</b><small>Hardware + subscriptions + pilot contract.</small></div>
+            <div class="metric"><span>Break-even</span><b>1,033</b><small>Estimated total units to cover fixed costs.</small></div>
+          </div>
+        </div>
+        <div class="panel chart-card hidden-el">
+          <div class="donut"><span>Revenue<br/>mix</span></div>
+          <div class="legend">
+            <div class="legend-item"><span class="legend-left"><span class="swatch"></span>B2C backpack sales</span><b>€250K</b></div>
+            <div class="legend-item"><span class="legend-left"><span class="swatch blue"></span>B2G tactical contract</span><b>€200K</b></div>
+            <div class="legend-item"><span class="legend-left"><span class="swatch gold"></span>Pro app subscription</span><b>€12K</b></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="validation">
+      <div class="page-shell">
+        <div class="section-head hidden-el">
+          <div class="section-kicker">Validation</div>
+          <h2>Proof of value μέσα από παρουσίαση, demo και αξιολόγηση χρηστών.</h2>
+          <p>Η επικύρωση στηρίζεται στην παρουσίαση του προβλήματος, την πρακτική επίδειξη λειτουργίας των αισθητήρων και τη συλλογή αντιδράσεων από πιθανούς χρήστες.</p>
+        </div>
+
+        <div class="roadmap">
+          <div class="roadmap-item hidden-el"><h3>Problem interview</h3><p>Καταγραφή εμπειριών πόνου, κόπωσης ή κακής κατανομής βάρους.</p></div>
+          <div class="roadmap-item hidden-el"><h3>Prototype demo</h3><p>Επίδειξη αισθητήρων, buzzer και μεταβολής πίεσης σε πραγματικό χρόνο.</p></div>
+          <div class="roadmap-item hidden-el"><h3>User evaluation</h3><p>Ερωτήσεις πρόθεσης χρήσης, πρακτικότητας και αντιλαμβανόμενης αξίας.</p></div>
+          <div class="roadmap-item hidden-el"><h3>Market comparison</h3><p>Σύγκριση με εργονομικά σακίδια και smartwatches που δεν μετρούν μηχανικό φορτίο.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="demo">
+      <div class="page-shell">
+        <div class="section-head hidden-el">
+          <div class="section-kicker">FAQ</div>
+          <h2>Συχνές ερωτήσεις για παρουσίαση ή pitch.</h2>
+        </div>
+        <div class="faq hidden-el">
+          <div class="faq-item open">
+            <button class="faq-q">Τι κάνει το Kestrel διαφορετικό από ένα εργονομικό σακίδιο;<span>+</span></button>
+            <div class="faq-a"><p>Ένα εργονομικό σακίδιο προσφέρει παθητική άνεση μέσω σχεδίασης. Το Kestrel προσθέτει ενεργητική εργονομία: μετρά πίεση, εντοπίζει ασυμμετρία και ειδοποιεί τον χρήστη με πρακτικές οδηγίες.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">Γιατί χρειάζεται και buzzer αφού υπάρχει εφαρμογή;<span>+</span></button>
+            <div class="faq-a"><p>Σε πεζοπορία ή επιχειρησιακό περιβάλλον ο χρήστης δεν μπορεί πάντα να κοιτάζει κινητό. Το buzzer δίνει άμεσο σήμα, ενώ η εφαρμογή προσφέρει λεπτομερή ανάλυση.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">Μπορεί να χρησιμοποιηθεί και εκτός πεζοπορίας;<span>+</span></button>
+            <div class="faq-a"><p>Ναι. Η ίδια τεχνολογία μπορεί να επεκταθεί σε σχολικές τσάντες, επαγγελματικά σακίδια, tactical εξοπλισμό ή heavy-duty carrying systems.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">Τι δεδομένα δείχνει η εφαρμογή;<span>+</span></button>
+            <div class="faq-a"><p>Δείχνει ισορροπία αριστερής/δεξιάς πλευράς, συνολικό ergo-score, επίπεδο καταπόνησης, ιστορικό διαδρομής και συγκεκριμένες οδηγίες ρύθμισης ιμάντων.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="page-shell">
+        <div class="cta-box hidden-el">
+          <div class="section-kicker">Kestrel</div>
+          <h2>Carry smarter. Move safer. Balance till the skies.</h2>
+          <p>Το Kestrel μετατρέπει ένα καθημερινό αντικείμενο σε έξυπνο εργαλείο πρόληψης, αντοχής και αυτοπεποίθησης. Από το βουνό μέχρι το tactical πεδίο, η ισορροπία γίνεται δεδομένο.</p>
+          <div class="hero-actions" style="justify-content:center; margin-bottom:0;">
+            <a class="pill-btn primary-btn" href="#home">Back to top ↑</a>
+            <button class="pill-btn" id="copyPitch">Copy 20-sec pitch</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="page-shell footer-grid">
+      <span>© 2026 Kestrel Concept · Smart Load Balance Backpack</span>
+      <span>Designed for academic startup presentation and GitHub Pages deployment.</span>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast">Copied pitch to clipboard.</div>
+
+  <script>
+    const body = document.body;
+    const navLinks = document.getElementById('navLinks');
+    const menuBtn = document.getElementById('menuBtn');
+    const themeBtn = document.getElementById('themeBtn');
+    const contrastBtn = document.getElementById('contrastBtn');
+    const fontUp = document.getElementById('fontUp');
+    const fontDown = document.getElementById('fontDown');
+    const toast = document.getElementById('toast');
+
+    let fontScale = 1;
+
+    menuBtn.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => navLinks.classList.remove('open')));
+
+    themeBtn.addEventListener('click', () => {
+      body.classList.toggle('light');
+      if (body.classList.contains('high-contrast')) body.classList.remove('high-contrast');
+    });
+
+    contrastBtn.addEventListener('click', () => {
+      body.classList.toggle('high-contrast');
+      if (body.classList.contains('light')) body.classList.remove('light');
+    });
+
+    fontUp.addEventListener('click', () => {
+      fontScale = Math.min(1.18, fontScale + 0.06);
+      document.documentElement.style.setProperty('--font-scale', fontScale.toFixed(2));
+    });
+
+    fontDown.addEventListener('click', () => {
+      fontScale = Math.max(0.9, fontScale - 0.06);
+      document.documentElement.style.setProperty('--font-scale', fontScale.toFixed(2));
+    });
+
+    const hiddenEls = document.querySelectorAll('.hidden-el');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.12 });
+    hiddenEls.forEach(el => observer.observe(el));
+
+    const tabs = document.querySelectorAll('.tab-btn');
+    const contents = document.querySelectorAll('.tab-content');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        contents.forEach(c => c.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+      });
+    });
+
+    const leftLoad = document.getElementById('leftLoad');
+    const rightLoad = document.getElementById('rightLoad');
+    const lumbarLoad = document.getElementById('lumbarLoad');
+    const leftVal = document.getElementById('leftVal');
+    const rightVal = document.getElementById('rightVal');
+    const lumbarVal = document.getElementById('lumbarVal');
+    const riskLabel = document.getElementById('riskLabel');
+    const balanceTitle = document.getElementById('balanceTitle');
+    const adviceText = document.getElementById('adviceText');
+    const balanceIndicator = document.getElementById('balanceIndicator');
+    const balanceFill = document.getElementById('balanceFill');
+
+    function updateSimulator() {
+      const left = Number(leftLoad.value);
+      const right = Number(rightLoad.value);
+      const lumbar = Number(lumbarLoad.value);
+      const diff = right - left;
+      const absDiff = Math.abs(diff);
+      leftVal.textContent = left + '%';
+      rightVal.textContent = right + '%';
+      lumbarVal.textContent = lumbar + '%';
+
+      const shift = Math.max(-105, Math.min(105, diff * 2));
+      balanceIndicator.style.transform = `translateX(${shift}px)`;
+      balanceFill.style.left = diff < 0 ? `calc(50% + ${shift}px)` : '50%';
+      balanceFill.style.width = Math.abs(shift) + 'px';
+
+      if (absDiff <= 8 && lumbar >= 45) {
+        riskLabel.textContent = 'Balanced';
+        balanceTitle.textContent = 'Stable distribution';
+        adviceText.textContent = 'Η κατανομή είναι σχεδόν ισορροπημένη. Διατήρησε τη ρύθμιση και έλεγξε ξανά μετά από αλλαγή εδάφους.';
+      } else if (absDiff <= 18) {
+        riskLabel.textContent = 'Minor asymmetry';
+        balanceTitle.textContent = diff > 0 ? 'Right side overload' : 'Left side overload';
+        adviceText.textContent = diff > 0
+          ? 'Η δεξιά πλευρά δέχεται περισσότερη πίεση. Χαλάρωσε ελαφρά τον δεξί ιμάντα ή σφίξε τον αριστερό.'
+          : 'Η αριστερή πλευρά δέχεται περισσότερη πίεση. Χαλάρωσε ελαφρά τον αριστερό ιμάντα ή σφίξε τον δεξί.';
+      } else {
+        riskLabel.textContent = 'High imbalance';
+        balanceTitle.textContent = 'Immediate adjustment needed';
+        adviceText.textContent = diff > 0
+          ? 'Υψηλή απόκλιση προς τα δεξιά. Σταμάτησε με ασφάλεια, ανακατένειμε το φορτίο και ρύθμισε τους ιμάντες.'
+          : 'Υψηλή απόκλιση προς τα αριστερά. Σταμάτησε με ασφάλεια, ανακατένειμε το φορτίο και ρύθμισε τους ιμάντες.';
+      }
+
+      if (lumbar < 35) {
+        riskLabel.textContent = 'Low lumbar support';
+        balanceTitle.textContent = 'Engage waist belt';
+        adviceText.textContent = 'Η στήριξη μέσης είναι χαμηλή. Σφίξε τη ζώνη μέσης ώστε μέρος του φορτίου να μεταφερθεί πιο σταθερά στον κορμό.';
+      }
+    }
+
+    [leftLoad, rightLoad, lumbarLoad].forEach(input => input.addEventListener('input', updateSimulator));
+    updateSimulator();
+
+    document.querySelectorAll('.faq-q').forEach(btn => {
+      btn.addEventListener('click', () => {
+        btn.parentElement.classList.toggle('open');
+      });
+    });
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2200);
+    }
+
+    document.getElementById('copyPitch').addEventListener('click', async () => {
+      const pitch = 'Kestrel is a smart load-balance backpack that uses pressure sensors and real-time app guidance to detect asymmetry, prevent unnecessary strain and help hikers or tactical users move safer and longer. Balance till the skies.';
+      try {
+        await navigator.clipboard.writeText(pitch);
+        showToast('Copied 20-sec pitch to clipboard.');
+      } catch (err) {
+        showToast('Pitch: ' + pitch);
+      }
+    });
+
+    const sections = document.querySelectorAll('section[id]');
+    const navAnchors = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const top = section.offsetTop - 130;
+        if (scrollY >= top) current = section.id;
+      });
+      navAnchors.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+      });
+    });
+  </script>
+</body>
+</html>
