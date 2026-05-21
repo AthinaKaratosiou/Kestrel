@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kestrel App | Balance till the skies</title>
+  <meta name="description" content="Kestrel App turns pressure sensor data into Ergo-Score, smart alerts, route insights and real-time backpack adjustment guidance." />
+
+  <style>
+    :root {
+      --bg: #07110f;
+      --bg-2: #0d1c18;
+      --surface: rgba(255, 255, 255, 0.08);
+      --surface-strong: rgba(255, 255, 255, 0.13);
+      --text: #f5f7ef;
+      --muted: #b9c7bd;
+      --soft: #eaf1df;
+      --accent: #b7f36b;
+      --accent-2: #74d6ff;
+      --gold: #efc86a;
+      --danger: #ff7a6e;
+      --line: rgba(255, 255, 255, 0.16);
+      --shadow: 0 30px 80px rgba(0, 0, 0, 0.42);
+      --radius-lg: 34px;
+      --radius-md: 22px;
+      --font-scale: 1;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(183, 243, 107, 0.22), transparent 31%),
+        radial-gradient(circle at 90% 6%, rgba(116, 214, 255, 0.18), transparent 34%),
+        linear-gradient(135deg, var(--bg), #020403 62%, #0e130c);
+      color: var(--text);
+      font-size: calc(16px * var(--font-scale));
+      overflow-x: hidden;
+    }
+
+    body.light {
+      --bg: #f5f7ef;
+      --bg-2: #e9efe1;
+      --surface: rgba(10, 35, 26, 0.07);
+      --surface-strong: rgba(10, 35, 26, 0.12);
+      --text: #0b1a15;
+      --muted: #506258;
+      --soft: #123126;
+      --line: rgba(6, 25, 19, 0.15);
+      --shadow: 0 24px 70px rgba(16, 38, 29, 0.16);
+      background:
+        radial-gradient(circle at 10% 0%, rgba(183, 243, 107, 0.31), transparent 32%),
+        radial-gradient(circle at 90% 6%, rgba(116, 214, 255, 0.18), transparent 34%),
+        linear-gradient(135deg, #f7faef, #edf4e8 62%, #e2ead9);
+    }
+
+    body.high-contrast {
+      --bg: #000;
+      --bg-2: #050505;
+      --surface: rgba(255, 255, 255, 0.15);
+      --surface-strong: rgba(255, 255, 255, 0.24);
+      --text: #fff;
+      --muted: #fff;
+      --accent: #d7ff00;
+      --accent-2: #00e5ff;
+      --gold: #ffe600;
+      --danger: #ff2b2b;
+      --line: rgba(255, 255, 255, 0.42);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+    h1, h2, h3, p { margin-top: 0; }
+
+    .page-shell {
+      width: min(1180px, calc(100% - 36px));
+      margin: 0 auto;
+    }
+
+    .announcement {
+      position: relative;
+      z-index: 4;
+      display: flex;
+      justify-content: center;
+      padding: 12px 18px;
+      background: linear-gradient(90deg, rgba(183, 243, 107, 0.18), rgba(116, 214, 255, 0.14));
+      border-bottom: 1px solid var(--line);
+      color: var(--soft);
+      font-size: 0.92rem;
+      text-align: center;
+    }
+
+    .announcement strong { color: var(--accent); }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(20px);
+      background: rgba(5, 14, 11, 0.72);
+      border-bottom: 1px solid var(--line);
+    }
+
+    body.light header { background: rgba(245, 247, 239, 0.78); }
+
+    .nav {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 190px;
+    }
+
+    .logo-mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 16px;
+      background: linear-gradient(145deg, rgba(183, 243, 107, 0.96), rgba(116, 214, 255, 0.88));
+      position: relative;
+      box-shadow: 0 14px 30px rgba(183, 243, 107, 0.21);
+      overflow: hidden;
+    }
+
+    .logo-mark::before {
+      content: "";
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      border: 3px solid rgba(7, 17, 15, 0.72);
+      border-left: 0;
+      border-bottom: 0;
+      transform: rotate(-23deg);
+      top: 9px;
+      left: 7px;
+      border-radius: 3px 14px 3px 3px;
+    }
+
+    .logo-mark::after {
+      content: "";
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: #07110f;
+      top: 15px;
+      left: 15px;
+    }
+
+    .brand-text b {
+      display: block;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 1rem;
+    }
+
+    .brand-text span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.74rem;
+      margin-top: 2px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 6px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: 999px;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: 0.88rem;
+      padding: 10px 13px;
+      border-radius: 999px;
+      transition: 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--text);
+      background: var(--surface-strong);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .icon-btn, .pill-btn {
+      border: 1px solid var(--line);
+      color: var(--text);
+      background: var(--surface);
+      border-radius: 999px;
+      min-height: 42px;
+      cursor: pointer;
+      transition: transform 0.18s ease, background 0.18s ease, border 0.18s ease;
+    }
+
+    .icon-btn {
+      width: 42px;
+      display: grid;
+      place-items: center;
+    }
+
+    .pill-btn {
+      padding: 0 18px;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      font-weight: 750;
+    }
+
+    .icon-btn:hover, .pill-btn:hover {
+      transform: translateY(-2px);
+      background: var(--surface-strong);
+      border-color: rgba(183, 243, 107, 0.42);
+    }
+
+    .primary-btn {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #06100d;
+      border: 0;
+      box-shadow: 0 18px 40px rgba(116, 214, 255, 0.12);
+    }
+
+    .menu-toggle { display: none; }
+
+    .hero {
+      padding: 90px 0 70px;
+      position: relative;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.98fr) minmax(420px, 1.02fr);
+      gap: 44px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(183, 243, 107, 0.34);
+      background: rgba(183, 243, 107, 0.1);
+      color: var(--accent);
+      font-weight: 850;
+      letter-spacing: 0.02em;
+      font-size: 0.86rem;
+      margin-bottom: 18px;
+    }
+
+    .pulse-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 0 rgba(183, 243, 107, 0.72);
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(183, 243, 107, 0.72); }
+      70% { box-shadow: 0 0 0 12px rgba(183, 243, 107, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(183, 243, 107, 0); }
+    }
+
+    h1 {
+      font-size: clamp(3rem, 7vw, 6.5rem);
+      line-height: 0.9;
+      letter-spacing: -0.075em;
+      margin-bottom: 22px;
+    }
+
+    .gradient-text {
+      display: block;
+      background: linear-gradient(135deg, var(--text), var(--accent) 42%, var(--accent-2));
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-copy {
+      color: var(--muted);
+      font-size: 1.13rem;
+      line-height: 1.78;
+      margin-bottom: 28px;
+      max-width: 760px;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 0;
+    }
+
+    .phone-stage {
+      display: grid;
+      grid-template-columns: 0.92fr 1fr;
+      gap: 18px;
+      align-items: center;
+      min-height: 600px;
+      border: 1px solid var(--line);
+      border-radius: 40px;
+      padding: 22px;
+      background:
+        radial-gradient(circle at 50% 0, rgba(116,214,255,0.17), transparent 35%),
+        linear-gradient(180deg, var(--surface), rgba(255,255,255,0.035));
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .phone {
+      width: min(330px, 100%);
+      min-height: 585px;
+      margin: 0 auto;
+      border-radius: 42px;
+      border: 10px solid rgba(0,0,0,0.42);
+      background:
+        radial-gradient(circle at 30% 5%, rgba(183,243,107,0.16), transparent 26%),
+        linear-gradient(180deg, #111b18, #050807);
+      box-shadow: 0 28px 80px rgba(0,0,0,0.34);
+      padding: 18px;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .phone.secondary {
+      transform: translateY(26px) scale(0.92);
+      opacity: 0.88;
+    }
+
+    .phone-notch {
+      width: 104px;
+      height: 24px;
+      background: #000;
+      border-radius: 0 0 18px 18px;
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .phone-top {
+      padding-top: 26px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: rgba(255,255,255,0.72);
+      font-size: 0.78rem;
+      margin-bottom: 18px;
+    }
+
+    .score-card {
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.08);
+      border-radius: 28px;
+      padding: 22px;
+      text-align: center;
+      margin-bottom: 14px;
+    }
+
+    .score-ring {
+      width: 160px;
+      height: 160px;
+      border-radius: 999px;
+      margin: 12px auto 16px;
+      display: grid;
+      place-items: center;
+      background: conic-gradient(var(--accent) 0deg 284deg, rgba(255,255,255,0.12) 284deg 360deg);
+      position: relative;
+    }
+
+    .score-ring::before {
+      content: "";
+      position: absolute;
+      width: 124px;
+      height: 124px;
+      border-radius: 999px;
+      background: #0a100e;
+    }
+
+    .score-ring b {
+      position: relative;
+      font-size: 2.6rem;
+      letter-spacing: -0.05em;
+    }
+
+    .phone-card {
+      border: 1px solid rgba(255,255,255,0.13);
+      background: rgba(255,255,255,0.07);
+      border-radius: 22px;
+      padding: 14px;
+      margin-top: 12px;
+    }
+
+    .phone-card h4 { margin: 0 0 8px; font-size: 0.92rem; }
+    .phone-card p { margin: 0; color: rgba(255,255,255,0.72); line-height: 1.45; font-size: 0.85rem; }
+
+    .mini-chart {
+      display: grid;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .chart-row {
+      display: grid;
+      grid-template-columns: 54px 1fr 40px;
+      align-items: center;
+      gap: 9px;
+      color: rgba(255,255,255,0.68);
+      font-size: 0.78rem;
+    }
+
+    .chart-track {
+      height: 8px;
+      background: rgba(255,255,255,0.12);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .chart-track span {
+      display: block;
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      border-radius: inherit;
+    }
+
+    .section { padding: 78px 0; }
+
+    .section-head {
+      max-width: 790px;
+      margin-bottom: 34px;
+    }
+
+    .section-kicker {
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-weight: 950;
+      font-size: 0.76rem;
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 4vw, 4rem);
+      letter-spacing: -0.055em;
+      line-height: 1.02;
+      margin-bottom: 16px;
+    }
+
+    .section-head p,
+    .lead {
+      color: var(--muted);
+      line-height: 1.75;
+      font-size: 1.04rem;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, var(--surface), rgba(255,255,255,0.035));
+      border-radius: var(--radius-md);
+      padding: 24px;
+      box-shadow: 0 16px 55px rgba(0,0,0,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      background: rgba(183, 243, 107, 0.12);
+      color: var(--accent);
+      margin-bottom: 18px;
+      font-size: 1.25rem;
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+      font-size: 1.22rem;
+      letter-spacing: -0.02em;
+    }
+
+    .card p,
+    .card li {
+      color: var(--muted);
+      line-height: 1.64;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 0.96fr 1.04fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .feature-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .feature-row {
+      display: grid;
+      grid-template-columns: 52px 1fr;
+      gap: 14px;
+      padding: 18px;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.045);
+    }
+
+    .feature-num {
+      width: 52px;
+      height: 52px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      color: #06100d;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      font-weight: 950;
+    }
+
+    .feature-row h3 { margin: 0 0 6px; font-size: 1.05rem; }
+    .feature-row p { margin: 0; color: var(--muted); line-height: 1.55; }
+
+    .screen-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-bottom: 18px;
+    }
+
+    .tab-btn {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--muted);
+      padding: 11px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 850;
+    }
+
+    .tab-btn.active {
+      color: #06100d;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      border-color: transparent;
+    }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    .screen-preview {
+      min-height: 360px;
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      padding: 24px;
+      background:
+        radial-gradient(circle at 80% 0, rgba(116,214,255,0.14), transparent 35%),
+        rgba(255,255,255,0.045);
+    }
+
+    .screen-preview h3 {
+      font-size: clamp(1.5rem, 3vw, 2.3rem);
+      letter-spacing: -0.045em;
+      margin-bottom: 12px;
+    }
+
+    .screen-preview p { color: var(--muted); line-height: 1.65; }
+
+    .preview-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .preview-tile {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px;
+      background: rgba(255,255,255,0.045);
+    }
+
+    .preview-tile b { display: block; margin-bottom: 6px; color: var(--text); }
+    .preview-tile span { color: var(--muted); line-height: 1.45; font-size: 0.92rem; }
+
+    .simulator {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 22px;
+      align-items: center;
+    }
+
+    .slider-group { display: grid; gap: 18px; }
+
+    .range-line {
+      border: 1px solid var(--line);
+      padding: 16px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.045);
+    }
+
+    .range-line label {
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      margin-bottom: 10px;
+      font-weight: 750;
+      gap: 14px;
+    }
+
+    input[type="range"] { width: 100%; accent-color: var(--accent); }
+
+    .notification-screen {
+      min-height: 380px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background:
+        radial-gradient(circle at 50% 0, rgba(183,243,107,0.15), transparent 42%),
+        var(--surface);
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .notification-card {
+      max-width: 460px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.075);
+      border-radius: 28px;
+      padding: 24px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+    }
+
+    .notification-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.07);
+      color: var(--accent);
+      font-weight: 900;
+      margin-bottom: 14px;
+    }
+
+    .notification-card h3 {
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      letter-spacing: -0.045em;
+      margin-bottom: 10px;
+    }
+
+    .notification-card p {
+      color: var(--muted);
+      line-height: 1.6;
+      margin: 0 auto;
+    }
+
+    .app-flow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      counter-reset: appflow;
+    }
+
+    .flow-item {
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 18px;
+      background: var(--surface);
+      position: relative;
+    }
+
+    .flow-item::before {
+      counter-increment: appflow;
+      content: "0" counter(appflow);
+      color: var(--accent);
+      font-weight: 950;
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .flow-item h3 { font-size: 1rem; margin-bottom: 8px; }
+    .flow-item p { color: var(--muted); line-height: 1.55; font-size: 0.92rem; margin: 0; }
+
+    .cta { padding: 86px 0 34px; }
+
+    .cta-box {
+      border: 1px solid rgba(183,243,107,0.28);
+      background:
+        radial-gradient(circle at 25% 0%, rgba(183,243,107,0.2), transparent 30%),
+        radial-gradient(circle at 85% 40%, rgba(116,214,255,0.15), transparent 34%),
+        var(--surface);
+      border-radius: 42px;
+      padding: clamp(28px, 6vw, 64px);
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .cta-box h2 { max-width: 850px; margin-left: auto; margin-right: auto; }
+    .cta-box p { color: var(--muted); line-height: 1.75; max-width: 720px; margin: 0 auto 26px; }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 28px 0;
+      color: var(--muted);
+    }
+
+    .footer-grid {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .hidden-el {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: 0.7s ease;
+    }
+
+    .hidden-el.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1120px) {
+      .hero-grid, .split, .simulator { grid-template-columns: 1fr; }
+      .phone-stage { grid-template-columns: 1fr 1fr; }
+      .cards-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .app-flow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 880px) {
+      .menu-toggle { display: grid; }
+
+      .nav-links {
+        position: fixed;
+        left: 18px;
+        right: 18px;
+        top: 138px;
+        flex-direction: column;
+        align-items: stretch;
+        border-radius: 26px;
+        padding: 12px;
+        transform: translateY(-12px);
+        opacity: 0;
+        pointer-events: none;
+        transition: 0.2s ease;
+      }
+
+      .nav-links.open {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
+
+      .nav-links a { padding: 13px 14px; }
+      .nav-actions .hide-mobile { display: none; }
+      .cards-grid, .preview-grid, .app-flow, .phone-stage { grid-template-columns: 1fr; }
+      .section { padding: 58px 0; }
+      .hero { padding-top: 58px; }
+      .phone.secondary { display: none; }
+    }
+
+    @media (max-width: 560px) {
+      .page-shell { width: min(100% - 24px, 1180px); }
+      .brand-text span { display: none; }
+      .brand { min-width: auto; }
+      .nav { min-height: 72px; }
+      .hero-actions .pill-btn { width: 100%; justify-content: center; }
+      .phone-stage { padding: 12px; }
+      .phone { min-height: 560px; }
+      .feature-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="announcement">
+    <span><strong>Kestrel App</strong> · Ergo-Score, smart alerts and guided backpack adjustment.</span>
+  </div>
+
+  <header>
+    <div class="page-shell nav">
+      <a class="brand" href="index.html" aria-label="Kestrel home">
+        <span class="logo-mark" aria-hidden="true"></span>
+        <span class="brand-text">
+          <b>Kestrel</b>
+          <span>Balance till the skies</span>
+        </span>
+      </a>
+
+      <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="technology.html">Technology</a>
+        <a class="active" href="app.html">App</a>
+        <a href="business.html">Business</a>
+        <a href="validation.html">Validation</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="icon-btn" id="themeBtn" title="Toggle light/dark mode" aria-label="Toggle theme">◐</button>
+        <button class="icon-btn" id="contrastBtn" title="High contrast" aria-label="High contrast">◩</button>
+        <button class="icon-btn hide-mobile" id="fontDown" title="Decrease font" aria-label="Decrease font">A−</button>
+        <button class="icon-btn hide-mobile" id="fontUp" title="Increase font" aria-label="Increase font">A+</button>
+        <a class="pill-btn primary-btn hide-mobile" href="business.html">Business model</a>
+        <button class="icon-btn menu-toggle" id="menuBtn" aria-label="Open menu">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="page-shell hero-grid">
+        <div class="hidden-el">
+          <div class="eyebrow"><span class="pulse-dot"></span> Mobile intelligence layer</div>
+          <h1>The app that turns data into <span class="gradient-text">safe movement.</span></h1>
+          <p class="hero-copy">
+            Το Kestrel App είναι το ψηφιακό κέντρο ελέγχου του έξυπνου σακιδίου. Παίρνει τα δεδομένα πίεσης από τους αισθητήρες, τα μετατρέπει σε Ergo-Score, εντοπίζει ασυμμετρίες και δίνει στον χρήστη απλές οδηγίες: τι να ρυθμίσει, πότε να σταματήσει και πώς να συνεχίσει με μεγαλύτερη σταθερότητα.
+          </p>
+          <div class="hero-actions">
+            <a class="pill-btn primary-btn" href="#features">Explore features →</a>
+            <a class="pill-btn" href="#notification-demo">Try alert demo</a>
+          </div>
+        </div>
+
+        <aside class="phone-stage hidden-el" aria-label="Kestrel app phone mockups">
+          <div class="phone">
+            <div class="phone-notch"></div>
+            <div class="phone-top"><span>09:41</span><span>Kestrel</span><span>●●●</span></div>
+            <div class="score-card">
+              <span style="color:rgba(255,255,255,0.65); font-weight:800;">ERGO-SCORE</span>
+              <div class="score-ring"><b>79</b></div>
+              <p style="margin:0; color:rgba(255,255,255,0.72);">Warning · right-side overload</p>
+            </div>
+            <div class="phone-card">
+              <h4>Suggested action</h4>
+              <p>Χαλάρωσε τον δεξί ιμάντα κατά 2 cm και σφίξε τη ζώνη μέσης.</p>
+            </div>
+            <div class="phone-card">
+              <h4>Pressure distribution</h4>
+              <div class="mini-chart">
+                <div class="chart-row"><span>Left</span><div class="chart-track"><span style="width:41%"></span></div><span>41%</span></div>
+                <div class="chart-row"><span>Right</span><div class="chart-track"><span style="width:59%"></span></div><span>59%</span></div>
+                <div class="chart-row"><span>Lumbar</span><div class="chart-track"><span style="width:66%"></span></div><span>66%</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="phone secondary">
+            <div class="phone-notch"></div>
+            <div class="phone-top"><span>11:08</span><span>Route</span><span>GPS</span></div>
+            <div class="phone-card" style="margin-top:44px;">
+              <h4>Today’s route</h4>
+              <p>7.8 km · 1h 42m · moderate terrain</p>
+            </div>
+            <div class="phone-card">
+              <h4>Stability trend</h4>
+              <div class="mini-chart">
+                <div class="chart-row"><span>Start</span><div class="chart-track"><span style="width:58%"></span></div><span>58</span></div>
+                <div class="chart-row"><span>Mid</span><div class="chart-track"><span style="width:72%"></span></div><span>72</span></div>
+                <div class="chart-row"><span>Now</span><div class="chart-track"><span style="width:84%"></span></div><span>84</span></div>
+              </div>
+            </div>
+            <div class="phone-card">
+              <h4>Insight</h4>
+              <p>Η ισορροπία βελτιώθηκε μετά τη ρύθμιση της ζώνης μέσης.</p>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <div class="page-shell">
+        <div class="section-head hidden-el">
+          <div class="section-kicker">Core app features</div>
+          <h2>Η εφαρμογή μεταφράζει την τεχνολογία σε καθημερινή εμπειρία χρήσης.</h2>
+          <p>Το app δεν είναι απλό συμπλήρωμα. Είναι το επίπεδο που κάνει το Kestrel κατανοητό, χρήσιμο και εμπορικά ελκυστικό.</p>
+        </div>
+
+        <div class="cards-grid">
+          <article class="card hidden-el"><div class="icon">◎</div><h3>Ergo-Score</h3><p>Ένας συνολικός δείκτης ισορροπίας που βοηθά τον χρήστη να καταλάβει άμεσα αν το φορτίο του είναι σωστά κατανεμημένο.</p></article>
+          <article class="card hidden-el"><div class="icon">🔔</div><h3>Smart alerts</h3><p>Η εφαρμογή εμφανίζει ειδοποιήσεις όταν η πίεση ή η ασυμμετρία ξεπεράσει ασφαλές όριο.</p></article>
+          <article class="card hidden-el"><div class="icon">🧭</div><h3>Guided correction</h3><p>Ο χρήστης δεν βλέπει απλώς αριθμούς. Λαμβάνει συγκεκριμένη οδηγία για ιμάντα, ζώνη μέσης ή ανακατανομή.</p></article>
+          <article class="card hidden-el"><div class="icon">📈</div><h3>Route insights</h3><p>Μελλοντική δυνατότητα σύνδεσης της σταθερότητας με τη διάρκεια, την απόσταση και τη δυσκολία διαδρομής.</p></article>
+          <article class="card hidden-el"><div class="icon">🧠</div><h3>Fatigue awareness</h3><p>Η εφαρμογή μπορεί να εξελιχθεί ώστε να εντοπίζει μοτίβα κόπωσης βάσει πίεσης και χρόνου χρήσης.</p></article>
+          <article class="card hidden-el"><div class="icon">🏆</div><h3>Progress tracking</h3><p>Ο χρήστης παρακολουθεί βελτίωση στη ρύθμιση, στη σταθερότητα και στη συνέπεια εργονομικής χρήσης.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="screens">
+      <div class="page-shell split">
+        <div class="panel hidden-el">
+          <div class="section-kicker">Screen architecture</div>
+          <h2>Οι βασικές οθόνες του Kestrel App.</h2>
+          <p class="lead">Η εμπειρία χρήστη οργανώνεται γύρω από την ταχύτητα κατανόησης: άμεσο σκορ, άμεση ειδοποίηση, άμεση διόρθωση.</p>
+          <div class="feature-list">
+            <div class="feature-row"><div class="feature-num">1</div><div><h3>Home dashboard</h3><p>Εμφανίζει Ergo-Score, τρέχουσα κατανομή πίεσης και κατάσταση συστήματος.</p></div></div>
+            <div class="feature-row"><div class="feature-num">2</div><div><h3>Live pressure</h3><p>Δείχνει σε πραγματικό χρόνο την πίεση αριστερά, δεξιά και στη μέση.</p></div></div>
+            <div class="feature-row"><div class="feature-num">3</div><div><h3>Adjustment guide</h3><p>Δίνει συγκεκριμένη ενέργεια, π.χ. «σφίξε αριστερό ιμάντα» ή «ρύθμισε ζώνη μέσης».</p></div></div>
+            <div class="feature-row"><div class="feature-num">4</div><div><h3>History & insights</h3><p>Καταγράφει πορεία χρήσης και βελτίωση εργονομικής συμπεριφοράς.</p></div></div>
+          </div>
+        </div>
+
+        <div class="panel hidden-el">
+          <div class="screen-tabs" role="tablist" aria-label="App screen tabs">
+            <button class="tab-btn active" data-tab="dashboard">Dashboard</button>
+            <button class="tab-btn" data-tab="alerts">Alerts</button>
+            <button class="tab-btn" data-tab="history">History</button>
+          </div>
+
+          <div class="screen-preview tab-content active" id="tab-dashboard">
+            <h3>Dashboard screen</h3>
+            <p>Η αρχική οθόνη πρέπει να απαντά σε τρία ερωτήματα: είμαι ισορροπημένος; υπάρχει υπερφόρτιση; τι πρέπει να κάνω τώρα;</p>
+            <div class="preview-grid">
+              <div class="preview-tile"><b>Ergo-Score</b><span>Συνολική εικόνα ισορροπίας.</span></div>
+              <div class="preview-tile"><b>Pressure bars</b><span>Αριστερή, δεξιά και οσφυϊκή πίεση.</span></div>
+              <div class="preview-tile"><b>Action tip</b><span>Σύντομη οδηγία διόρθωσης.</span></div>
+            </div>
+          </div>
+
+          <div class="screen-preview tab-content" id="tab-alerts">
+            <h3>Alert screen</h3>
+            <p>Όταν εντοπίζεται αυξημένη πίεση ή ασυμμετρία, η εφαρμογή εμφανίζει άμεση ειδοποίηση και προτεραιοποιεί την ασφάλεια.</p>
+            <div class="preview-grid">
+              <div class="preview-tile"><b>Warning</b><span>Μικρή απόκλιση φορτίου.</span></div>
+              <div class="preview-tile"><b>Critical</b><span>Υψηλή απόκλιση ή υπέρβαση ορίου.</span></div>
+              <div class="preview-tile"><b>Buzzer sync</b><span>Σύνδεση με ηχητική ειδοποίηση.</span></div>
+            </div>
+          </div>
+
+          <div class="screen-preview tab-content" id="tab-history">
+            <h3>History screen</h3>
+            <p>Η οθόνη ιστορικού δείχνει στον χρήστη πώς εξελίσσεται η σταθερότητα και η εργονομική συμπεριφορά του με την πάροδο του χρόνου.</p>
+            <div class="preview-grid">
+              <div class="preview-tile"><b>Route log</b><span>Διαδρομές και χρόνος χρήσης.</span></div>
+              <div class="preview-tile"><b>Trend</b><span>Βελτίωση ή επιδείνωση ισορροπίας.</span></div>
+              <div class="preview-tile"><b>Insights</b><span>Προσωποποιημένες παρατηρήσεις.</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="notification-demo">
+      <div class="page-shell">
+        <div class="section-head hidden-el">
+          <div class="section-kicker">Interactive notification demo</div>
+          <h2>Δες πώς αλλάζει η ειδοποίηση ανάλογα με την ασυμμετρία.</h2>
+          <p>Το demo παρουσιάζει πώς η εφαρμογή μετατρέπει την απόκλιση φορτίου σε κατανοητή ειδοποίηση και οδηγία.</p>
+        </div>
+
+        <div class="panel simulator hidden-el">
+          <div class="slider-group">
+            <div class="range-line">
+              <label for="asymmetryInput"><span>Load asymmetry</span><b id="asymmetryVal">18%</b></label>
+              <input id="asymmetryInput" type="range" min="0" max="60" value="18" />
+            </div>
+            <div class="range-line">
+              <label for="rightInput"><span>Right strap pressure</span><b id="rightVal">56%</b></label>
+              <input id="rightInput" type="range" min="0" max="100" value="56" />
+            </div>
+            <div class="range-line">
+              <label for="lumbarInput"><span>Lumbar support</span><b id="lumbarVal">64%</b></label>
+              <input id="lumbarInput" type="range" min="0" max="100" value="64" />
+            </div>
+          </div>
+
+          <div class="notification-screen">
+            <div class="notification-card">
+              <div class="notification-badge"><span class="pulse-dot"></span><span id="alertLevel">Smart alert</span></div>
+              <h3 id="alertTitle">Minor adjustment suggested</h3>
+              <p id="alertText">Υπάρχει μικρή ασυμμετρία. Η εφαρμογή θα πρότεινε ήπια ρύθμιση του δεξιού ιμάντα.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="experience">
+      <div class="page-shell">
+        <div class="section-head hidden-el">
+          <div class="section-kicker">User journey</div>
+          <h2>Η εμπειρία του χρήστη σε τέσσερα βήματα.</h2>
+          <p>Το app έχει σχεδιαστεί ώστε ο χρήστης να μη χρειάζεται τεχνικές γνώσεις. Απλώς φορά το σακίδιο, βλέπει την κατάσταση και διορθώνει όπου χρειάζεται.</p>
+        </div>
+
+        <div class="app-flow">
+          <div class="flow-item hidden-el"><h3>Pair backpack</h3><p>Ο χρήστης συνδέει το σακίδιο με την εφαρμογή και κάνει γρήγορη βαθμονόμηση.</p></div>
+          <div class="flow-item hidden-el"><h3>Start activity</h3><p>Ενεργοποιεί live monitoring πριν ξεκινήσει πεζοπορία ή διαδρομή.</p></div>
+          <div class="flow-item hidden-el"><h3>Receive guidance</h3><p>Λαμβάνει ειδοποίηση και πρακτική οδηγία όταν υπάρξει ασυμμετρία.</p></div>
+          <div class="flow-item hidden-el"><h3>Review insights</h3><p>Στο τέλος βλέπει σταθερότητα, σημεία πίεσης και προτάσεις βελτίωσης.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="page-shell split">
+        <div class="panel hidden-el">
+          <div class="section-kicker">Freemium logic</div>
+          <h2>Η εφαρμογή μπορεί να στηρίξει και το επιχειρηματικό μοντέλο.</h2>
+          <p class="lead">Η βασική έκδοση προσφέρει real-time feedback, ενώ η Pro έκδοση μπορεί να προσφέρει advanced analytics, ιστορικό και προσωποποιημένες προτάσεις.</p>
+          <div class="feature-list">
+            <div class="feature-row"><div class="feature-num">F</div><div><h3>Free version</h3><p>Live Ergo-Score, βασικές ειδοποιήσεις και απλές οδηγίες ρύθμισης.</p></div></div>
+            <div class="feature-row"><div class="feature-num">P</div><div><h3>Pro version</h3><p>Ιστορικό διαδρομών, fatigue insights, premium analytics και advanced calibration.</p></div></div>
+          </div>
+        </div>
+
+        <div class="panel hidden-el">
+          <div class="section-kicker">Trust & clarity</div>
+          <h2>Η εφαρμογή πρέπει να εμπνέει εμπιστοσύνη.</h2>
+          <p class="lead">Επειδή το Kestrel αφορά κίνηση, σώμα και πρόληψη, η διεπαφή πρέπει να είναι καθαρή, όχι υπερφορτωμένη.</p>
+          <div class="cards-grid" style="grid-template-columns:1fr;">
+            <article class="card"><h3>Clear language</h3><p>Αποφυγή τεχνικών όρων στην ειδοποίηση. Ο χρήστης χρειάζεται απλή ενέργεια, όχι πολύπλοκη ανάλυση.</p></article>
+            <article class="card"><h3>Privacy-first data</h3><p>Τα δεδομένα χρήσης πρέπει να παρουσιάζονται ως προσωπική βελτίωση και όχι ως περιττή παρακολούθηση.</p></article>
+            <article class="card"><h3>Safety framing</h3><p>Το app δεν αντικαθιστά την κρίση του χρήστη, αλλά λειτουργεί ως υποστηρικτικό εργαλείο εργονομίας.</p></article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="page-shell">
+        <div class="cta-box hidden-el">
+          <div class="section-kicker">Next page</div>
+          <h2>Η εφαρμογή δημιουργεί αξία. Το business model τη μετατρέπει σε βιώσιμο προϊόν.</h2>
+          <p>Η επόμενη σελίδα παρουσιάζει B2C/B2G στρατηγική, revenue streams, κόστος, premium positioning και εμπορική προοπτική.</p>
+          <div class="hero-actions" style="justify-content:center;">
+            <a class="pill-btn primary-btn" href="business.html">Next: Business →</a>
+            <a class="pill-btn" href="technology.html">Back to Technology</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="page-shell footer-grid">
+      <span>© 2026 Kestrel Concept · App Page</span>
+      <span>Ergo-Score · Smart alerts · Guided movement</span>
+    </div>
+  </footer>
+
+  <script>
+    const body = document.body;
+    const navLinks = document.getElementById('navLinks');
+    const menuBtn = document.getElementById('menuBtn');
+    const themeBtn = document.getElementById('themeBtn');
+    const contrastBtn = document.getElementById('contrastBtn');
+    const fontUp = document.getElementById('fontUp');
+    const fontDown = document.getElementById('fontDown');
+    let fontScale = 1;
+
+    menuBtn.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => navLinks.classList.remove('open')));
+
+    themeBtn.addEventListener('click', () => {
+      body.classList.toggle('light');
+      if (body.classList.contains('high-contrast')) body.classList.remove('high-contrast');
+    });
+
+    contrastBtn.addEventListener('click', () => {
+      body.classList.toggle('high-contrast');
+      if (body.classList.contains('light')) body.classList.remove('light');
+    });
+
+    fontUp.addEventListener('click', () => {
+      fontScale = Math.min(1.18, fontScale + 0.06);
+      document.documentElement.style.setProperty('--font-scale', fontScale.toFixed(2));
+    });
+
+    fontDown.addEventListener('click', () => {
+      fontScale = Math.max(0.9, fontScale - 0.06);
+      document.documentElement.style.setProperty('--font-scale', fontScale.toFixed(2));
+    });
+
+    const hiddenEls = document.querySelectorAll('.hidden-el');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.12 });
+    hiddenEls.forEach(el => observer.observe(el));
+
+    const tabs = document.querySelectorAll('.tab-btn');
+    const contents = document.querySelectorAll('.tab-content');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        contents.forEach(c => c.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+      });
+    });
+
+    const asymmetryInput = document.getElementById('asymmetryInput');
+    const rightInput = document.getElementById('rightInput');
+    const lumbarInput = document.getElementById('lumbarInput');
+    const asymmetryVal = document.getElementById('asymmetryVal');
+    const rightVal = document.getElementById('rightVal');
+    const lumbarVal = document.getElementById('lumbarVal');
+    const alertLevel = document.getElementById('alertLevel');
+    const alertTitle = document.getElementById('alertTitle');
+    const alertText = document.getElementById('alertText');
+
+    function updateAlertDemo() {
+      const asymmetry = Number(asymmetryInput.value);
+      const right = Number(rightInput.value);
+      const lumbar = Number(lumbarInput.value);
+
+      asymmetryVal.textContent = asymmetry + '%';
+      rightVal.textContent = right + '%';
+      lumbarVal.textContent = lumbar + '%';
+
+      if (lumbar < 35) {
+        alertLevel.textContent = 'Lumbar warning';
+        alertTitle.textContent = 'Engage waist belt';
+        alertText.textContent = 'Η στήριξη μέσης είναι χαμηλή. Σφίξε τη ζώνη μέσης ώστε το φορτίο να μοιραστεί πιο σταθερά στον κορμό.';
+      } else if (asymmetry >= 38 || right >= 82) {
+        alertLevel.textContent = 'Critical alert';
+        alertTitle.textContent = 'Stop and rebalance';
+        alertText.textContent = 'Η απόκλιση φορτίου είναι υψηλή. Σταμάτησε με ασφάλεια, ανακατένειμε το βάρος και ρύθμισε τους ιμάντες.';
+      } else if (asymmetry >= 18 || right >= 62) {
+        alertLevel.textContent = 'Smart alert';
+        alertTitle.textContent = 'Minor adjustment suggested';
+        alertText.textContent = 'Υπάρχει μικρή ασυμμετρία. Η εφαρμογή θα πρότεινε ήπια ρύθμιση του δεξιού ιμάντα.';
+      } else {
+        alertLevel.textContent = 'Stable';
+        alertTitle.textContent = 'Balanced load';
+        alertText.textContent = 'Η κατανομή είναι σταθερή. Συνέχισε την πορεία και έλεγξε ξανά μετά από αλλαγή εδάφους.';
+      }
+    }
+
+    [asymmetryInput, rightInput, lumbarInput].forEach(input => input.addEventListener('input', updateAlertDemo));
+    updateAlertDemo();
+  </script>
+</body>
+</html>
