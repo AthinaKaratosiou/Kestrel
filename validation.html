@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Validation | Kestrel</title>
+  <meta name="description" content="Kestrel validation strategy: user research, prototype testing, survey design, KPIs, pilot plan and decision gates for market readiness." />
+
+  <style>
+    :root {
+      --bg: #07110f;
+      --surface: rgba(255, 255, 255, 0.08);
+      --surface-strong: rgba(255, 255, 255, 0.13);
+      --text: #f5f7ef;
+      --muted: #b9c7bd;
+      --soft: #eaf1df;
+      --accent: #b7f36b;
+      --accent-2: #74d6ff;
+      --gold: #efc86a;
+      --danger: #ff7a6e;
+      --line: rgba(255, 255, 255, 0.16);
+      --shadow: 0 30px 80px rgba(0, 0, 0, 0.42);
+      --radius-lg: 34px;
+      --radius-md: 22px;
+      --font-scale: 1;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(183, 243, 107, 0.22), transparent 31%),
+        radial-gradient(circle at 90% 6%, rgba(116, 214, 255, 0.18), transparent 34%),
+        radial-gradient(circle at 50% 94%, rgba(239, 200, 106, 0.1), transparent 38%),
+        linear-gradient(135deg, var(--bg), #020403 62%, #0e130c);
+      color: var(--text);
+      font-size: calc(16px * var(--font-scale));
+      overflow-x: hidden;
+    }
+
+    body.light {
+      --bg: #f5f7ef;
+      --surface: rgba(10, 35, 26, 0.07);
+      --surface-strong: rgba(10, 35, 26, 0.12);
+      --text: #0b1a15;
+      --muted: #506258;
+      --soft: #123126;
+      --line: rgba(6, 25, 19, 0.15);
+      --shadow: 0 24px 70px rgba(16, 38, 29, 0.16);
+      background:
+        radial-gradient(circle at 10% 0%, rgba(183, 243, 107, 0.31), transparent 32%),
+        radial-gradient(circle at 90% 6%, rgba(116, 214, 255, 0.18), transparent 34%),
+        linear-gradient(135deg, #f7faef, #edf4e8 62%, #e2ead9);
+    }
+
+    body.high-contrast {
+      --bg: #000;
+      --surface: rgba(255, 255, 255, 0.15);
+      --surface-strong: rgba(255, 255, 255, 0.24);
+      --text: #fff;
+      --muted: #fff;
+      --accent: #d7ff00;
+      --accent-2: #00e5ff;
+      --gold: #ffe600;
+      --danger: #ff2b2b;
+      --line: rgba(255, 255, 255, 0.42);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+    h1, h2, h3, p { margin-top: 0; }
+
+    .page-shell {
+      width: min(1180px, calc(100% - 36px));
+      margin: 0 auto;
+    }
+
+    .announcement {
+      display: flex;
+      justify-content: center;
+      padding: 12px 18px;
+      background: linear-gradient(90deg, rgba(183, 243, 107, 0.18), rgba(116, 214, 255, 0.14));
+      border-bottom: 1px solid var(--line);
+      color: var(--soft);
+      font-size: 0.92rem;
+      text-align: center;
+    }
+
+    .announcement strong { color: var(--accent); }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(20px);
+      background: rgba(5, 14, 11, 0.72);
+      border-bottom: 1px solid var(--line);
+    }
+
+    body.light header { background: rgba(245, 247, 239, 0.78); }
+
+    .nav {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 190px;
+    }
+
+    .logo-mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 16px;
+      background: linear-gradient(145deg, rgba(183, 243, 107, 0.96), rgba(116, 214, 255, 0.88));
+      position: relative;
+      box-shadow: 0 14px 30px rgba(183, 243, 107, 0.21);
+      overflow: hidden;
+    }
+
+    .logo-mark::before {
+      content: "";
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      border: 3px solid rgba(7, 17, 15, 0.72);
+      border-left: 0;
+      border-bottom: 0;
+      transform: rotate(-23deg);
+      top: 9px;
+      left: 7px;
+      border-radius: 3px 14px 3px 3px;
+    }
+
+    .logo-mark::after {
+      content: "";
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: #07110f;
+      top: 15px;
+      left: 15px;
+    }
+
+    .brand-text b {
+      display: block;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 1rem;
+    }
+
+    .brand-text span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.74rem;
+      margin-top: 2px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 6px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: 999px;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: 0.88rem;
+      padding: 10px 13px;
+      border-radius: 999px;
+      transition: 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--text);
+      background: var(--surface-strong);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .icon-btn, .pill-btn {
+      border: 1px solid var(--line);
+      color: var(--text);
+      background: var(--surface);
+      border-radius: 999px;
+      min-height: 42px;
+      cursor: pointer;
+      transition: transform 0.18s ease, background 0.18s ease, border 0.18s ease;
+    }
+
+    .icon-btn {
+      width: 42px;
+      display: grid;
+      place-items: center;
+    }
+
+    .pill-btn {
+      padding: 0 18px;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      font-weight: 750;
+    }
+
+    .icon-btn:hover, .pill-btn:hover {
+      transform: translateY(-2px);
+      background: var(--surface-strong);
+      border-color: rgba(183, 243, 107, 0.42);
+    }
+
+    .primary-btn {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #06100d;
+      border: 0;
+      box-shadow: 0 18px 40px rgba(116, 214, 255, 0.12);
+    }
+
+    .menu-toggle { display: none; }
+
+    .hero {
+      padding: 90px 0 70px;
+      position: relative;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(390px, 0.9fr);
+      gap: 46px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(183, 243, 107, 0.34);
+      background: rgba(183, 243, 107, 0.1);
+      color: var(--accent);
+      font-weight: 850;
+      font-size: 0.86rem;
+      margin-bottom: 18px;
+    }
+
+    .pulse-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 0 rgba(183, 243, 107, 0.72);
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(183, 243, 107, 0.72); }
+      70% { box-shadow: 0 0 0 12px rgba(183, 243, 107, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(183, 243, 107, 0); }
+    }
+
+    h1 {
+      font-size: clamp(3rem, 7vw, 6.6rem);
+      line-height: 0.9;
+      letter-spacing: -0.075em;
+      margin-bottom: 22px;
+    }
+
+    .gradient-text {
+      display: block;
+      background: linear-gradient(135deg, var(--text), var(--accent) 42%, var(--accent-2));
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-copy {
+      color: var(--muted);
+      font-size: 1.13rem;
+      line-height: 1.78;
+      margin-bottom: 28px;
+      max-width: 760px;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .validation-board {
+      min-height: 560px;
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 50% 0, rgba(116, 214, 255, 0.18), transparent 34%),
+        linear-gradient(180deg, var(--surface), rgba(255,255,255,0.035));
+      border-radius: 38px;
+      box-shadow: var(--shadow);
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .validation-board::before {
+      content: "";
+      position: absolute;
+      inset: 22px;
+      border-radius: 30px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background-image:
+        linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px);
+      background-size: 32px 32px;
+      opacity: 0.8;
+    }
+
+    .board-inner {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      gap: 16px;
+    }
+
+    .board-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 4px;
+    }
+
+    .board-title h3 {
+      margin: 0;
+      font-size: 1.18rem;
+      letter-spacing: -0.02em;
+    }
+
+    .board-title span {
+      color: var(--accent);
+      font-weight: 900;
+      font-size: 0.82rem;
+    }
+
+    .score-orbit {
+      display: grid;
+      place-items: center;
+      padding: 16px 0;
+    }
+
+    .score-ring {
+      width: 210px;
+      height: 210px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      background: conic-gradient(var(--accent) 0deg 273deg, rgba(255,255,255,0.12) 273deg 360deg);
+      position: relative;
+      box-shadow: 0 24px 80px rgba(183,243,107,0.13);
+    }
+
+    .score-ring::before {
+      content: "";
+      position: absolute;
+      width: 156px;
+      height: 156px;
+      border-radius: 999px;
+      background: rgba(7,17,15,0.92);
+      border: 1px solid var(--line);
+    }
+
+    body.light .score-ring::before { background: rgba(247,250,239,0.96); }
+
+    .score-ring .score-content {
+      position: relative;
+      text-align: center;
+    }
+
+    .score-content b {
+      display: block;
+      font-size: 3.2rem;
+      letter-spacing: -0.07em;
+      line-height: 1;
+    }
+
+    .score-content span {
+      display: block;
+      color: var(--muted);
+      margin-top: 6px;
+      font-size: 0.82rem;
+      font-weight: 850;
+    }
+
+    .validation-metrics {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .hero-metric {
+      border: 1px solid var(--line);
+      background: rgba(2,6,5,0.62);
+      backdrop-filter: blur(18px);
+      border-radius: 22px;
+      padding: 16px;
+    }
+
+    body.light .hero-metric { background: rgba(255,255,255,0.7); }
+
+    .hero-metric span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.84rem;
+      margin-bottom: 8px;
+    }
+
+    .hero-metric b {
+      display: block;
+      font-size: 1.7rem;
+      letter-spacing: -0.055em;
+      line-height: 1;
+    }
+
+    .section { padding: 78px 0; }
+
+    .section-head {
+      max-width: 790px;
+      margin-bottom: 34px;
+    }
+
+    .section-kicker {
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-weight: 950;
+      font-size: 0.76rem;
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 4vw, 4rem);
+      letter-spacing: -0.055em;
+      line-height: 1.02;
+      margin-bottom: 16px;
+    }
+
+    .section-head p, .lead {
+      color: var(--muted);
+      line-height: 1.75;
+      font-size: 1.04rem;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, var(--surface), rgba(255,255,255,0.035));
+      border-radius: var(--radius-md);
+      padding: 24px;
+      box-shadow: 0 16px 55px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+
+    .icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      background: rgba(183, 243, 107, 0.12);
+      color: var(--accent);
+      margin-bottom: 18px;
+      font-size: 1.25rem;
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+      font-size: 1.22rem;
+      letter-spacing: -0.02em;
+    }
+
+    .card p, .card li {
+      color: var(--muted);
+      line-height: 1.64;
+    }
+
+    .card ul { padding-left: 18px; margin-bottom: 0; }
+
+    .split {
+      display: grid;
+      grid-template-columns: 0.96fr 1.04fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .method-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .method-card {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: 24px;
+      padding: 20px;
+    }
+
+    .method-card span {
+      display: inline-flex;
+      color: #06100d;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      border-radius: 999px;
+      padding: 7px 10px;
+      font-weight: 950;
+      font-size: 0.78rem;
+      margin-bottom: 14px;
+    }
+
+    .method-card h3 { margin-bottom: 8px; }
+    .method-card p { color: var(--muted); line-height: 1.55; margin-bottom: 0; }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-bottom: 18px;
+    }
+
+    .tab-btn {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--muted);
+      padding: 11px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 850;
+    }
+
+    .tab-btn.active {
+      color: #06100d;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      border-color: transparent;
+    }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    .question-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .question-item {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 14px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 16px;
+      background: rgba(255,255,255,0.045);
+    }
+
+    .question-num {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      color: #06100d;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      font-weight: 950;
+    }
+
+    .question-item h3 { margin: 0 0 5px; font-size: 1.02rem; }
+    .question-item p { margin: 0; color: var(--muted); line-height: 1.5; }
+
+    .timeline {
+      display: grid;
+      gap: 14px;
+      counter-reset: timeline;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 64px 1fr auto;
+      gap: 14px;
+      align-items: center;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.045);
+      border-radius: 22px;
+      padding: 16px;
+    }
+
+    .timeline-item::before {
+      counter-increment: timeline;
+      content: "0" counter(timeline);
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #06100d;
+      font-weight: 950;
+    }
+
+    .timeline-item h3 { margin: 0 0 5px; }
+    .timeline-item p { margin: 0; color: var(--muted); line-height: 1.5; }
+
+    .time-pill {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 10px;
+      color: var(--accent);
+      font-weight: 950;
+      white-space: nowrap;
+      background: rgba(183,243,107,0.08);
+    }
+
+    .calculator {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .slider-group { display: grid; gap: 18px; }
+
+    .range-line {
+      border: 1px solid var(--line);
+      padding: 16px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.045);
+    }
+
+    .range-line label {
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      margin-bottom: 10px;
+      font-weight: 750;
+      gap: 14px;
+    }
+
+    input[type="range"] { width: 100%; accent-color: var(--accent); }
+
+    .score-output {
+      min-height: 420px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background:
+        radial-gradient(circle at 50% 0, rgba(183,243,107,0.15), transparent 42%),
+        var(--surface);
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .score-big {
+      width: min(250px, 100%);
+      height: 250px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 20px;
+      background: conic-gradient(var(--accent) 0deg 250deg, rgba(255,255,255,0.12) 250deg 360deg);
+      position: relative;
+    }
+
+    .score-big::before {
+      content: "";
+      position: absolute;
+      width: 186px;
+      height: 186px;
+      border-radius: 999px;
+      background: rgba(7,17,15,0.92);
+      border: 1px solid var(--line);
+    }
+
+    body.light .score-big::before { background: rgba(247,250,239,0.96); }
+
+    .score-big b {
+      position: relative;
+      font-size: 4rem;
+      letter-spacing: -0.07em;
+      line-height: 1;
+    }
+
+    .score-output h3 {
+      font-size: clamp(1.6rem, 3vw, 2.3rem);
+      letter-spacing: -0.045em;
+      margin-bottom: 10px;
+    }
+
+    .score-output p {
+      color: var(--muted);
+      line-height: 1.6;
+      max-width: 470px;
+      margin: 0 auto;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .kpi-card {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, var(--surface), rgba(255,255,255,0.035));
+      border-radius: 24px;
+      padding: 20px;
+    }
+
+    .kpi-card span { color: var(--muted); display: block; margin-bottom: 8px; }
+    .kpi-card b { display: block; font-size: 2.2rem; letter-spacing: -0.06em; margin-bottom: 8px; }
+    .kpi-card p { color: var(--muted); line-height: 1.55; margin: 0; font-size: 0.92rem; }
+
+    .decision-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .decision-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 26px;
+      background: var(--surface);
+    }
+
+    .decision-card h3 { font-size: 1.4rem; margin-bottom: 12px; }
+    .decision-card p, .decision-card li { color: var(--muted); line-height: 1.6; }
+    .decision-card ul { padding-left: 18px; margin-bottom: 0; }
+
+    .decision-card.go { border-color: rgba(183,243,107,0.42); }
+    .decision-card.iterate { border-color: rgba(239,200,106,0.42); }
+    .decision-card.stop { border-color: rgba(255,122,110,0.42); }
+
+    .cta { padding: 86px 0 34px; }
+
+    .cta-box {
+      border: 1px solid rgba(183,243,107,0.28);
+      background:
+        radial-gradient(circle at 25% 0%, rgba(183,243,107,0.2), transparent 30%),
+        radial-gradient(circle at 85% 40%, rgba(116,214,255,0.15), transparent 34%),
+        var(--surface);
+      border-radius: 42px;
+      padding: clamp(28px, 6vw, 64px);
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .cta-box h2 { max-width: 850px; margin-left: auto; margin-right: auto; }
+    .cta-box p { color: var(--muted); line-height: 1.75; max-width: 720px; margin: 0 auto 26px; }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 28px 0;
+      color: var(--muted);
+    }
+
+    .footer-grid {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .hidden-el {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: 0.7s ease;
+    }
+
+    .hidden-el.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1120px) {
+      .hero-grid, .split, .calculator { grid-template-columns: 1fr; }
+      .cards-grid, .decision-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .method-grid, .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .validation-board { min-height: auto; }
+    }
+
+    @media (max-width: 880px) {
+      .menu-toggle { display: grid; }
+
+      .nav-links {
+        position: fixed;
+        left: 18px;
+        right: 18px;
+        top: 138px;
+        flex-direction: column;
+        align-items: stretch;
+        border-radius: 26px;
+        padding: 12px;
+        transform: translateY(-12px);
+        opacity: 0;
+        pointer-events: none;
+        transition: 0.2s ease;
+      }
+
+      .nav-links.open {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
+
+      .nav-links a { padding: 13px 14px; }
+      .nav-actions .hide-mobile { display: none; }
+      .cards-grid, .method-grid, .decision-grid, .kpi-grid, .validation-metrics { grid-template-columns: 1fr; }
+      .timeline-item { grid-template-columns: 1fr; }
+      .question-item { grid-template-columns: 1fr; }
+      .section { padding: 58px 0; }
+      .hero { padding-top: 58px; }
+    }
+
+    @media (max-width: 560px) {
+      .page-shell { width: min(100% - 24px, 1180px); }
+      .brand-text span { display: none; }
+      .brand { min-width: auto; }
+      .nav { min-height: 72px; }
+      .hero-actions .pill-btn { width: 100%; justify-content: center; }
+      .validation-board { padding: 16px; }
+      .score-ring { width: 180px; height: 180px; }
+      .score-ring::before { width: 132px; height: 132px; }
+      .score-big { width: 210px; height: 210px; }
+      .score-big::before { width: 156px; height: 156px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="announcement">
+    <span><strong>Kestrel Validation</strong> · Evidence, pilot testing and decision gates before market scaling.</span>
+  </div>
+
+  <header>
+    <div class="page-shell nav">
+      <a class="brand" href="index.html" aria-label="Kestrel home">
+        <span class="logo-mark" aria-hidden="true"></span>
+        <span class="brand-text">
+          <b>Kestrel</b>
+          <span>Balance till the skies</span>
+        </span>
+      </a>
+
+      <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="technology.html">Technology</a>
+        <a href="app.html">App</a>
+        <a href="business.html">Business</a>
+        <a class="active" href="validation.html">Validation</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="icon-btn" id="themeBtn" title="Toggle light/dark mode" aria-label="Toggle theme">◐</button>
+        <button class="icon-btn" id="contrastBtn" title="High contrast" aria-label="High contrast">◩</button>
+        <button class="icon-btn hide-mobile" id="fontDown" title="Decrease font" aria-label="Decrease font">A−</button>
+        <button class="icon-btn hide-mobile" id="fontUp" title="Increase font" aria-label="Increase font">A+</button>
+        <a class="pill-btn primary-btn hide-mobile" href="contact.html">Contact team</a>
+        <button class="icon-btn menu-toggle" id="menuBtn" aria-label="Open menu">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="page-shell hero-grid">
+        <div class="hidden-el">
+          <div class="eyebrow"><span class="pulse-dot"></span> Evidence before scaling</div>
+          <h1>Validate the need. <span class="gradient-text">Then scale the innovation.</span></h1>
+          <p class="hero-copy">
+            Η σελίδα αυτή παρουσιάζει πώς το Kestrel μπορεί να περάσει από ιδέα σε τεκμηριωμένη επιχειρηματική πρόταση. Η επικύρωση βασίζεται σε έρευνα χρηστών, δοκιμή πρωτοτύπου, μετρήσιμους δείκτες, πιλοτική εφαρμογή και ξεκάθαρα decision gates πριν την εμπορική διάθεση.
+          </p>
+          <div class="hero-actions">
+            <a class="pill-btn primary-btn" href="#framework">Validation framework →</a>
+            <a class="pill-btn" href="#readiness">Check readiness</a>
+          </div>
+        </div>
+
+        <aside class="validation-board hidden-el" aria-label="Kestrel validation dashboard">
+          <div class="board-inner">
+            <div class="board-title">
+              <h3>Validation snapshot</h3>
+              <span>Pre-launch stage</span>
+            </div>
+
+            <div class="score-orbit">
+              <div class="score-ring">
+                <div class="score-content">
+                  <b>76</b>
+                  <span>Validation potential</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="validation-metrics">
+              <div class="hero-metric"><span>User interviews</span><b>15–20</b></div>
+              <div class="hero-metric"><span>Survey target</span><b>100+</b></div>
+              <div class="hero-metric"><span>Prototype sessions</span><b>12</b></div>
+              <div class="hero-metric"><span>Pilot duration</span><b>4–6 w.</b></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="framework">
+      <div class="page-shell">
+        <div class="section-head hidden-el">
+          <div class="section-kicker">Validation framework</div>
+          <h2>Το Kestrel πρέπει να επικυρωθεί σε τρεις διαστάσεις.</h2>
+          <p>Η αξιολόγηση δεν αφορά μόνο το αν λειτουργεί η τεχνολογία. Πρέπει να αποδειχθεί ότι υπάρχει πραγματική ανάγκη, ότι οι χρήστες κατανοούν την αξία και ότι το προϊόν μπορεί να χρησιμοποιηθεί σε πραγματικές συνθήκες.</p>
+        </div>
+
+        <div class="cards-grid">
+          <article class="card hidden-el">
+            <div class="icon">◎</div>
+            <h3>Problem validation</h3>
+            <p>Ελέγχει αν οι πεζοπόροι, οι outdoor users ή οι tactical χρήστες βιώνουν πράγματι πρόβλημα από κακή κατανομή βάρους, κόπωση ή πίεση.</p>
+          </article>
+          <article class="card hidden-el">
+            <div class="icon">⚙</div>
+            <h3>Solution validation</h3>
+            <p>Εξετάζει αν το Kestrel γίνεται αντιληπτό ως χρήσιμη λύση και όχι ως περιττό τεχνολογικό χαρακτηριστικό.</p>
+          </article>
+          <article class="card hidden-el">
+            <div class="icon">📈</div>
+            <h3>Market validation</h3>
+            <p>Μετρά πρόθεση αγοράς, αποδοχή τιμής, πιθανότητα χρήσης app και διάθεση συμμετοχής σε πιλοτική δοκιμή.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="methods">
+      <div class="page-shell">
+        <div class="section-head hidden-el">
+          <div class="section-kicker">Research methods</div>
+          <h2>Η επικύρωση συνδυάζει ποιοτικά και ποσοτικά δεδομένα.</h2>
+          <p>Έτσι η ομάδα δεν βασίζεται μόνο σε προσωπική διαίσθηση, αλλά σε πραγματικές αντιδράσεις χρηστών και μετρήσιμα αποτελέσματα.</p>
+        </div>
+
+        <div class="method-grid">
+          <article class="method-card hidden-el"><span>01</span><h3>User interviews</h3><p>Σύντομες συνεντεύξεις με outdoor χρήστες για πόνο, κόπωση, βάρος και συνήθειες μεταφοράς.</p></article>
+          <article class="method-card hidden-el"><span>02</span><h3>Online survey</h3><p>Ποσοτική συλλογή απόψεων για ανάγκη, αξία, τιμή, app features και πρόθεση αγοράς.</p></article>
+          <article class="method-card hidden-el"><span>03</span><h3>Prototype demo</h3><p>Δοκιμή αισθητήρων, buzzer και mockup εφαρμογής με παρατήρηση αντίδρασης χρήστη.</p></article>
+          <article class="method-card hidden-el"><span>04</span><h3>Pilot testing</h3><p>Μικρή πιλοτική χρήση σε πραγματικές ή προσομοιωμένες διαδρομές για πιο αξιόπιστο feedback.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="survey">
+      <div class="page-shell split">
+        <div class="panel hidden-el">
+          <div class="section-kicker">Survey design</div>
+          <h2>Ενδεικτικές ερωτήσεις για ερωτηματολόγιο επικύρωσης.</h2>
+          <p class="lead">Το ερωτηματολόγιο πρέπει να αποδεικνύει αν υπάρχει πρόβλημα, αν η λύση είναι ελκυστική και αν η τιμή θεωρείται αποδεκτή.</p>
+
+          <div class="tabs" role="tablist" aria-label="Survey question categories">
+            <button class="tab-btn active" data-tab="problem">Problem</button>
+            <button class="tab-btn" data-tab="solution">Solution</button>
+            <button class="tab-btn" data-tab="pricing">Pricing</button>
+          </div>
+
+          <div class="tab-content active" id="tab-problem">
+            <div class="question-list">
+              <div class="question-item"><div class="question-num">1</div><div><h3>Πόσο συχνά χρησιμοποιείς σακίδιο σε πεζοπορία ή δραστηριότητες outdoor;</h3><p>Σκοπός: εντοπισμός κατάλληλου target audience.</p></div></div>
+              <div class="question-item"><div class="question-num">2</div><div><h3>Έχεις νιώσει πόνο ή κόπωση στους ώμους, στη μέση ή στην πλάτη λόγω βάρους;</h3><p>Σκοπός: τεκμηρίωση πραγματικού προβλήματος.</p></div></div>
+              <div class="question-item"><div class="question-num">3</div><div><h3>Πόσο σημαντική θεωρείς τη σωστή κατανομή βάρους κατά τη μετακίνηση;</h3><p>Σκοπός: μέτρηση αντιλαμβανόμενης σοβαρότητας.</p></div></div>
+            </div>
+          </div>
+
+          <div class="tab-content" id="tab-solution">
+            <div class="question-list">
+              <div class="question-item"><div class="question-num">1</div><div><h3>Θα σε ενδιέφερε ένα σακίδιο που σε ειδοποιεί όταν το βάρος δεν κατανέμεται σωστά;</h3><p>Σκοπός: μέτρηση ενδιαφέροντος για την πρόταση αξίας.</p></div></div>
+              <div class="question-item"><div class="question-num">2</div><div><h3>Πόσο χρήσιμη θα ήταν μια εφαρμογή που σου δείχνει πώς να ρυθμίσεις τους ιμάντες;</h3><p>Σκοπός: επικύρωση app usefulness.</p></div></div>
+              <div class="question-item"><div class="question-num">3</div><div><h3>Ποιο χαρακτηριστικό θα θεωρούσες πιο σημαντικό: ειδοποίηση, Ergo-Score, ιστορικό ή οδηγίες διόρθωσης;</h3><p>Σκοπός: ιεράρχηση features.</p></div></div>
+            </div>
+          </div>
+
+          <div class="tab-content" id="tab-pricing">
+            <div class="question-list">
+              <div class="question-item"><div class="question-num">1</div><div><h3>Πόσο πιθανό είναι να αγόραζες ένα τέτοιο σακίδιο στην τιμή των €250;</h3><p>Σκοπός: έλεγχος willingness to pay.</p></div></div>
+              <div class="question-item"><div class="question-num">2</div><div><h3>Θα πλήρωνες €5/μήνα για premium analytics και ιστορικό χρήσης;</h3><p>Σκοπός: αξιολόγηση συνδρομητικού μοντέλου.</p></div></div>
+              <div class="question-item"><div class="question-num">3</div><div><h3>Τι θα σε έκανε να εμπιστευτείς περισσότερο το Kestrel πριν το αγοράσεις;</h3><p>Σκοπός: εντοπισμός adoption barriers.</p></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel hidden-el">
+          <div class="section-kicker">Interview guide</div>
+          <h2>Ποιοτική διερεύνηση πριν από το survey.</h2>
+          <p class="lead">Οι συνεντεύξεις βοηθούν να καταλάβουμε τη γλώσσα του χρήστη, τις πραγματικές του δυσκολίες και τα σημεία όπου η λύση πρέπει να γίνει πιο απλή.</p>
+          <div class="cards-grid" style="grid-template-columns:1fr;">
+            <article class="card"><h3>Experience question</h3><p>«Περιέγραψέ μου μια φορά που το σακίδιο σε ενόχλησε σε πεζοπορία ή μετακίνηση.»</p></article>
+            <article class="card"><h3>Behavior question</h3><p>«Πώς καταλαβαίνεις σήμερα ότι έχεις ρυθμίσει σωστά τους ιμάντες ή το βάρος;»</p></article>
+            <article class="card"><h3>Value question</h3><p>«Αν το σακίδιο μπορούσε να σε καθοδηγήσει σε πραγματικό χρόνο, τι θα περίμενες να σου λέει;»</p></article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="prototype-test">
+      <div class="page-shell">
+        <div class="section-head hidden-el">
+          <div class="section-kicker">Prototype test plan</div>
+          <h2>Πλάνο δοκιμής πρωτοτύπου σε πέντε βήματα.</h2>
+          <p>Η δοκιμή πρέπει να είναι απλή, μετρήσιμη και επαναλήψιμη, ώστε να δείχνει αν το σύστημα λειτουργεί και αν ο χρήστης καταλαβαίνει την ειδοποίηση.</p>
+        </div>
+
+        <div class="panel hidden-el">
+          <div class="timeline">
+            <div class="timeline-item"><div><h3>Baseline measurement</h3><p>Ο χρήστης φορά το σακίδιο χωρίς ενεργή καθοδήγηση και καταγράφεται η αρχική κατανομή πίεσης.</p></div><span class="time-pill">5 min</span></div>
+            <div class="timeline-item"><div><h3>Sensor calibration</h3><p>Ρύθμιση ευαισθησίας και έλεγχος ότι οι FSR αισθητήρες ανταποκρίνονται σωστά.</p></div><span class="time-pill">3 min</span></div>
+            <div class="timeline-item"><div><h3>Guided adjustment</h3><p>Η εφαρμογή ή το demo δίνει οδηγία και ο χρήστης ρυθμίζει ιμάντες ή ζώνη μέσης.</p></div><span class="time-pill">7 min</span></div>
+            <div class="timeline-item"><div><h3>Movement simulation</h3><p>Περπάτημα ή προσομοίωση μικρής διαδρομής για να φανεί αν η ισορροπία διατηρείται.</p></div><span class="time-pill">10 min</span></div>
+            <div class="timeline-item"><div><h3>Feedback capture</h3><p>Σύντομες ερωτήσεις για ευκολία χρήσης, εμπιστοσύνη, χρησιμότητα και πρόθεση αγοράς.</p></div><span class="time-pill">5 min</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="readiness">
+      <div class="page-shell">
+        <div class="section-head hidden-el">
+          <div class="section-kicker">Interactive validation score</div>
+          <h2>Υπολόγισε πόσο έτοιμο είναι το Kestrel για πιλοτική διάθεση.</h2>
+          <p>Ο δείκτης είναι ενδεικτικός και λειτουργεί ως δημιουργικό εργαλείο παρουσίασης για να δείξει τη λογική αξιολόγησης πριν από το λανσάρισμα.</p>
+        </div>
+
+        <div class="panel calculator hidden-el">
+          <div class="slider-group">
+            <div class="range-line"><label for="problemInput"><span>Problem clarity</span><b id="problemVal">80%</b></label><input id="problemInput" type="range" min="0" max="100" value="80" /></div>
+            <div class="range-line"><label for="prototypeInput"><span>Prototype maturity</span><b id="prototypeVal">65%</b></label><input id="prototypeInput" type="range" min="0" max="100" value="65" /></div>
+            <div class="range-line"><label for="interestInput"><span>User interest</span><b id="interestVal">74%</b></label><input id="interestInput" type="range" min="0" max="100" value="74" /></div>
+            <div class="range-line"><label for="pricingInput"><span>Pricing acceptance</span><b id="pricingVal">58%</b></label><input id="pricingInput" type="range" min="0" max="100" value="58" /></div>
+            <div class="range-line"><label for="reliabilityInput"><span>Technical reliability</span><b id="reliabilityVal">70%</b></label><input id="reliabilityInput" type="range" min="0" max="100" value="70" /></div>
+          </div>
+
+          <div class="score-output">
+            <div>
+              <div class="score-big" id="scoreCircle"><b id="readinessScore">69</b></div>
+              <h3 id="readinessTitle">Pilot-ready with improvements</h3>
+              <p id="readinessText">Το Kestrel μπορεί να προχωρήσει σε περιορισμένο pilot, αλλά χρειάζεται περαιτέρω τεχνική σταθεροποίηση και ισχυρότερη τεκμηρίωση αποδοχής τιμής.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="kpis">
+      <div class="page-shell">
+        <div class="section-head hidden-el">
+          <div class="section-kicker">Validation KPIs</div>
+          <h2>Οι δείκτες που δείχνουν αν αξίζει να συνεχιστεί η ανάπτυξη.</h2>
+          <p>Τα KPIs βοηθούν την ομάδα να πάρει τεκμηριωμένη απόφαση αντί να βασιστεί σε ενθουσιασμό ή υποθέσεις.</p>
+        </div>
+
+        <div class="kpi-grid">
+          <div class="kpi-card hidden-el"><span>Problem intensity</span><b>70%+</b><p>Ποσοστό χρηστών που δηλώνει ότι έχει βιώσει κόπωση, πόνο ή λάθος κατανομή βάρους.</p></div>
+          <div class="kpi-card hidden-el"><span>Solution interest</span><b>60%+</b><p>Ποσοστό που θεωρεί την ειδοποίηση και την εφαρμογή χρήσιμες για πραγματική χρήση.</p></div>
+          <div class="kpi-card hidden-el"><span>Price acceptance</span><b>35%+</b><p>Ποσοστό που δηλώνει πιθανή αγορά στην ενδεικτική τιμή των €250.</p></div>
+          <div class="kpi-card hidden-el"><span>Demo clarity</span><b>80%+</b><p>Ποσοστό χρηστών που καταλαβαίνει χωρίς βοήθεια τι σημαίνει η ειδοποίηση.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="pilot">
+      <div class="page-shell split">
+        <div class="panel hidden-el">
+          <div class="section-kicker">Pilot design</div>
+          <h2>Πιλοτική εφαρμογή 4–6 εβδομάδων.</h2>
+          <p class="lead">Το pilot μπορεί να γίνει με μικρή ομάδα outdoor χρηστών, με εβδομαδιαία καταγραφή εμπειρίας, τεχνικών προβλημάτων και αντιλαμβανόμενης αξίας.</p>
+          <div class="cards-grid" style="grid-template-columns:1fr;">
+            <article class="card"><h3>Participants</h3><p>10–15 χρήστες με εμπειρία σε πεζοπορία, μετακίνηση με σακίδιο ή outdoor δραστηριότητες.</p></article>
+            <article class="card"><h3>Data collected</h3><p>Χρήση app, συχνότητα ειδοποιήσεων, αντιλαμβανόμενη άνεση, εμπιστοσύνη στο σύστημα και τεχνικά προβλήματα.</p></article>
+            <article class="card"><h3>Final output</h3><p>Σύντομο validation report με ευρήματα, βελτιώσεις, adoption barriers και go/no-go recommendation.</p></article>
+          </div>
+        </div>
+
+        <div class="panel hidden-el">
+          <div class="section-kicker">Ethics & privacy</div>
+          <h2>Η επικύρωση πρέπει να γίνει με εμπιστοσύνη.</h2>
+          <p class="lead">Επειδή το προϊόν συνδέεται με σώμα, κίνηση και δεδομένα χρήσης, η ομάδα πρέπει να εξηγεί με σαφήνεια τι συλλέγεται και γιατί.</p>
+          <div class="cards-grid" style="grid-template-columns:1fr;">
+            <article class="card"><h3>Transparent consent</h3><p>Οι συμμετέχοντες ενημερώνονται για τον σκοπό της δοκιμής και το είδος των δεδομένων.</p></article>
+            <article class="card"><h3>Minimal data</h3><p>Συλλέγονται μόνο όσα δεδομένα είναι απαραίτητα για την αξιολόγηση της ιδέας.</p></article>
+            <article class="card"><h3>No medical claims</h3><p>Το Kestrel παρουσιάζεται ως εργονομικό υποστηρικτικό εργαλείο, όχι ως ιατρική διάγνωση ή θεραπεία.</p></article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="decisions">
+      <div class="page-shell">
+        <div class="section-head hidden-el">
+          <div class="section-kicker">Decision gates</div>
+          <h2>Μετά την επικύρωση υπάρχουν τρεις πιθανές αποφάσεις.</h2>
+          <p>Η ομάδα πρέπει να δείχνει ότι ξέρει πότε να προχωρήσει, πότε να βελτιώσει και πότε να αλλάξει κατεύθυνση.</p>
+        </div>
+
+        <div class="decision-grid">
+          <article class="decision-card go hidden-el">
+            <div class="icon">✓</div>
+            <h3>Go</h3>
+            <p>Προχωράμε σε pre-launch όταν υπάρχει υψηλή κατανόηση αξίας, θετικό demo feedback και αποδεκτή πρόθεση αγοράς.</p>
+            <ul><li>Strong problem signal</li><li>Positive usability feedback</li><li>Clear willingness to try</li></ul>
+          </article>
+          <article class="decision-card iterate hidden-el">
+            <div class="icon">↻</div>
+            <h3>Iterate</h3>
+            <p>Βελτιώνουμε το προϊόν όταν υπάρχει ενδιαφέρον, αλλά οι χρήστες δυσκολεύονται να καταλάβουν την εφαρμογή ή την τιμή.</p>
+            <ul><li>Refine app interface</li><li>Improve sensor stability</li><li>Reframe pricing</li></ul>
+          </article>
+          <article class="decision-card stop hidden-el">
+            <div class="icon">!</div>
+            <h3>Pivot</h3>
+            <p>Αλλάζουμε εστίαση όταν το πρόβλημα δεν θεωρείται αρκετά σημαντικό ή όταν το κόστος ξεπερνά την αντιλαμβανόμενη αξία.</p>
+            <ul><li>Re-target market</li><li>Focus on B2G</li><li>License technology</li></ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="page-shell">
+        <div class="cta-box hidden-el">
+          <div class="section-kicker">Next page</div>
+          <h2>Μετά την επικύρωση, η ομάδα χρειάζεται σημείο επικοινωνίας.</h2>
+          <p>Η επόμενη σελίδα μπορεί να λειτουργήσει ως contact page για demo request, pilot interest, συνεργασίες και ακαδημαϊκή παρουσίαση του project.</p>
+          <div class="hero-actions" style="justify-content:center;">
+            <a class="pill-btn primary-btn" href="contact.html">Next: Contact →</a>
+            <a class="pill-btn" href="business.html">Back to Business</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="page-shell footer-grid">
+      <span>© 2026 Kestrel Concept · Validation Page</span>
+      <span>User research · Prototype testing · Pilot validation</span>
+    </div>
+  </footer>
+
+  <script>
+    const body = document.body;
+    const navLinks = document.getElementById('navLinks');
+    const menuBtn = document.getElementById('menuBtn');
+    const themeBtn = document.getElementById('themeBtn');
+    const contrastBtn = document.getElementById('contrastBtn');
+    const fontUp = document.getElementById('fontUp');
+    const fontDown = document.getElementById('fontDown');
+    let fontScale = 1;
+
+    menuBtn.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => navLinks.classList.remove('open')));
+
+    themeBtn.addEventListener('click', () => {
+      body.classList.toggle('light');
+      if (body.classList.contains('high-contrast')) body.classList.remove('high-contrast');
+    });
+
+    contrastBtn.addEventListener('click', () => {
+      body.classList.toggle('high-contrast');
+      if (body.classList.contains('light')) body.classList.remove('light');
+    });
+
+    fontUp.addEventListener('click', () => {
+      fontScale = Math.min(1.18, fontScale + 0.06);
+      document.documentElement.style.setProperty('--font-scale', fontScale.toFixed(2));
+    });
+
+    fontDown.addEventListener('click', () => {
+      fontScale = Math.max(0.9, fontScale - 0.06);
+      document.documentElement.style.setProperty('--font-scale', fontScale.toFixed(2));
+    });
+
+    const hiddenEls = document.querySelectorAll('.hidden-el');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.12 });
+    hiddenEls.forEach(el => observer.observe(el));
+
+    const tabs = document.querySelectorAll('.tab-btn');
+    const contents = document.querySelectorAll('.tab-content');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        contents.forEach(c => c.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+      });
+    });
+
+    const problemInput = document.getElementById('problemInput');
+    const prototypeInput = document.getElementById('prototypeInput');
+    const interestInput = document.getElementById('interestInput');
+    const pricingInput = document.getElementById('pricingInput');
+    const reliabilityInput = document.getElementById('reliabilityInput');
+
+    const problemVal = document.getElementById('problemVal');
+    const prototypeVal = document.getElementById('prototypeVal');
+    const interestVal = document.getElementById('interestVal');
+    const pricingVal = document.getElementById('pricingVal');
+    const reliabilityVal = document.getElementById('reliabilityVal');
+
+    const readinessScore = document.getElementById('readinessScore');
+    const readinessTitle = document.getElementById('readinessTitle');
+    const readinessText = document.getElementById('readinessText');
+    const scoreCircle = document.getElementById('scoreCircle');
+
+    function updateReadiness() {
+      const problem = Number(problemInput.value);
+      const prototype = Number(prototypeInput.value);
+      const interest = Number(interestInput.value);
+      const pricing = Number(pricingInput.value);
+      const reliability = Number(reliabilityInput.value);
+
+      problemVal.textContent = problem + '%';
+      prototypeVal.textContent = prototype + '%';
+      interestVal.textContent = interest + '%';
+      pricingVal.textContent = pricing + '%';
+      reliabilityVal.textContent = reliability + '%';
+
+      const score = Math.round(
+        problem * 0.24 +
+        prototype * 0.20 +
+        interest * 0.24 +
+        pricing * 0.14 +
+        reliability * 0.18
+      );
+
+      readinessScore.textContent = score;
+      const degrees = Math.round(score * 3.6);
+      scoreCircle.style.background = `conic-gradient(var(--accent) 0deg ${degrees}deg, rgba(255,255,255,0.12) ${degrees}deg 360deg)`;
+
+      if (score >= 80) {
+        readinessTitle.textContent = 'Strong launch potential';
+        readinessText.textContent = 'Τα δεδομένα δείχνουν ισχυρή προοπτική. Το Kestrel μπορεί να προχωρήσει σε προσεκτικό pre-launch με σαφές pilot report και αρχική εμπορική καμπάνια.';
+      } else if (score >= 62) {
+        readinessTitle.textContent = 'Pilot-ready with improvements';
+        readinessText.textContent = 'Το Kestrel μπορεί να προχωρήσει σε περιορισμένο pilot, αλλά χρειάζεται περαιτέρω τεχνική σταθεροποίηση και ισχυρότερη τεκμηρίωση αποδοχής τιμής.';
+      } else if (score >= 45) {
+        readinessTitle.textContent = 'Needs iteration before pilot';
+        readinessText.textContent = 'Η ιδέα έχει ενδιαφέρον, αλλά χρειάζεται βελτίωση σε prototype, pricing ή user understanding πριν παρουσιαστεί ως ώριμη επιχειρηματική πρόταση.';
+      } else {
+        readinessTitle.textContent = 'Reframe the concept';
+        readinessText.textContent = 'Τα σήματα επικύρωσης είναι χαμηλά. Η ομάδα πρέπει να επανεξετάσει το target market, την πρόταση αξίας ή τον τρόπο παρουσίασης της λύσης.';
+      }
+    }
+
+    [problemInput, prototypeInput, interestInput, pricingInput, reliabilityInput].forEach(input => input.addEventListener('input', updateReadiness));
+    updateReadiness();
+  </script>
+</body>
+</html>
