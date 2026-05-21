@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Business Model | Kestrel</title>
+  <meta name="description" content="Kestrel business model: B2C premium outdoor users, B2G tactical applications, revenue streams, pricing, break-even, go-to-market strategy and risk analysis." />
+
+  <style>
+    :root {
+      --bg: #07110f;
+      --surface: rgba(255, 255, 255, 0.08);
+      --surface-strong: rgba(255, 255, 255, 0.13);
+      --text: #f5f7ef;
+      --muted: #b9c7bd;
+      --soft: #eaf1df;
+      --accent: #b7f36b;
+      --accent-2: #74d6ff;
+      --gold: #efc86a;
+      --danger: #ff7a6e;
+      --line: rgba(255, 255, 255, 0.16);
+      --shadow: 0 30px 80px rgba(0, 0, 0, 0.42);
+      --radius-lg: 34px;
+      --radius-md: 22px;
+      --font-scale: 1;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 9% 0%, rgba(183, 243, 107, 0.22), transparent 31%),
+        radial-gradient(circle at 89% 6%, rgba(116, 214, 255, 0.18), transparent 34%),
+        radial-gradient(circle at 50% 92%, rgba(239, 200, 106, 0.11), transparent 36%),
+        linear-gradient(135deg, var(--bg), #020403 62%, #0e130c);
+      color: var(--text);
+      font-size: calc(16px * var(--font-scale));
+      overflow-x: hidden;
+    }
+
+    body.light {
+      --bg: #f5f7ef;
+      --surface: rgba(10, 35, 26, 0.07);
+      --surface-strong: rgba(10, 35, 26, 0.12);
+      --text: #0b1a15;
+      --muted: #506258;
+      --soft: #123126;
+      --line: rgba(6, 25, 19, 0.15);
+      --shadow: 0 24px 70px rgba(16, 38, 29, 0.16);
+      background:
+        radial-gradient(circle at 9% 0%, rgba(183, 243, 107, 0.31), transparent 32%),
+        radial-gradient(circle at 89% 6%, rgba(116, 214, 255, 0.18), transparent 34%),
+        linear-gradient(135deg, #f7faef, #edf4e8 62%, #e2ead9);
+    }
+
+    body.high-contrast {
+      --bg: #000;
+      --surface: rgba(255, 255, 255, 0.15);
+      --surface-strong: rgba(255, 255, 255, 0.24);
+      --text: #fff;
+      --muted: #fff;
+      --accent: #d7ff00;
+      --accent-2: #00e5ff;
+      --gold: #ffe600;
+      --danger: #ff2b2b;
+      --line: rgba(255, 255, 255, 0.42);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+    h1, h2, h3, p { margin-top: 0; }
+
+    .page-shell {
+      width: min(1180px, calc(100% - 36px));
+      margin: 0 auto;
+    }
+
+    .announcement {
+      display: flex;
+      justify-content: center;
+      padding: 12px 18px;
+      background: linear-gradient(90deg, rgba(183, 243, 107, 0.18), rgba(116, 214, 255, 0.14));
+      border-bottom: 1px solid var(--line);
+      color: var(--soft);
+      font-size: 0.92rem;
+      text-align: center;
+    }
+
+    .announcement strong { color: var(--accent); }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(20px);
+      background: rgba(5, 14, 11, 0.72);
+      border-bottom: 1px solid var(--line);
+    }
+
+    body.light header { background: rgba(245, 247, 239, 0.78); }
+
+    .nav {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 190px;
+    }
+
+    .logo-mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 16px;
+      background: linear-gradient(145deg, rgba(183, 243, 107, 0.96), rgba(116, 214, 255, 0.88));
+      position: relative;
+      box-shadow: 0 14px 30px rgba(183, 243, 107, 0.21);
+      overflow: hidden;
+    }
+
+    .logo-mark::before {
+      content: "";
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      border: 3px solid rgba(7, 17, 15, 0.72);
+      border-left: 0;
+      border-bottom: 0;
+      transform: rotate(-23deg);
+      top: 9px;
+      left: 7px;
+      border-radius: 3px 14px 3px 3px;
+    }
+
+    .logo-mark::after {
+      content: "";
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: #07110f;
+      top: 15px;
+      left: 15px;
+    }
+
+    .brand-text b {
+      display: block;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 1rem;
+    }
+
+    .brand-text span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.74rem;
+      margin-top: 2px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 6px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: 999px;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: 0.88rem;
+      padding: 10px 13px;
+      border-radius: 999px;
+      transition: 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--text);
+      background: var(--surface-strong);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .icon-btn, .pill-btn {
+      border: 1px solid var(--line);
+      color: var(--text);
+      background: var(--surface);
+      border-radius: 999px;
+      min-height: 42px;
+      cursor: pointer;
+      transition: transform 0.18s ease, background 0.18s ease, border 0.18s ease;
+    }
+
+    .icon-btn {
+      width: 42px;
+      display: grid;
+      place-items: center;
+    }
+
+    .pill-btn {
+      padding: 0 18px;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      font-weight: 750;
+    }
+
+    .icon-btn:hover, .pill-btn:hover {
+      transform: translateY(-2px);
+      background: var(--surface-strong);
+      border-color: rgba(183, 243, 107, 0.42);
+    }
+
+    .primary-btn {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #06100d;
+      border: 0;
+      box-shadow: 0 18px 40px rgba(116, 214, 255, 0.12);
+    }
+
+    .menu-toggle { display: none; }
+
+    .hero {
+      padding: 90px 0 70px;
+      position: relative;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(390px, 0.9fr);
+      gap: 46px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(183, 243, 107, 0.34);
+      background: rgba(183, 243, 107, 0.1);
+      color: var(--accent);
+      font-weight: 850;
+      font-size: 0.86rem;
+      margin-bottom: 18px;
+    }
+
+    .pulse-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 0 rgba(183, 243, 107, 0.72);
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(183, 243, 107, 0.72); }
+      70% { box-shadow: 0 0 0 12px rgba(183, 243, 107, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(183, 243, 107, 0); }
+    }
+
+    h1 {
+      font-size: clamp(3rem, 7vw, 6.6rem);
+      line-height: 0.9;
+      letter-spacing: -0.075em;
+      margin-bottom: 22px;
+    }
+
+    .gradient-text {
+      display: block;
+      background: linear-gradient(135deg, var(--text), var(--accent) 42%, var(--accent-2));
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-copy {
+      color: var(--muted);
+      font-size: 1.13rem;
+      line-height: 1.78;
+      margin-bottom: 28px;
+      max-width: 760px;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .business-board {
+      min-height: 560px;
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 50% 0, rgba(116, 214, 255, 0.18), transparent 34%),
+        linear-gradient(180deg, var(--surface), rgba(255,255,255,0.035));
+      border-radius: 38px;
+      box-shadow: var(--shadow);
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .board-title {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .board-title h3 {
+      margin: 0;
+      font-size: 1.2rem;
+      letter-spacing: -0.02em;
+    }
+
+    .board-title span {
+      color: var(--accent);
+      font-weight: 900;
+      font-size: 0.82rem;
+    }
+
+    .metric-stack {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      gap: 14px;
+    }
+
+    .hero-metric {
+      border: 1px solid var(--line);
+      background: rgba(2,6,5,0.62);
+      backdrop-filter: blur(18px);
+      border-radius: 24px;
+      padding: 18px;
+    }
+
+    body.light .hero-metric { background: rgba(255,255,255,0.7); }
+
+    .hero-metric span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.88rem;
+      margin-bottom: 8px;
+    }
+
+    .hero-metric b {
+      display: block;
+      font-size: clamp(1.8rem, 4vw, 3.1rem);
+      letter-spacing: -0.06em;
+      line-height: 1;
+    }
+
+    .hero-metric small {
+      display: block;
+      color: var(--muted);
+      margin-top: 8px;
+      line-height: 1.45;
+    }
+
+    .mini-bars {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 90px 1fr 56px;
+      gap: 10px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    .bar-track {
+      height: 9px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.1);
+      overflow: hidden;
+    }
+
+    .bar-track span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    }
+
+    .section { padding: 78px 0; }
+
+    .section-head {
+      max-width: 790px;
+      margin-bottom: 34px;
+    }
+
+    .section-kicker {
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-weight: 950;
+      font-size: 0.76rem;
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 4vw, 4rem);
+      letter-spacing: -0.055em;
+      line-height: 1.02;
+      margin-bottom: 16px;
+    }
+
+    .section-head p, .lead {
+      color: var(--muted);
+      line-height: 1.75;
+      font-size: 1.04rem;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, var(--surface), rgba(255,255,255,0.035));
+      border-radius: var(--radius-md);
+      padding: 24px;
+      box-shadow: 0 16px 55px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+
+    .icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      background: rgba(183, 243, 107, 0.12);
+      color: var(--accent);
+      margin-bottom: 18px;
+      font-size: 1.25rem;
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+      font-size: 1.22rem;
+      letter-spacing: -0.02em;
+    }
+
+    .card p, .card li {
+      color: var(--muted);
+      line-height: 1.64;
+    }
+
+    .card ul { padding-left: 18px; margin-bottom: 0; }
+
+    .split {
+      display: grid;
+      grid-template-columns: 0.96fr 1.04fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .segment-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .segment-card {
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 80% 0, rgba(183,243,107,0.13), transparent 35%),
+        var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+    }
+
+    .segment-card h3 {
+      font-size: clamp(1.5rem, 3vw, 2.5rem);
+      letter-spacing: -0.05em;
+      margin-bottom: 12px;
+    }
+
+    .persona-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .persona-item {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .persona-item b { display: block; color: var(--text); margin-bottom: 4px; }
+    .persona-item span { color: var(--muted); line-height: 1.5; }
+
+    .revenue-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .revenue-card {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: 24px;
+      padding: 20px;
+    }
+
+    .revenue-card span {
+      display: inline-flex;
+      color: #06100d;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      border-radius: 999px;
+      padding: 7px 10px;
+      font-weight: 950;
+      font-size: 0.78rem;
+      margin-bottom: 14px;
+    }
+
+    .revenue-card h3 { margin-bottom: 8px; }
+    .revenue-card p { color: var(--muted); line-height: 1.55; margin-bottom: 0; }
+
+    .pricing-table {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .price-card {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, var(--surface), rgba(255,255,255,0.035));
+      border-radius: var(--radius-lg);
+      padding: 26px;
+      position: relative;
+    }
+
+    .price-card.featured {
+      border-color: rgba(183,243,107,0.48);
+      box-shadow: 0 24px 80px rgba(183,243,107,0.08);
+    }
+
+    .price-card h3 { margin-bottom: 8px; font-size: 1.25rem; }
+    .price-card .price {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      letter-spacing: -0.06em;
+      font-weight: 950;
+      margin: 16px 0 8px;
+    }
+
+    .price-card p, .price-card li { color: var(--muted); line-height: 1.6; }
+    .price-card ul { padding-left: 18px; margin-bottom: 0; }
+
+    .tag {
+      display: inline-flex;
+      color: #06100d;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      border-radius: 999px;
+      padding: 7px 10px;
+      font-weight: 950;
+      font-size: 0.78rem;
+      margin-bottom: 12px;
+    }
+
+    .calculator {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .slider-group { display: grid; gap: 18px; }
+
+    .range-line {
+      border: 1px solid var(--line);
+      padding: 16px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.045);
+    }
+
+    .range-line label {
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      margin-bottom: 10px;
+      font-weight: 750;
+      gap: 14px;
+    }
+
+    input[type="range"] { width: 100%; accent-color: var(--accent); }
+
+    .calc-output {
+      min-height: 390px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background:
+        radial-gradient(circle at 50% 0, rgba(183,243,107,0.15), transparent 42%),
+        var(--surface);
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .calc-grid {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .calc-tile {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.055);
+      border-radius: 22px;
+      padding: 18px;
+    }
+
+    .calc-tile span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.88rem;
+      margin-bottom: 8px;
+    }
+
+    .calc-tile b {
+      display: block;
+      font-size: clamp(1.35rem, 3vw, 2.4rem);
+      letter-spacing: -0.05em;
+    }
+
+    .roadmap {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      counter-reset: roadmap;
+    }
+
+    .roadmap-item {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: 24px;
+      padding: 20px;
+    }
+
+    .roadmap-item::before {
+      counter-increment: roadmap;
+      content: "0" counter(roadmap);
+      color: var(--accent);
+      font-weight: 950;
+      display: block;
+      margin-bottom: 14px;
+    }
+
+    .roadmap-item h3 { font-size: 1.02rem; margin-bottom: 8px; }
+    .roadmap-item p { color: var(--muted); line-height: 1.55; margin: 0; font-size: 0.93rem; }
+
+    .risk-table {
+      display: grid;
+      gap: 12px;
+    }
+
+    .risk-row {
+      display: grid;
+      grid-template-columns: 0.7fr 1fr 1fr auto;
+      gap: 12px;
+      align-items: center;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.045);
+      border-radius: 20px;
+      padding: 16px;
+    }
+
+    .risk-row b { color: var(--text); }
+    .risk-row span { color: var(--muted); line-height: 1.45; }
+    .risk-pill { border-radius: 999px; padding: 8px 10px; font-weight: 950; color: #06100d; background: linear-gradient(135deg, var(--gold), var(--accent)); white-space: nowrap; }
+
+    .cta { padding: 86px 0 34px; }
+
+    .cta-box {
+      border: 1px solid rgba(183,243,107,0.28);
+      background:
+        radial-gradient(circle at 25% 0%, rgba(183,243,107,0.2), transparent 30%),
+        radial-gradient(circle at 85% 40%, rgba(116,214,255,0.15), transparent 34%),
+        var(--surface);
+      border-radius: 42px;
+      padding: clamp(28px, 6vw, 64px);
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .cta-box h2 { max-width: 850px; margin-left: auto; margin-right: auto; }
+    .cta-box p { color: var(--muted); line-height: 1.75; max-width: 720px; margin: 0 auto 26px; }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 28px 0;
+      color: var(--muted);
+    }
+
+    .footer-grid {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .hidden-el {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: 0.7s ease;
+    }
+
+    .hidden-el.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1120px) {
+      .hero-grid, .split, .calculator { grid-template-columns: 1fr; }
+      .cards-grid, .pricing-table { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .revenue-grid, .roadmap { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .business-board { min-height: auto; }
+    }
+
+    @media (max-width: 880px) {
+      .menu-toggle { display: grid; }
+
+      .nav-links {
+        position: fixed;
+        left: 18px;
+        right: 18px;
+        top: 138px;
+        flex-direction: column;
+        align-items: stretch;
+        border-radius: 26px;
+        padding: 12px;
+        transform: translateY(-12px);
+        opacity: 0;
+        pointer-events: none;
+        transition: 0.2s ease;
+      }
+
+      .nav-links.open {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
+
+      .nav-links a { padding: 13px 14px; }
+      .nav-actions .hide-mobile { display: none; }
+      .cards-grid, .pricing-table, .revenue-grid, .segment-grid, .roadmap, .calc-grid { grid-template-columns: 1fr; }
+      .risk-row { grid-template-columns: 1fr; }
+      .section { padding: 58px 0; }
+      .hero { padding-top: 58px; }
+    }
+
+    @media (max-width: 560px) {
+      .page-shell { width: min(100% - 24px, 1180px); }
+      .brand-text span { display: none; }
+      .brand { min-width: auto; }
+      .nav { min-height: 72px; }
+      .hero-actions .pill-btn { width: 100%; justify-content: center; }
+      .business-board { padding: 16px; }
+      .bar-row { grid-template-columns: 72px 1fr 44px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="announcement">
+    <span><strong>Kestrel Business Model</strong> · Premium outdoor innovation with B2C and B2G growth potential.</span>
+  </div>
+
+  <header>
+    <div class="page-shell nav">
+      <a class="brand" href="index.html" aria-label="Kestrel home">
+        <span class="logo-mark" aria-hidden="true"></span>
+        <span class="brand-text">
+          <b>Kestrel</b>
+          <span>Balance till the skies</span>
+        </span>
+      </a>
+
+      <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="technology.html">Technology</a>
+        <a href="app.html">App</a>
+        <a class="active" href="business.html">Business</a>
+        <a href="validation.html">Validation</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="icon-btn" id="themeBtn" title="Toggle light/dark mode" aria-label="Toggle theme">◐</button>
+        <button class="icon-btn" id="contrastBtn" title="High contrast" aria-label="High contrast">◩</button>
+        <button class="icon-btn hide-mobile" id="fontDown" title="Decrease font" aria-label="Decrease font">A−</button>
+        <button class="icon-btn hide-mobile" id="fontUp" title="Increase font" aria-label="Increase font">A+</button>
+        <a class="pill-btn primary-btn hide-mobile" href="validation.html">Validate idea</a>
+        <button class="icon-btn menu-toggle" id="menuBtn" aria-label="Open menu">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="page-shell hero-grid">
+        <div class="hidden-el">
+          <div class="eyebrow"><span class="pulse-dot"></span> Commercial strategy</div>
+          <h1>Built as a product. <span class="gradient-text">Designed as a venture.</span></h1>
+          <p class="hero-copy">
+            Το Kestrel δεν είναι μόνο ένα τεχνολογικό concept. Είναι μια επιχειρηματική πρόταση που συνδυάζει premium outdoor εξοπλισμό, ψηφιακή υπηρεσία μέσω εφαρμογής και δυνατότητα επέκτασης σε αγορές υψηλής αξίας, όπως tactical και B2G χρήσεις.
+          </p>
+          <div class="hero-actions">
+            <a class="pill-btn primary-btn" href="#model">See business model →</a>
+            <a class="pill-btn" href="#calculator">Open calculator</a>
+          </div>
+        </div>
+
+        <aside class="business-board hidden-el" aria-label="Kestrel business dashboard">
+          <div class="board-title">
+            <h3>Year 1 snapshot</h3>
+            <span>Scenario-based</span>
+          </div>
+          <div class="metric-stack">
+            <div class="hero-metric">
+              <span>Estimated Year 1 revenue</span>
+              <b>€462K</b>
+              <small>Hardware sales, B2G pilot and app subscription potential in a realistic first-market scenario.</small>
+            </div>
+            <div class="hero-metric">
+              <span>Indicative pricing</span>
+              <b>€250 / €400</b>
+              <small>B2C premium outdoor backpack and B2G tactical version.</small>
+              <div class="mini-bars">
+                <div class="bar-row"><span>B2C</span><div class="bar-track"><span style="width:62%"></span></div><strong>€250</strong></div>
+                <div class="bar-row"><span>B2G</span><div class="bar-track"><span style="width:100%"></span></div><strong>€400</strong></div>
+                <div class="bar-row"><span>App Pro</span><div class="bar-track"><span style="width:24%"></span></div><strong>€5/mo</strong></div>
+              </div>
+            </div>
+            <div class="hero-metric">
+              <span>Estimated break-even</span>
+              <b>1,033 units</b>
+              <small>Indicative threshold based on fixed costs, contribution margin and early-stage commercialization.</small>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="model">
+      <div class="page-shell">
+        <div class="section-head hidden-el">
+          <div class="section-kicker">Business model</div>
+          <h2>Το Kestrel δημιουργεί αξία σε τρία επίπεδα: προϊόν, λογισμικό και δεδομένα.</h2>
+          <p>Το επιχειρηματικό μοντέλο στηρίζεται στην πώληση smart backpack, στην επέκταση μέσω premium app υπηρεσιών και στη μελλοντική αξιοποίηση τεχνογνωσίας σε B2B/B2G συνεργασίες.</p>
+        </div>
+
+        <div class="revenue-grid">
+          <article class="revenue-card hidden-el"><span>01</span><h3>Hardware sales</h3><p>Πώληση του Kestrel backpack σε premium outdoor χρήστες και tactical πελάτες.</p></article>
+          <article class="revenue-card hidden-el"><span>02</span><h3>App subscription</h3><p>Freemium λογική με Pro analytics, ιστορικό, fatigue insights και advanced calibration.</p></article>
+          <article class="revenue-card hidden-el"><span>03</span><h3>B2G contracts</h3><p>Πιλοτικές προμήθειες ή ειδικές εκδόσεις για οργανισμούς με υψηλές απαιτήσεις μεταφοράς φορτίου.</p></article>
+          <article class="revenue-card hidden-el"><span>04</span><h3>Licensing</h3><p>Μελλοντική αδειοδότηση της τεχνολογίας σε brands σακιδίων, tactical gear ή εργονομικού εξοπλισμού.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="segments">
+      <div class="page-shell">
+        <div class="section-head hidden-el">
+          <div class="section-kicker">Market segments</div>
+          <h2>Διπλή στόχευση: premium outdoor αγορά και tactical readiness.</h2>
+          <p>Η εμπορική δύναμη του Kestrel βρίσκεται στο ότι το ίδιο τεχνολογικό core μπορεί να προσαρμοστεί σε δύο διαφορετικές ανάγκες.</p>
+        </div>
+
+        <div class="segment-grid">
+          <article class="segment-card hidden-el">
+            <div class="icon">⛰</div>
+            <h3>B2C · Outdoor premium</h3>
+            <p class="lead">Για πεζοπόρους, ορειβάτες και adventure users που δίνουν αξία σε ασφάλεια, τεχνολογία και άνεση.</p>
+            <div class="persona-list">
+              <div class="persona-item"><b>Need</b><span>Σωστή κατανομή βάρους, λιγότερη κόπωση και μεγαλύτερη εμπιστοσύνη στη διαδρομή.</span></div>
+              <div class="persona-item"><b>Value proposition</b><span>Έξυπνη εργονομία, real-time feedback και premium αίσθηση εξοπλισμού.</span></div>
+              <div class="persona-item"><b>Channel</b><span>E-shop, outdoor stores, hiking communities, influencers και experience-based demos.</span></div>
+            </div>
+          </article>
+
+          <article class="segment-card hidden-el">
+            <div class="icon">🎖</div>
+            <h3>B2G · Tactical applications</h3>
+            <p class="lead">Για οργανισμούς όπου η μεταφορά βάρους επηρεάζει ετοιμότητα, αντοχή και πρόληψη τραυματισμών.</p>
+            <div class="persona-list">
+              <div class="persona-item"><b>Need</b><span>Μείωση καταπόνησης, καλύτερη διαχείριση φορτίου και λειτουργική αξιοπιστία.</span></div>
+              <div class="persona-item"><b>Value proposition</b><span>Data-driven πρόληψη, tactical durability και δυνατότητα πιλοτικών προγραμμάτων.</span></div>
+              <div class="persona-item"><b>Channel</b><span>Πιλοτικές δοκιμές, δημόσιοι διαγωνισμοί, συνεργασίες με προμηθευτές εξοπλισμού.</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="pricing">
+      <div class="page-shell">
+        <div class="section-head hidden-el">
+          <div class="section-kicker">Pricing strategy</div>
+          <h2>Premium τιμολόγηση με ξεκάθαρη διαφοροποίηση ανά αγορά.</h2>
+          <p>Η τιμολόγηση πρέπει να στηρίζει την καινοτομία, το κόστος hardware και την αντίληψη αξίας του χρήστη.</p>
+        </div>
+
+        <div class="pricing-table">
+          <article class="price-card hidden-el">
+            <span class="tag">B2C</span>
+            <h3>Kestrel Outdoor</h3>
+            <div class="price">€250</div>
+            <p>Για premium outdoor users που θέλουν έξυπνο σακίδιο με βασική εφαρμογή.</p>
+            <ul>
+              <li>Pressure sensors</li>
+              <li>Basic Ergo-Score</li>
+              <li>Smart alerts</li>
+              <li>Guided adjustment</li>
+            </ul>
+          </article>
+
+          <article class="price-card featured hidden-el">
+            <span class="tag">B2G</span>
+            <h3>Kestrel Tactical</h3>
+            <div class="price">€400</div>
+            <p>Ειδική έκδοση για απαιτητικά περιβάλλοντα και οργανωμένη μεταφορά φορτίου.</p>
+            <ul>
+              <li>Enhanced durability</li>
+              <li>Advanced calibration</li>
+              <li>Operational reporting</li>
+              <li>Pilot procurement option</li>
+            </ul>
+          </article>
+
+          <article class="price-card hidden-el">
+            <span class="tag">APP</span>
+            <h3>Kestrel Pro</h3>
+            <div class="price">€5/mo</div>
+            <p>Συνδρομητικό μοντέλο για analytics και προσωποποιημένη εργονομική καθοδήγηση.</p>
+            <ul>
+              <li>History dashboard</li>
+              <li>Fatigue insights</li>
+              <li>Route comparisons</li>
+              <li>Personalized tips</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="calculator">
+      <div class="page-shell">
+        <div class="section-head hidden-el">
+          <div class="section-kicker">Interactive financial calculator</div>
+          <h2>Δοκίμασε διαφορετικά σενάρια πωλήσεων και δες την εμπορική εικόνα.</h2>
+          <p>Το calculator είναι ενδεικτικό και βοηθά να παρουσιαστεί η οικονομική λογική του concept με πιο δημιουργικό τρόπο.</p>
+        </div>
+
+        <div class="panel calculator hidden-el">
+          <div class="slider-group">
+            <div class="range-line"><label for="b2cUnits"><span>B2C units</span><b id="b2cVal">1200</b></label><input id="b2cUnits" type="range" min="100" max="3000" step="50" value="1200" /></div>
+            <div class="range-line"><label for="b2gUnits"><span>B2G units</span><b id="b2gVal">300</b></label><input id="b2gUnits" type="range" min="0" max="1000" step="25" value="300" /></div>
+            <div class="range-line"><label for="appUsers"><span>Pro app users</span><b id="appVal">500</b></label><input id="appUsers" type="range" min="0" max="2500" step="50" value="500" /></div>
+            <div class="range-line"><label for="fixedCosts"><span>Fixed costs</span><b id="fixedVal">€120K</b></label><input id="fixedCosts" type="range" min="50000" max="250000" step="5000" value="120000" /></div>
+          </div>
+
+          <div class="calc-output">
+            <div class="calc-grid">
+              <div class="calc-tile"><span>Hardware revenue</span><b id="hardwareRevenue">€420K</b></div>
+              <div class="calc-tile"><span>Annual app revenue</span><b id="appRevenue">€30K</b></div>
+              <div class="calc-tile"><span>Total revenue</span><b id="totalRevenue">€450K</b></div>
+              <div class="calc-tile"><span>Estimated gross profit</span><b id="grossProfit">€240K</b></div>
+              <div class="calc-tile"><span>Operating result</span><b id="operatingResult">€120K</b></div>
+              <div class="calc-tile"><span>Status</span><b id="scenarioStatus">Viable</b></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="go-to-market">
+      <div class="page-shell">
+        <div class="section-head hidden-el">
+          <div class="section-kicker">Go-to-market roadmap</div>
+          <h2>Στρατηγική εισόδου στην αγορά σε τέσσερα στάδια.</h2>
+          <p>Το Kestrel χρειάζεται πρώτα απόδειξη λειτουργικότητας και αποδοχής, μετά εμπορική τοποθέτηση και στη συνέχεια επέκταση.</p>
+        </div>
+
+        <div class="roadmap">
+          <div class="roadmap-item hidden-el"><h3>Prototype validation</h3><p>Δοκιμή αισθητήρων, εφαρμογής, buzzer και βασικής εργονομικής χρησιμότητας.</p></div>
+          <div class="roadmap-item hidden-el"><h3>Outdoor pilots</h3><p>Πιλοτικές δοκιμές με πεζοπόρους, μικρές κοινότητες και outdoor micro-influencers.</p></div>
+          <div class="roadmap-item hidden-el"><h3>Premium launch</h3><p>Πρώτη εμπορική διάθεση μέσω e-shop, outdoor events και στοχευμένου performance marketing.</p></div>
+          <div class="roadmap-item hidden-el"><h3>B2G expansion</h3><p>Πιλοτικές προτάσεις σε φορείς με ανάγκες μεταφοράς φορτίου και πρόληψης καταπόνησης.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="costs">
+      <div class="page-shell split">
+        <div class="panel hidden-el">
+          <div class="section-kicker">Cost structure</div>
+          <h2>Τα βασικά κόστη που πρέπει να ελεγχθούν.</h2>
+          <p class="lead">Η οικονομική βιωσιμότητα εξαρτάται από το κόστος αισθητήρων, την κατασκευή σακιδίου, την ανάπτυξη εφαρμογής, το marketing και την υποστήριξη.</p>
+          <div class="cards-grid" style="grid-template-columns:1fr;">
+            <article class="card"><h3>Variable costs</h3><p>Υλικά σακιδίου, αισθητήρες, κύκλωμα, συναρμολόγηση, packaging και logistics.</p></article>
+            <article class="card"><h3>Fixed costs</h3><p>R&D, app development, industrial design, certifications, branding και αρχικό marketing.</p></article>
+            <article class="card"><h3>Scaling costs</h3><p>Αποθέματα, after-sales support, warranty, data infrastructure και B2G customization.</p></article>
+          </div>
+        </div>
+
+        <div class="panel hidden-el">
+          <div class="section-kicker">Competitive advantage</div>
+          <h2>Η διαφοροποίηση δεν είναι το σακίδιο. Είναι η ενεργητική εργονομία.</h2>
+          <p class="lead">Η αγορά έχει εργονομικά σακίδια και wearables, όμως το Kestrel γεφυρώνει το κενό μεταξύ μεταφοράς φορτίου και real-time μηχανικής πληροφόρησης.</p>
+          <div class="cards-grid" style="grid-template-columns:1fr;">
+            <article class="card"><h3>Data-driven ergonomics</h3><p>Το προϊόν δεν υπόσχεται γενική άνεση. Μετρά την κατανομή πίεσης και ειδοποιεί όταν αλλάζει.</p></article>
+            <article class="card"><h3>Hybrid hardware + software</h3><p>Το value proposition δεν τελειώνει στην αγορά του σακιδίου. Συνεχίζεται μέσα από την εφαρμογή.</p></article>
+            <article class="card"><h3>Dual market potential</h3><p>Το ίδιο core technology μπορεί να προσαρμοστεί σε outdoor και tactical εφαρμογές.</p></article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="risks">
+      <div class="page-shell">
+        <div class="section-head hidden-el">
+          <div class="section-kicker">Risk analysis</div>
+          <h2>Οι βασικοί επιχειρηματικοί κίνδυνοι και η αντιμετώπισή τους.</h2>
+          <p>Μια επαγγελματική επιχειρηματική παρουσίαση πρέπει να δείχνει όχι μόνο την ευκαιρία, αλλά και επίγνωση των κινδύνων.</p>
+        </div>
+
+        <div class="panel hidden-el">
+          <div class="risk-table">
+            <div class="risk-row"><b>Technical reliability</b><span>Οι αισθητήρες πρέπει να παραμένουν αξιόπιστοι σε κίνηση, υγρασία και πίεση.</span><span>Testing, calibration και προστατευτική ενσωμάτωση στο σακίδιο.</span><span class="risk-pill">High</span></div>
+            <div class="risk-row"><b>Customer adoption</b><span>Οι χρήστες μπορεί να μη θεωρήσουν απαραίτητη την έξυπνη λειτουργία.</span><span>Demo experience, storytelling και ανάδειξη πρόληψης καταπόνησης.</span><span class="risk-pill">Medium</span></div>
+            <div class="risk-row"><b>Production cost</b><span>Το hardware μπορεί να αυξήσει την τελική τιμή.</span><span>Σταδιακή παραγωγή, modular design και έλεγχος BOM.</span><span class="risk-pill">Medium</span></div>
+            <div class="risk-row"><b>B2G sales cycle</b><span>Οι δημόσιες ή οργανωτικές προμήθειες έχουν αργές διαδικασίες.</span><span>Πρώτα B2C traction, μετά pilot cases και τεκμηρίωση αξίας.</span><span class="risk-pill">High</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="page-shell">
+        <div class="cta-box hidden-el">
+          <div class="section-kicker">Next page</div>
+          <h2>Η επιχειρηματική λογική χρειάζεται επικύρωση.</h2>
+          <p>Η επόμενη σελίδα παρουσιάζει πώς μπορεί να αποδειχθεί ότι το Kestrel έχει πραγματική αξία: ερωτηματολόγια, demo testing, user feedback και πιλοτική εφαρμογή.</p>
+          <div class="hero-actions" style="justify-content:center;">
+            <a class="pill-btn primary-btn" href="validation.html">Next: Validation →</a>
+            <a class="pill-btn" href="app.html">Back to App</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="page-shell footer-grid">
+      <span>© 2026 Kestrel Concept · Business Model Page</span>
+      <span>B2C · B2G · Freemium app · Licensing potential</span>
+    </div>
+  </footer>
+
+  <script>
+    const body = document.body;
+    const navLinks = document.getElementById('navLinks');
+    const menuBtn = document.getElementById('menuBtn');
+    const themeBtn = document.getElementById('themeBtn');
+    const contrastBtn = document.getElementById('contrastBtn');
+    const fontUp = document.getElementById('fontUp');
+    const fontDown = document.getElementById('fontDown');
+    let fontScale = 1;
+
+    menuBtn.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => navLinks.classList.remove('open')));
+
+    themeBtn.addEventListener('click', () => {
+      body.classList.toggle('light');
+      if (body.classList.contains('high-contrast')) body.classList.remove('high-contrast');
+    });
+
+    contrastBtn.addEventListener('click', () => {
+      body.classList.toggle('high-contrast');
+      if (body.classList.contains('light')) body.classList.remove('light');
+    });
+
+    fontUp.addEventListener('click', () => {
+      fontScale = Math.min(1.18, fontScale + 0.06);
+      document.documentElement.style.setProperty('--font-scale', fontScale.toFixed(2));
+    });
+
+    fontDown.addEventListener('click', () => {
+      fontScale = Math.max(0.9, fontScale - 0.06);
+      document.documentElement.style.setProperty('--font-scale', fontScale.toFixed(2));
+    });
+
+    const hiddenEls = document.querySelectorAll('.hidden-el');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.12 });
+    hiddenEls.forEach(el => observer.observe(el));
+
+    const b2cUnits = document.getElementById('b2cUnits');
+    const b2gUnits = document.getElementById('b2gUnits');
+    const appUsers = document.getElementById('appUsers');
+    const fixedCosts = document.getElementById('fixedCosts');
+
+    const b2cVal = document.getElementById('b2cVal');
+    const b2gVal = document.getElementById('b2gVal');
+    const appVal = document.getElementById('appVal');
+    const fixedVal = document.getElementById('fixedVal');
+
+    const hardwareRevenue = document.getElementById('hardwareRevenue');
+    const appRevenue = document.getElementById('appRevenue');
+    const totalRevenue = document.getElementById('totalRevenue');
+    const grossProfit = document.getElementById('grossProfit');
+    const operatingResult = document.getElementById('operatingResult');
+    const scenarioStatus = document.getElementById('scenarioStatus');
+
+    function euro(value) {
+      const rounded = Math.round(value / 1000);
+      if (Math.abs(value) >= 1000) return '€' + rounded + 'K';
+      return '€' + Math.round(value);
+    }
+
+    function updateCalculator() {
+      const b2c = Number(b2cUnits.value);
+      const b2g = Number(b2gUnits.value);
+      const users = Number(appUsers.value);
+      const fixed = Number(fixedCosts.value);
+
+      const b2cPrice = 250;
+      const b2gPrice = 400;
+      const appMonthly = 5;
+      const variableCostB2C = 120;
+      const variableCostB2G = 190;
+
+      const hardware = b2c * b2cPrice + b2g * b2gPrice;
+      const app = users * appMonthly * 12;
+      const total = hardware + app;
+      const variableCost = b2c * variableCostB2C + b2g * variableCostB2G;
+      const gross = total - variableCost;
+      const operating = gross - fixed;
+
+      b2cVal.textContent = b2c.toLocaleString('en-US');
+      b2gVal.textContent = b2g.toLocaleString('en-US');
+      appVal.textContent = users.toLocaleString('en-US');
+      fixedVal.textContent = euro(fixed);
+
+      hardwareRevenue.textContent = euro(hardware);
+      appRevenue.textContent = euro(app);
+      totalRevenue.textContent = euro(total);
+      grossProfit.textContent = euro(gross);
+      operatingResult.textContent = euro(operating);
+      scenarioStatus.textContent = operating >= 0 ? 'Viable' : 'Needs scale';
+    }
+
+    [b2cUnits, b2gUnits, appUsers, fixedCosts].forEach(input => input.addEventListener('input', updateCalculator));
+    updateCalculator();
+  </script>
+</body>
+</html>
