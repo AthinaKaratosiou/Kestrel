@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Kestrel | Balance till the skies</title>
+  <meta name="description" content="Learn the vision, mission and innovation behind Kestrel, the smart load-balance backpack for safer movement and real-time ergonomic guidance." />
+  <style>
+    :root {
+      --bg: #07110f;
+      --bg-2: #0d1c18;
+      --surface: rgba(255, 255, 255, 0.08);
+      --surface-strong: rgba(255, 255, 255, 0.13);
+      --text: #f5f7ef;
+      --muted: #b9c7bd;
+      --soft: #eaf1df;
+      --accent: #b7f36b;
+      --accent-2: #74d6ff;
+      --gold: #efc86a;
+      --danger: #ff7a6e;
+      --line: rgba(255, 255, 255, 0.16);
+      --shadow: 0 30px 80px rgba(0, 0, 0, 0.42);
+      --radius-lg: 34px;
+      --radius-md: 22px;
+      --radius-sm: 14px;
+      --font-scale: 1;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 8% 0%, rgba(183, 243, 107, 0.22), transparent 32%),
+        radial-gradient(circle at 90% 4%, rgba(116, 214, 255, 0.18), transparent 34%),
+        linear-gradient(135deg, var(--bg), #020403 64%, #10160e);
+      color: var(--text);
+      font-size: calc(16px * var(--font-scale));
+      overflow-x: hidden;
+    }
+
+    body.light {
+      --bg: #f5f7ef;
+      --bg-2: #e9efe1;
+      --surface: rgba(10, 35, 26, 0.07);
+      --surface-strong: rgba(10, 35, 26, 0.12);
+      --text: #0b1a15;
+      --muted: #506258;
+      --soft: #123126;
+      --line: rgba(6, 25, 19, 0.15);
+      --shadow: 0 24px 70px rgba(16, 38, 29, 0.16);
+      background:
+        radial-gradient(circle at 8% 0%, rgba(183, 243, 107, 0.31), transparent 32%),
+        radial-gradient(circle at 90% 4%, rgba(116, 214, 255, 0.18), transparent 34%),
+        linear-gradient(135deg, #f7faef, #edf4e8 62%, #e2ead9);
+    }
+
+    body.high-contrast {
+      --bg: #000;
+      --bg-2: #050505;
+      --surface: rgba(255, 255, 255, 0.15);
+      --surface-strong: rgba(255, 255, 255, 0.24);
+      --text: #fff;
+      --muted: #fff;
+      --accent: #d7ff00;
+      --accent-2: #00e5ff;
+      --gold: #ffe600;
+      --danger: #ff2b2b;
+      --line: rgba(255, 255, 255, 0.42);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    h1, h2, h3, p { margin-top: 0; }
+
+    .page-shell {
+      width: min(1180px, calc(100% - 36px));
+      margin: 0 auto;
+    }
+
+    .announcement {
+      position: relative;
+      z-index: 4;
+      display: flex;
+      justify-content: center;
+      padding: 12px 18px;
+      background: linear-gradient(90deg, rgba(183, 243, 107, 0.18), rgba(116, 214, 255, 0.14));
+      border-bottom: 1px solid var(--line);
+      color: var(--soft);
+      font-size: 0.92rem;
+      text-align: center;
+    }
+
+    .announcement strong { color: var(--accent); }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(20px);
+      background: rgba(5, 14, 11, 0.72);
+      border-bottom: 1px solid var(--line);
+    }
+
+    body.light header { background: rgba(245, 247, 239, 0.78); }
+
+    .nav {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 190px;
+    }
+
+    .logo-mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 16px;
+      background: linear-gradient(145deg, rgba(183, 243, 107, 0.96), rgba(116, 214, 255, 0.88));
+      position: relative;
+      box-shadow: 0 14px 30px rgba(183, 243, 107, 0.21);
+      overflow: hidden;
+    }
+
+    .logo-mark::before {
+      content: "";
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      border: 3px solid rgba(7, 17, 15, 0.72);
+      border-left: 0;
+      border-bottom: 0;
+      transform: rotate(-23deg);
+      top: 9px;
+      left: 7px;
+      border-radius: 3px 14px 3px 3px;
+    }
+
+    .logo-mark::after {
+      content: "";
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: #07110f;
+      top: 15px;
+      left: 15px;
+    }
+
+    .brand-text b {
+      display: block;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 1rem;
+    }
+
+    .brand-text span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.74rem;
+      margin-top: 2px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 6px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: 999px;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: 0.88rem;
+      padding: 10px 13px;
+      border-radius: 999px;
+      transition: 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--text);
+      background: var(--surface-strong);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .icon-btn,
+    .pill-btn {
+      border: 1px solid var(--line);
+      color: var(--text);
+      background: var(--surface);
+      border-radius: 999px;
+      min-height: 42px;
+      cursor: pointer;
+      transition: transform 0.18s ease, background 0.18s ease, border 0.18s ease;
+    }
+
+    .icon-btn {
+      width: 42px;
+      display: grid;
+      place-items: center;
+    }
+
+    .pill-btn {
+      padding: 0 18px;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      font-weight: 750;
+    }
+
+    .icon-btn:hover,
+    .pill-btn:hover {
+      transform: translateY(-2px);
+      background: var(--surface-strong);
+      border-color: rgba(183, 243, 107, 0.42);
+    }
+
+    .primary-btn {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #06100d;
+      border: 0;
+      box-shadow: 0 18px 40px rgba(116, 214, 255, 0.12);
+    }
+
+    .menu-toggle { display: none; }
+
+    .hero {
+      padding: 88px 0 70px;
+      position: relative;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(360px, 0.82fr);
+      gap: 44px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(183, 243, 107, 0.34);
+      background: rgba(183, 243, 107, 0.1);
+      color: var(--accent);
+      font-weight: 850;
+      letter-spacing: 0.02em;
+      font-size: 0.86rem;
+      margin-bottom: 18px;
+    }
+
+    .pulse-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 0 rgba(183, 243, 107, 0.72);
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(183, 243, 107, 0.72); }
+      70% { box-shadow: 0 0 0 12px rgba(183, 243, 107, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(183, 243, 107, 0); }
+    }
+
+    h1 {
+      font-size: clamp(3rem, 7vw, 6.4rem);
+      line-height: 0.9;
+      letter-spacing: -0.075em;
+      margin-bottom: 22px;
+    }
+
+    .gradient-text {
+      display: block;
+      background: linear-gradient(135deg, var(--text), var(--accent) 42%, var(--accent-2));
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-copy {
+      color: var(--muted);
+      font-size: 1.13rem;
+      line-height: 1.78;
+      margin-bottom: 28px;
+      max-width: 760px;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .identity-card {
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 30% 0%, rgba(183, 243, 107, 0.2), transparent 30%),
+        radial-gradient(circle at 100% 20%, rgba(116, 214, 255, 0.16), transparent 32%),
+        linear-gradient(180deg, var(--surface), rgba(255,255,255,0.035));
+      border-radius: 38px;
+      min-height: 540px;
+      box-shadow: var(--shadow);
+      padding: 26px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .identity-card::before {
+      content: "";
+      position: absolute;
+      inset: 24px;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 30px;
+      pointer-events: none;
+    }
+
+    .brand-emblem {
+      width: 150px;
+      height: 150px;
+      border-radius: 46px;
+      margin: 44px auto 28px;
+      background: linear-gradient(145deg, rgba(183, 243, 107, 0.98), rgba(116, 214, 255, 0.92));
+      display: grid;
+      place-items: center;
+      color: #06100d;
+      font-size: 4.8rem;
+      box-shadow: 0 34px 90px rgba(183, 243, 107, 0.22);
+    }
+
+    .identity-card h2 {
+      text-align: center;
+      font-size: clamp(2rem, 4vw, 3.6rem);
+      line-height: 1;
+      letter-spacing: -0.06em;
+      margin-bottom: 8px;
+    }
+
+    .identity-card .tagline {
+      text-align: center;
+      color: var(--accent);
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-size: 0.88rem;
+      margin-bottom: 26px;
+    }
+
+    .identity-stats {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .identity-stat {
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 16px;
+      background: rgba(255,255,255,0.055);
+    }
+
+    .identity-stat b {
+      display: block;
+      font-size: 1.5rem;
+      letter-spacing: -0.04em;
+      margin-bottom: 4px;
+    }
+
+    .identity-stat span {
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.4;
+    }
+
+    .section { padding: 78px 0; }
+
+    .section-head {
+      max-width: 780px;
+      margin-bottom: 34px;
+    }
+
+    .section-kicker {
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-weight: 950;
+      font-size: 0.76rem;
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 4vw, 4rem);
+      letter-spacing: -0.055em;
+      line-height: 1.02;
+      margin-bottom: 16px;
+    }
+
+    .section-head p,
+    .lead {
+      color: var(--muted);
+      line-height: 1.75;
+      font-size: 1.04rem;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, var(--surface), rgba(255,255,255,0.035));
+      border-radius: var(--radius-md);
+      padding: 24px;
+      box-shadow: 0 16px 55px rgba(0,0,0,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      background: rgba(183, 243, 107, 0.12);
+      color: var(--accent);
+      margin-bottom: 18px;
+      font-size: 1.25rem;
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+      font-size: 1.22rem;
+      letter-spacing: -0.02em;
+    }
+
+    .card p,
+    .card li {
+      color: var(--muted);
+      line-height: 1.64;
+    }
+
+    .card ul {
+      padding-left: 18px;
+      margin-bottom: 0;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 30px;
+      box-shadow: var(--shadow);
+    }
+
+    .story-block {
+      display: grid;
+      gap: 16px;
+    }
+
+    .story-point {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.045);
+      border-radius: 22px;
+      padding: 18px;
+    }
+
+    .story-point b {
+      display: block;
+      color: var(--text);
+      margin-bottom: 7px;
+      font-size: 1.02rem;
+    }
+
+    .story-point span {
+      display: block;
+      color: var(--muted);
+      line-height: 1.58;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 14px;
+      counter-reset: timeline;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+
+    .timeline-item::before {
+      counter-increment: timeline;
+      content: "0" counter(timeline);
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #06100d;
+      display: grid;
+      place-items: center;
+      font-weight: 950;
+    }
+
+    .timeline-content {
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 18px;
+      background: rgba(255,255,255,0.045);
+    }
+
+    .timeline-content h3 {
+      margin-bottom: 7px;
+      font-size: 1.07rem;
+    }
+
+    .timeline-content p {
+      color: var(--muted);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .mission-board {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .big-card {
+      min-height: 330px;
+      border: 1px solid var(--line);
+      border-radius: 34px;
+      padding: 30px;
+      background:
+        linear-gradient(180deg, var(--surface), rgba(255,255,255,0.035)),
+        radial-gradient(circle at 80% 0, rgba(183,243,107,0.12), transparent 30%);
+      box-shadow: var(--shadow);
+    }
+
+    .big-card h3 {
+      font-size: clamp(1.65rem, 3vw, 2.5rem);
+      letter-spacing: -0.045em;
+      line-height: 1.06;
+      margin-bottom: 14px;
+    }
+
+    .big-card p {
+      color: var(--muted);
+      line-height: 1.72;
+      margin-bottom: 0;
+    }
+
+    .value-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .value-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .value-item span:first-child {
+      width: 28px;
+      height: 28px;
+      border-radius: 10px;
+      background: rgba(183,243,107,0.13);
+      color: var(--accent);
+      display: grid;
+      place-items: center;
+      flex: 0 0 28px;
+      font-weight: 900;
+    }
+
+    .quote-section {
+      padding: 72px 0;
+    }
+
+    .quote-box {
+      border: 1px solid rgba(183,243,107,0.28);
+      background:
+        radial-gradient(circle at 18% 0%, rgba(183,243,107,0.18), transparent 28%),
+        radial-gradient(circle at 90% 60%, rgba(116,214,255,0.12), transparent 30%),
+        var(--surface);
+      border-radius: 42px;
+      padding: clamp(30px, 6vw, 62px);
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .quote-box blockquote {
+      margin: 0 auto 20px;
+      max-width: 900px;
+      font-size: clamp(1.7rem, 4vw, 3.6rem);
+      line-height: 1.05;
+      letter-spacing: -0.06em;
+      font-weight: 900;
+    }
+
+    .quote-box p {
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 28px 0;
+      color: var(--muted);
+    }
+
+    .footer-grid {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .hidden-el {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: 0.7s ease;
+    }
+
+    .hidden-el.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1040px) {
+      .hero-grid,
+      .split {
+        grid-template-columns: 1fr;
+      }
+
+      .cards-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 850px) {
+      .menu-toggle { display: grid; }
+
+      .nav-links {
+        position: fixed;
+        left: 18px;
+        right: 18px;
+        top: 138px;
+        flex-direction: column;
+        align-items: stretch;
+        border-radius: 26px;
+        padding: 12px;
+        transform: translateY(-12px);
+        opacity: 0;
+        pointer-events: none;
+        transition: 0.2s ease;
+      }
+
+      .nav-links.open {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
+
+      .nav-links a { padding: 13px 14px; }
+      .nav-actions .hide-mobile { display: none; }
+
+      .cards-grid,
+      .mission-board,
+      .identity-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .section { padding: 58px 0; }
+      .hero { padding-top: 58px; }
+      .identity-card { min-height: auto; }
+    }
+
+    @media (max-width: 560px) {
+      .page-shell { width: min(100% - 24px, 1180px); }
+      .brand-text span { display: none; }
+      .brand { min-width: auto; }
+      .nav { min-height: 72px; }
+      .hero-actions .pill-btn { width: 100%; justify-content: center; }
+      .timeline-item { grid-template-columns: 1fr; }
+      .timeline-item::before { width: 46px; height: 46px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="announcement">
+    <span><strong>Kestrel About</strong> · The story behind the smart load-balance backpack.</span>
+  </div>
+
+  <header>
+    <div class="page-shell nav">
+      <a class="brand" href="index.html" aria-label="Kestrel home">
+        <span class="logo-mark" aria-hidden="true"></span>
+        <span class="brand-text">
+          <b>Kestrel</b>
+          <span>Balance till the skies</span>
+        </span>
+      </a>
+
+      <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a class="active" href="about.html">About</a>
+        <a href="technology.html">Technology</a>
+        <a href="app.html">App</a>
+        <a href="business.html">Business</a>
+        <a href="validation.html">Validation</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="icon-btn" id="themeBtn" title="Toggle light/dark mode" aria-label="Toggle theme">◐</button>
+        <button class="icon-btn" id="contrastBtn" title="High contrast" aria-label="High contrast">◩</button>
+        <button class="icon-btn hide-mobile" id="fontDown" title="Decrease font" aria-label="Decrease font">A−</button>
+        <button class="icon-btn hide-mobile" id="fontUp" title="Increase font" aria-label="Increase font">A+</button>
+        <a class="pill-btn primary-btn hide-mobile" href="contact.html">Book demo</a>
+        <button class="icon-btn menu-toggle" id="menuBtn" aria-label="Open menu">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="page-shell hero-grid">
+        <div class="hidden-el">
+          <div class="eyebrow"><span class="pulse-dot"></span> About the innovation</div>
+          <h1>Designed for balance. <span class="gradient-text">Built for movement.</span></h1>
+          <p class="hero-copy">
+            Το Kestrel δημιουργήθηκε πάνω σε μία απλή αλλά ουσιαστική παρατήρηση: ο χρήστης δεν τραυματίζεται μόνο επειδή κουβαλάει βάρος, αλλά επειδή συχνά δεν γνωρίζει πώς αυτό το βάρος κατανέμεται στο σώμα του. Το προϊόν μετατρέπει το σακίδιο από παθητικό αντικείμενο μεταφοράς σε ενεργό σύστημα πρόληψης, καθοδήγησης και εργονομικής νοημοσύνης.
+          </p>
+          <div class="hero-actions">
+            <a class="pill-btn primary-btn" href="#mission">Our mission →</a>
+            <a class="pill-btn" href="technology.html">See technology</a>
+          </div>
+        </div>
+
+        <aside class="identity-card hidden-el" aria-label="Kestrel brand identity card">
+          <div class="brand-emblem">⌁</div>
+          <h2>Kestrel</h2>
+          <div class="tagline">Balance till the skies</div>
+          <div class="identity-stats">
+            <div class="identity-stat"><b>Smart</b><span>Pressure-based load intelligence.</span></div>
+            <div class="identity-stat"><b>Safe</b><span>Real-time guidance for safer movement.</span></div>
+            <div class="identity-stat"><b>Outdoor</b><span>Premium hiking and mountain use.</span></div>
+            <div class="identity-stat"><b>Tactical</b><span>Expandable for demanding B2G contexts.</span></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="mission">
+      <div class="page-shell">
+        <div class="section-head hidden-el">
+          <div class="section-kicker">Mission & vision</div>
+          <h2>Η αποστολή του Kestrel είναι να κάνει την ισορροπία μετρήσιμη, κατανοητή και άμεσα διορθώσιμη.</h2>
+          <p>
+            Η καινοτομία δεν βρίσκεται μόνο στους αισθητήρες. Βρίσκεται στον τρόπο που τα δεδομένα μετατρέπονται σε μία απλή οδηγία: σφίξε, χαλάρωσε, διόρθωσε, συνέχισε με ασφάλεια.
+          </p>
+        </div>
+
+        <div class="mission-board">
+          <article class="big-card hidden-el">
+            <div class="section-kicker">Mission</div>
+            <h3>Να προστατεύει το σώμα πριν εμφανιστεί η καταπόνηση.</h3>
+            <p>
+              Το Kestrel στοχεύει να μειώσει την αβεβαιότητα που έχει ο χρήστης όταν φορά ένα βαρύ σακίδιο. Μέσα από μέτρηση πίεσης, σύγκριση φορτίου και άμεση ειδοποίηση, βοηθά τον χρήστη να προσαρμόσει τη στάση και τους ιμάντες του πριν η λανθασμένη κατανομή εξελιχθεί σε κόπωση ή πόνο.
+            </p>
+          </article>
+
+          <article class="big-card hidden-el">
+            <div class="section-kicker">Vision</div>
+            <h3>Να γίνει το νέο πρότυπο ενεργητικής εργονομίας στα σακίδια.</h3>
+            <p>
+              Το όραμα του Kestrel είναι να περάσει η αγορά από τα «άνετα σακίδια» στα «έξυπνα σακίδια». Η επόμενη γενιά εξοπλισμού δεν θα είναι απλώς ανθεκτική ή ελαφριά, αλλά ικανή να αντιλαμβάνεται το σώμα, την πίεση και τη χρήση σε πραγματικό χρόνο.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="page-shell split">
+        <div class="panel hidden-el">
+          <div class="section-kicker">Why Kestrel exists</div>
+          <h2>Από το πρόβλημα στην πρόταση αξίας.</h2>
+          <p class="lead">
+            Οι πεζοπόροι, οι ορειβάτες και οι χρήστες tactical εξοπλισμού συχνά μεταφέρουν βάρος σε δύσκολες συνθήκες. Το Kestrel δημιουργήθηκε για να απαντήσει στο κενό ανάμεσα στην εργονομική σχεδίαση και την πραγματική χρήση.
+          </p>
+          <div class="story-block">
+            <div class="story-point"><b>Το υπάρχον κενό</b><span>Τα παραδοσιακά εργονομικά σακίδια είναι σχεδιασμένα για άνεση, αλλά δεν γνωρίζουν αν ο χρήστης τα έχει ρυθμίσει σωστά.</span></div>
+            <div class="story-point"><b>Η τεχνολογική απάντηση</b><span>Οι αισθητήρες πίεσης επιτρέπουν στο σακίδιο να αποκτήσει αντίληψη φορτίου και να εντοπίζει ασυμμετρία.</span></div>
+            <div class="story-point"><b>Η εμπειρία χρήστη</b><span>Το buzzer και η εφαρμογή μετατρέπουν την τεχνική μέτρηση σε άμεση, πρακτική καθοδήγηση.</span></div>
+          </div>
+        </div>
+
+        <div class="panel hidden-el">
+          <div class="section-kicker">From idea to product</div>
+          <h2>Η λογική ανάπτυξης του Kestrel.</h2>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-content">
+                <h3>Αναγνώριση ανάγκης</h3>
+                <p>Η κακή κατανομή φορτίου αναγνωρίστηκε ως πρόβλημα που επηρεάζει άνεση, στάση σώματος, ισορροπία και απόδοση.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-content">
+                <h3>Prototype thinking</h3>
+                <p>Η ιδέα μεταφράστηκε σε σύστημα αισθητήρων FSR402, ποτενσιόμετρου, αντιστάσεων, buzzer και mobile app.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-content">
+                <h3>Value proposition</h3>
+                <p>Το προϊόν τοποθετήθηκε ως premium smart backpack που παρέχει ενεργητική εργονομία αντί για παθητική άνεση.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-content">
+                <h3>Market expansion</h3>
+                <p>Η λύση σχεδιάστηκε ώστε να μπορεί να απευθυνθεί τόσο σε outdoor χρήστες όσο και σε B2G/tactical περιβάλλοντα.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="page-shell">
+        <div class="section-head hidden-el">
+          <div class="section-kicker">Core values</div>
+          <h2>Η ταυτότητα του brand στηρίζεται σε τέσσερις αξίες.</h2>
+        </div>
+
+        <div class="cards-grid">
+          <article class="card hidden-el">
+            <div class="icon">⚖</div>
+            <h3>Balance</h3>
+            <p>Η ισορροπία είναι ο πυρήνας του προϊόντος: σωματική, λειτουργική και εμπειρική. Το Kestrel βοηθά τον χρήστη να κινείται με πιο σταθερή κατανομή φορτίου.</p>
+          </article>
+          <article class="card hidden-el">
+            <div class="icon">🛡</div>
+            <h3>Prevention</h3>
+            <p>Το προϊόν δεν περιμένει να εμφανιστεί το πρόβλημα. Ειδοποιεί νωρίς, όταν υπάρχει ένδειξη ασυμμετρίας ή αυξημένης πίεσης.</p>
+          </article>
+          <article class="card hidden-el">
+            <div class="icon">📡</div>
+            <h3>Intelligence</h3>
+            <p>Η αξία δεν βρίσκεται μόνο στη συλλογή δεδομένων, αλλά στη μετάφρασή τους σε άμεσες, απλές και κατανοητές οδηγίες.</p>
+          </article>
+          <article class="card hidden-el">
+            <div class="icon">⛰</div>
+            <h3>Endurance</h3>
+            <p>Το Kestrel απευθύνεται σε ανθρώπους που κινούνται σε απαιτητικά περιβάλλοντα και χρειάζονται εξοπλισμό που στηρίζει την αντοχή τους.</p>
+          </article>
+          <article class="card hidden-el">
+            <div class="icon">🧩</div>
+            <h3>Scalability</h3>
+            <p>Η τεχνολογία μπορεί να εξελιχθεί σε modular σύστημα, add-on kit, integration με fitness apps ή licensing σε κατασκευαστές.</p>
+          </article>
+          <article class="card hidden-el">
+            <div class="icon">✨</div>
+            <h3>Premium experience</h3>
+            <p>Το brand θέλει να συνδέσει την ασφάλεια με την αίσθηση high-tech, premium και επαγγελματικού εξοπλισμού.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="quote-section">
+      <div class="page-shell">
+        <div class="quote-box hidden-el">
+          <blockquote>“Kestrel does not simply carry your gear. It helps your body carry it better.”</blockquote>
+          <p>
+            Αυτή είναι η κεντρική ιδέα της σελίδας About: το προϊόν παρουσιάζεται ως ένα έξυπνο σύστημα που συνδέει hardware, software και ανθρώπινη κίνηση σε μία ενιαία εμπειρία προστασίας και απόδοσης.
+          </p>
+          <div class="hero-actions" style="justify-content:center; margin-top:26px;">
+            <a class="pill-btn primary-btn" href="technology.html">Next: Technology →</a>
+            <a class="pill-btn" href="index.html">Back to Home</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="page-shell footer-grid">
+      <span>© 2026 Kestrel Concept · Smart Load Balance Backpack</span>
+      <span>About page · Balance till the skies.</span>
+    </div>
+  </footer>
+
+  <script>
+    const body = document.body;
+    const navLinks = document.getElementById('navLinks');
+    const menuBtn = document.getElementById('menuBtn');
+    const themeBtn = document.getElementById('themeBtn');
+    const contrastBtn = document.getElementById('contrastBtn');
+    const fontUp = document.getElementById('fontUp');
+    const fontDown = document.getElementById('fontDown');
+    let fontScale = 1;
+
+    menuBtn.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => navLinks.classList.remove('open')));
+
+    themeBtn.addEventListener('click', () => {
+      body.classList.toggle('light');
+      if (body.classList.contains('high-contrast')) body.classList.remove('high-contrast');
+    });
+
+    contrastBtn.addEventListener('click', () => {
+      body.classList.toggle('high-contrast');
+      if (body.classList.contains('light')) body.classList.remove('light');
+    });
+
+    fontUp.addEventListener('click', () => {
+      fontScale = Math.min(1.18, fontScale + 0.06);
+      document.documentElement.style.setProperty('--font-scale', fontScale.toFixed(2));
+    });
+
+    fontDown.addEventListener('click', () => {
+      fontScale = Math.max(0.9, fontScale - 0.06);
+      document.documentElement.style.setProperty('--font-scale', fontScale.toFixed(2));
+    });
+
+    const hiddenEls = document.querySelectorAll('.hidden-el');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.12 });
+    hiddenEls.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
