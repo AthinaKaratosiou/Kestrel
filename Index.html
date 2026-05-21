@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kestrel | Balance till the skies</title>
   <meta name="description" content="Kestrel is a smart load-balance backpack system that monitors pressure distribution, detects asymmetry and guides safer movement in real time." />
+
   <style>
     :root {
       --bg: #07110f;
@@ -22,15 +23,11 @@
       --shadow: 0 30px 80px rgba(0, 0, 0, 0.42);
       --radius-lg: 34px;
       --radius-md: 22px;
-      --radius-sm: 14px;
       --font-scale: 1;
     }
 
     * { box-sizing: border-box; }
-
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
@@ -74,14 +71,9 @@
       --line: rgba(255, 255, 255, 0.42);
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    button, input, select {
-      font: inherit;
-    }
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+    h1, h2, h3, p { margin-top: 0; }
 
     .page-shell {
       width: min(1180px, calc(100% - 36px));
@@ -98,11 +90,10 @@
       border-bottom: 1px solid var(--line);
       color: var(--soft);
       font-size: 0.92rem;
+      text-align: center;
     }
 
-    .announcement strong {
-      color: var(--accent);
-    }
+    .announcement strong { color: var(--accent); }
 
     header {
       position: sticky;
@@ -113,12 +104,10 @@
       border-bottom: 1px solid var(--line);
     }
 
-    body.light header {
-      background: rgba(245, 247, 239, 0.78);
-    }
+    body.light header { background: rgba(245, 247, 239, 0.78); }
 
     .nav {
-      height: 78px;
+      min-height: 78px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -136,9 +125,7 @@
       width: 44px;
       height: 44px;
       border-radius: 16px;
-      background:
-        linear-gradient(145deg, rgba(183, 243, 107, 0.96), rgba(116, 214, 255, 0.88)),
-        #fff;
+      background: linear-gradient(145deg, rgba(183, 243, 107, 0.96), rgba(116, 214, 255, 0.88));
       position: relative;
       box-shadow: 0 14px 30px rgba(183, 243, 107, 0.21);
       overflow: hidden;
@@ -214,8 +201,7 @@
       gap: 8px;
     }
 
-    .icon-btn,
-    .pill-btn {
+    .icon-btn, .pill-btn {
       border: 1px solid var(--line);
       color: var(--text);
       background: var(--surface);
@@ -239,8 +225,7 @@
       font-weight: 750;
     }
 
-    .icon-btn:hover,
-    .pill-btn:hover {
+    .icon-btn:hover, .pill-btn:hover {
       transform: translateY(-2px);
       background: var(--surface-strong);
       border-color: rgba(183, 243, 107, 0.42);
@@ -253,9 +238,7 @@
       box-shadow: 0 18px 40px rgba(116, 214, 255, 0.12);
     }
 
-    .menu-toggle {
-      display: none;
-    }
+    .menu-toggle { display: none; }
 
     .hero {
       position: relative;
@@ -299,10 +282,6 @@
       100% { box-shadow: 0 0 0 0 rgba(183, 243, 107, 0); }
     }
 
-    h1, h2, h3, p {
-      margin-top: 0;
-    }
-
     h1 {
       font-size: clamp(3rem, 7vw, 6.9rem);
       line-height: 0.88;
@@ -310,7 +289,7 @@
       margin-bottom: 22px;
     }
 
-    .hero .gradient-text {
+    .gradient-text {
       display: block;
       background: linear-gradient(135deg, var(--text), var(--accent) 42%, var(--accent-2));
       -webkit-background-clip: text;
@@ -550,8 +529,7 @@
       margin-bottom: 16px;
     }
 
-    .section-head p,
-    .lead {
+    .section-head p, .lead {
       color: var(--muted);
       line-height: 1.75;
       font-size: 1.04rem;
@@ -573,17 +551,6 @@
       overflow: hidden;
     }
 
-    .card::after {
-      content: "";
-      position: absolute;
-      width: 120px;
-      height: 120px;
-      border-radius: 999px;
-      right: -60px;
-      top: -60px;
-      background: rgba(183, 243, 107, 0.09);
-    }
-
     .icon {
       width: 48px;
       height: 48px;
@@ -602,8 +569,7 @@
       letter-spacing: -0.02em;
     }
 
-    .card p,
-    .card li {
+    .card p, .card li {
       color: var(--muted);
       line-height: 1.64;
     }
@@ -654,16 +620,8 @@
       font-weight: 950;
     }
 
-    .step h3 {
-      margin: 0 0 6px;
-      font-size: 1.05rem;
-    }
-
-    .step p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.55;
-    }
+    .step h3 { margin: 0 0 6px; font-size: 1.05rem; }
+    .step p { margin: 0; color: var(--muted); line-height: 1.55; }
 
     .app-mockup {
       border-radius: 36px;
@@ -753,17 +711,8 @@
       margin-top: 12px;
     }
 
-    .phone-card h4 {
-      margin: 0 0 8px;
-      font-size: 0.92rem;
-    }
-
-    .phone-card p {
-      margin: 0;
-      color: rgba(255,255,255,0.72);
-      line-height: 1.45;
-      font-size: 0.85rem;
-    }
+    .phone-card h4 { margin: 0 0 8px; font-size: 0.92rem; }
+    .phone-card p { margin: 0; color: rgba(255,255,255,0.72); line-height: 1.45; font-size: 0.85rem; }
 
     .pressure-row {
       display: grid;
@@ -780,42 +729,8 @@
       text-align: center;
     }
 
-    .pressure-block small {
-      color: rgba(255,255,255,0.6);
-      display: block;
-      margin-bottom: 4px;
-    }
-
-    .versus {
-      color: rgba(255,255,255,0.42);
-      font-size: 0.82rem;
-    }
-
-    .tabs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 9px;
-      margin: 0 0 18px;
-    }
-
-    .tab-btn {
-      border: 1px solid var(--line);
-      background: var(--surface);
-      color: var(--muted);
-      padding: 11px 14px;
-      border-radius: 999px;
-      cursor: pointer;
-      font-weight: 800;
-    }
-
-    .tab-btn.active {
-      color: #06100d;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      border-color: transparent;
-    }
-
-    .tab-content { display: none; }
-    .tab-content.active { display: block; }
+    .pressure-block small { color: rgba(255,255,255,0.6); display: block; margin-bottom: 4px; }
+    .versus { color: rgba(255,255,255,0.42); font-size: 0.82rem; }
 
     .market-grid {
       display: grid;
@@ -848,16 +763,8 @@
       background: rgba(255,255,255,0.04);
     }
 
-    .persona-item b {
-      display: block;
-      color: var(--text);
-      margin-bottom: 4px;
-    }
-
-    .persona-item span {
-      color: var(--muted);
-      line-height: 1.5;
-    }
+    .persona-item b { display: block; color: var(--text); margin-bottom: 4px; }
+    .persona-item span { color: var(--muted); line-height: 1.5; }
 
     .simulator {
       display: grid;
@@ -866,10 +773,7 @@
       align-items: center;
     }
 
-    .slider-group {
-      display: grid;
-      gap: 18px;
-    }
+    .slider-group { display: grid; gap: 18px; }
 
     .range-line {
       border: 1px solid var(--line);
@@ -886,10 +790,7 @@
       font-weight: 750;
     }
 
-    input[type="range"] {
-      width: 100%;
-      accent-color: var(--accent);
-    }
+    input[type="range"] { width: 100%; accent-color: var(--accent); }
 
     .balance-output {
       min-height: 360px;
@@ -943,31 +844,6 @@
       margin: 0 auto;
     }
 
-    .component-map {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .component {
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      padding: 18px;
-      background: rgba(255,255,255,0.04);
-    }
-
-    .component b {
-      display: block;
-      color: var(--text);
-      margin-bottom: 6px;
-    }
-
-    .component span {
-      color: var(--muted);
-      line-height: 1.5;
-      font-size: 0.93rem;
-    }
-
     .finance-board {
       display: grid;
       grid-template-columns: 1.05fr 0.95fr;
@@ -987,92 +863,9 @@
       border-radius: 22px;
     }
 
-    .metric span {
-      display: block;
-      color: var(--muted);
-      margin-bottom: 8px;
-      font-size: 0.9rem;
-    }
-
-    .metric b {
-      display: block;
-      font-size: clamp(1.4rem, 3vw, 2.4rem);
-      letter-spacing: -0.04em;
-    }
-
-    .metric small {
-      display: block;
-      color: var(--muted);
-      margin-top: 7px;
-      line-height: 1.45;
-    }
-
-    .chart-card {
-      display: grid;
-      align-content: center;
-      gap: 18px;
-    }
-
-    .donut {
-      width: 230px;
-      height: 230px;
-      border-radius: 999px;
-      margin: 0 auto;
-      background: conic-gradient(var(--accent) 0 54%, var(--accent-2) 54% 77%, var(--gold) 77% 100%);
-      display: grid;
-      place-items: center;
-      position: relative;
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.18);
-    }
-
-    .donut::before {
-      content: "";
-      width: 138px;
-      height: 138px;
-      border-radius: 999px;
-      background: var(--bg-2);
-      border: 1px solid var(--line);
-      position: absolute;
-    }
-
-    .donut span {
-      position: relative;
-      text-align: center;
-      font-weight: 900;
-      letter-spacing: -0.04em;
-      font-size: 1.8rem;
-    }
-
-    .legend {
-      display: grid;
-      gap: 10px;
-    }
-
-    .legend-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      color: var(--muted);
-      border-bottom: 1px solid var(--line);
-      padding-bottom: 10px;
-    }
-
-    .legend-left {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-    }
-
-    .swatch {
-      width: 12px;
-      height: 12px;
-      border-radius: 999px;
-      background: var(--accent);
-    }
-
-    .swatch.blue { background: var(--accent-2); }
-    .swatch.gold { background: var(--gold); }
+    .metric span { display: block; color: var(--muted); margin-bottom: 8px; font-size: 0.9rem; }
+    .metric b { display: block; font-size: clamp(1.4rem, 3vw, 2.4rem); letter-spacing: -0.04em; }
+    .metric small { display: block; color: var(--muted); margin-top: 7px; line-height: 1.45; }
 
     .roadmap {
       display: grid;
@@ -1098,64 +891,10 @@
       margin-bottom: 14px;
     }
 
-    .roadmap-item h3 {
-      font-size: 1.02rem;
-      margin-bottom: 8px;
-    }
+    .roadmap-item h3 { font-size: 1.02rem; margin-bottom: 8px; }
+    .roadmap-item p { color: var(--muted); line-height: 1.55; margin: 0; font-size: 0.93rem; }
 
-    .roadmap-item p {
-      color: var(--muted);
-      line-height: 1.55;
-      margin: 0;
-      font-size: 0.93rem;
-    }
-
-    .faq {
-      display: grid;
-      gap: 12px;
-    }
-
-    .faq-item {
-      border: 1px solid var(--line);
-      background: var(--surface);
-      border-radius: 22px;
-      overflow: hidden;
-    }
-
-    .faq-q {
-      width: 100%;
-      border: 0;
-      background: transparent;
-      color: var(--text);
-      padding: 20px;
-      text-align: left;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      font-weight: 900;
-    }
-
-    .faq-a {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.25s ease;
-    }
-
-    .faq-a p {
-      color: var(--muted);
-      line-height: 1.65;
-      padding: 0 20px 20px;
-      margin: 0;
-    }
-
-    .faq-item.open .faq-a {
-      max-height: 260px;
-    }
-
-    .cta {
-      padding: 90px 0 34px;
-    }
+    .cta { padding: 90px 0 34px; }
 
     .cta-box {
       border: 1px solid rgba(183,243,107,0.28);
@@ -1169,18 +908,8 @@
       box-shadow: var(--shadow);
     }
 
-    .cta-box h2 {
-      max-width: 850px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .cta-box p {
-      color: var(--muted);
-      line-height: 1.75;
-      max-width: 720px;
-      margin: 0 auto 26px;
-    }
+    .cta-box h2 { max-width: 850px; margin-left: auto; margin-right: auto; }
+    .cta-box p { color: var(--muted); line-height: 1.75; max-width: 720px; margin: 0 auto 26px; }
 
     footer {
       border-top: 1px solid var(--line);
@@ -1215,10 +944,7 @@
       transition: 0.25s ease;
     }
 
-    .toast.show {
-      transform: translateY(0);
-      opacity: 1;
-    }
+    .toast.show { transform: translateY(0); opacity: 1; }
 
     .hidden-el {
       opacity: 0;
@@ -1232,29 +958,11 @@
     }
 
     @media (max-width: 1040px) {
-      .hero-grid,
-      .split,
-      .finance-board,
-      .simulator {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-grid {
-        gap: 32px;
-      }
-
-      .product-stage {
-        min-height: 520px;
-      }
-
-      .cards-grid,
-      .component-map {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .roadmap {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
+      .hero-grid, .split, .finance-board, .simulator { grid-template-columns: 1fr; }
+      .hero-grid { gap: 32px; }
+      .product-stage { min-height: 520px; }
+      .cards-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .roadmap { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
     @media (max-width: 850px) {
@@ -1281,49 +989,23 @@
         transform: translateY(0);
       }
 
-      .nav-links a {
-        padding: 13px 14px;
-      }
-
-      .nav-actions .hide-mobile {
-        display: none;
-      }
-
-      .market-grid,
-      .cards-grid,
-      .component-map,
-      .metric-grid,
-      .mini-proof,
-      .roadmap {
-        grid-template-columns: 1fr;
-      }
-
+      .nav-links a { padding: 13px 14px; }
+      .nav-actions .hide-mobile { display: none; }
+      .market-grid, .cards-grid, .metric-grid, .mini-proof, .roadmap { grid-template-columns: 1fr; }
       .section { padding: 58px 0; }
       .hero { padding-top: 58px; }
-
-      .product-stage {
-        min-height: 500px;
-        padding: 18px;
-      }
-
-      .pack-visual {
-        width: 210px;
-        height: 330px;
-      }
-
+      .product-stage { min-height: 500px; padding: 18px; }
+      .pack-visual { width: 210px; height: 330px; }
       .hud-right { top: auto; bottom: 120px; right: 18px; }
       .hud-left { left: 18px; top: 18px; }
       .hud-bottom { left: 18px; right: 18px; }
     }
 
     @media (max-width: 560px) {
-      .page-shell {
-        width: min(100% - 24px, 1180px);
-      }
-
+      .page-shell { width: min(100% - 24px, 1180px); }
       .brand-text span { display: none; }
       .brand { min-width: auto; }
-      .nav { height: 72px; }
+      .nav { min-height: 72px; }
       .hero-actions .pill-btn { width: 100%; justify-content: center; }
       .hud .bar { width: 120px; }
       .phone { min-height: 570px; }
@@ -1333,6 +1015,7 @@
     }
   </style>
 </head>
+
 <body>
   <div class="announcement">
     <span><strong>Kestrel</strong> prototype concept · Smart load-balance backpack for outdoor performance and tactical readiness.</span>
@@ -1340,7 +1023,7 @@
 
   <header>
     <div class="page-shell nav">
-      <a class="brand" href="#home" aria-label="Kestrel home">
+      <a class="brand" href="index.html" aria-label="Kestrel home">
         <span class="logo-mark" aria-hidden="true"></span>
         <span class="brand-text">
           <b>Kestrel</b>
@@ -1349,6 +1032,8 @@
       </a>
 
       <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+        <a class="active" href="index.html">Home</a>
+        <a href="about.html">About</a>
         <a href="#problem">Problem</a>
         <a href="#technology">Technology</a>
         <a href="#markets">Markets</a>
@@ -1379,21 +1064,12 @@
           </p>
           <div class="hero-actions">
             <a class="pill-btn primary-btn" href="#technology">Explore the system →</a>
-            <a class="pill-btn" href="#simulator">Try load simulator</a>
+            <a class="pill-btn" href="about.html">About Kestrel</a>
           </div>
           <div class="mini-proof">
-            <div class="proof-card">
-              <b>3x</b>
-              <span>Pressure sensors for shoulder and lumbar load monitoring.</span>
-            </div>
-            <div class="proof-card">
-              <b>Real-time</b>
-              <span>Immediate signal comparison between left and right side.</span>
-            </div>
-            <div class="proof-card">
-              <b>B2C + B2G</b>
-              <span>Premium outdoor users and defense/tactical applications.</span>
-            </div>
+            <div class="proof-card"><b>3x</b><span>Pressure sensors for shoulder and lumbar load monitoring.</span></div>
+            <div class="proof-card"><b>Real-time</b><span>Immediate signal comparison between left and right side.</span></div>
+            <div class="proof-card"><b>B2C + B2G</b><span>Premium outdoor users and defense/tactical applications.</span></div>
           </div>
         </div>
 
@@ -1430,27 +1106,12 @@
         <div class="section-head hidden-el">
           <div class="section-kicker">The problem</div>
           <h2>Το φορτίο δεν είναι πρόβλημα μόνο όταν είναι βαρύ. Είναι πρόβλημα όταν είναι άνισο.</h2>
-          <p>
-            Η κακή κατανομή φορτίου μπορεί να οδηγήσει σε μυϊκή κόπωση, λανθασμένη στάση, επιβάρυνση ώμων, αυχένα και μέσης, αλλά και μειωμένη σταθερότητα σε δύσκολες διαδρομές. Το Kestrel αντιμετωπίζει το σακίδιο ως σύστημα πρόληψης, όχι απλώς ως αποθηκευτικό αντικείμενο.
-          </p>
+          <p>Η κακή κατανομή φορτίου μπορεί να οδηγήσει σε μυϊκή κόπωση, λανθασμένη στάση, επιβάρυνση ώμων, αυχένα και μέσης, αλλά και μειωμένη σταθερότητα σε δύσκολες διαδρομές.</p>
         </div>
-
         <div class="cards-grid">
-          <article class="card hidden-el">
-            <div class="icon">⚖</div>
-            <h3>Ασύμμετρη φόρτιση</h3>
-            <p>Μικρές διαφορές μεταξύ αριστερού και δεξιού ιμάντα μπορούν να αλλάξουν την αίσθηση ισορροπίας και να αυξήσουν την καταπόνηση του σώματος.</p>
-          </article>
-          <article class="card hidden-el">
-            <div class="icon">🧭</div>
-            <h3>Μετατόπιση κέντρου βάρους</h3>
-            <p>Σε ανηφορικά, κατηφορικά ή ανώμαλα εδάφη, η λανθασμένη κατανομή μπορεί να επηρεάσει τη σταθερότητα και τη σιγουριά του χρήστη.</p>
-          </article>
-          <article class="card hidden-el">
-            <div class="icon">🛡</div>
-            <h3>Πρόληψη αντί για αντίδραση</h3>
-            <p>Το Kestrel ειδοποιεί πριν η επιβάρυνση γίνει έντονη, μετατρέποντας την εργονομία από παθητικό χαρακτηριστικό σε ενεργητική προστασία.</p>
-          </article>
+          <article class="card hidden-el"><div class="icon">⚖</div><h3>Ασύμμετρη φόρτιση</h3><p>Μικρές διαφορές μεταξύ αριστερού και δεξιού ιμάντα μπορούν να αλλάξουν την αίσθηση ισορροπίας και να αυξήσουν την καταπόνηση.</p></article>
+          <article class="card hidden-el"><div class="icon">🧭</div><h3>Μετατόπιση κέντρου βάρους</h3><p>Σε ανηφορικά, κατηφορικά ή ανώμαλα εδάφη, η λανθασμένη κατανομή μπορεί να επηρεάσει τη σταθερότητα.</p></article>
+          <article class="card hidden-el"><div class="icon">🛡</div><h3>Πρόληψη αντί για αντίδραση</h3><p>Το Kestrel ειδοποιεί πριν η επιβάρυνση γίνει έντονη, μετατρέποντας την εργονομία σε ενεργητική προστασία.</p></article>
         </div>
       </div>
     </section>
@@ -1462,22 +1123,10 @@
           <h2>Τέσσερα στάδια λειτουργίας. Μία καθαρή εμπειρία για τον χρήστη.</h2>
           <p class="lead">Το σύστημα ενσωματώνει αισθητήρες πίεσης, μετατροπή σήματος, μικροελεγκτή και ειδοποίηση μέσω buzzer και εφαρμογής.</p>
           <div class="workflow">
-            <div class="step">
-              <div class="step-num">1</div>
-              <div><h3>Ανίχνευση πίεσης</h3><p>Οι αισθητήρες FSR402 τοποθετούνται σε σημεία επαφής του σακιδίου με το σώμα.</p></div>
-            </div>
-            <div class="step">
-              <div class="step-num">2</div>
-              <div><h3>Μετατροπή σήματος</h3><p>Η μεταβολή αντίστασης μετατρέπεται σε μετρήσιμη τάση μέσω κυκλώματος με αντιστάσεις 10K.</p></div>
-            </div>
-            <div class="step">
-              <div class="step-num">3</div>
-              <div><h3>Σύγκριση & ανάλυση</h3><p>Ο μικροελεγκτής συγκρίνει αριστερή και δεξιά πλευρά και εντοπίζει απόκλιση φορτίου.</p></div>
-            </div>
-            <div class="step">
-              <div class="step-num">4</div>
-              <div><h3>Ειδοποίηση & καθοδήγηση</h3><p>Το Piezo Buzzer ενεργοποιείται και η εφαρμογή εμφανίζει συγκεκριμένη οδηγία προσαρμογής.</p></div>
-            </div>
+            <div class="step"><div class="step-num">1</div><div><h3>Ανίχνευση πίεσης</h3><p>Οι αισθητήρες FSR402 τοποθετούνται σε σημεία επαφής του σακιδίου με το σώμα.</p></div></div>
+            <div class="step"><div class="step-num">2</div><div><h3>Μετατροπή σήματος</h3><p>Η μεταβολή αντίστασης μετατρέπεται σε μετρήσιμη τάση μέσω κυκλώματος με αντιστάσεις 10K.</p></div></div>
+            <div class="step"><div class="step-num">3</div><div><h3>Σύγκριση & ανάλυση</h3><p>Ο μικροελεγκτής συγκρίνει αριστερή και δεξιά πλευρά και εντοπίζει απόκλιση φορτίου.</p></div></div>
+            <div class="step"><div class="step-num">4</div><div><h3>Ειδοποίηση & καθοδήγηση</h3><p>Το Piezo Buzzer ενεργοποιείται και η εφαρμογή εμφανίζει συγκεκριμένη οδηγία προσαρμογής.</p></div></div>
           </div>
         </div>
 
@@ -1498,33 +1147,9 @@
                 <div class="pressure-block"><small>Right</small><b>58%</b></div>
               </div>
             </div>
-            <div class="phone-card">
-              <h4>Suggested action</h4>
-              <p>Χαλάρωσε ελαφρά τον δεξί ιμάντα και σφίξε τη ζώνη μέσης για πιο ουδέτερη κατανομή.</p>
-            </div>
-            <div class="phone-card">
-              <h4>Route insight</h4>
-              <p>Η σταθερότητα βελτιώθηκε κατά 12% στα τελευταία 800 μέτρα.</p>
-            </div>
+            <div class="phone-card"><h4>Suggested action</h4><p>Χαλάρωσε ελαφρά τον δεξί ιμάντα και σφίξε τη ζώνη μέσης για πιο ουδέτερη κατανομή.</p></div>
+            <div class="phone-card"><h4>Route insight</h4><p>Η σταθερότητα βελτιώθηκε κατά 12% στα τελευταία 800 μέτρα.</p></div>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="page-shell">
-        <div class="section-head hidden-el">
-          <div class="section-kicker">Hardware architecture</div>
-          <h2>Το πρωτότυπο βασίζεται σε απλά, προσιτά και επεκτάσιμα εξαρτήματα.</h2>
-          <p>Η τεχνολογική λογική του Kestrel είναι σχεδιασμένη ώστε να μπορεί να ξεκινήσει ως λειτουργικό prototype και να εξελιχθεί σε modular product system.</p>
-        </div>
-        <div class="component-map">
-          <div class="component hidden-el"><b>FSR402 Pressure Sensors</b><span>Καταγράφουν μεταβολές πίεσης στα σημεία επαφής του σακιδίου με το σώμα.</span></div>
-          <div class="component hidden-el"><b>10K Resistors</b><span>Μετατρέπουν τη μεταβολή αντίστασης σε ηλεκτρικό σήμα αναγνώσιμο από τον μικροελεγκτή.</span></div>
-          <div class="component hidden-el"><b>10K Potentiometer</b><span>Ρυθμίζει την ευαισθησία του συστήματος και το όριο ειδοποίησης.</span></div>
-          <div class="component hidden-el"><b>Piezo Buzzer</b><span>Παρέχει άμεση ηχητική προειδοποίηση όταν η πίεση ξεπεράσει το επιτρεπτό όριο.</span></div>
-          <div class="component hidden-el"><b>Microcontroller</b><span>Συγκρίνει τις τιμές, υπολογίζει απόκλιση και αποστέλλει δεδομένα στην εφαρμογή.</span></div>
-          <div class="component hidden-el"><b>Mobile App</b><span>Μεταφράζει την τεχνική μέτρηση σε απλή, πρακτική οδηγία για τον χρήστη.</span></div>
         </div>
       </div>
     </section>
@@ -1534,13 +1159,11 @@
         <div class="section-head hidden-el">
           <div class="section-kicker">Customer segments</div>
           <h2>Δύο αγορές υψηλής αξίας: outdoor premium και tactical readiness.</h2>
-          <p>Το Kestrel έχει διπλή εμπορική κατεύθυνση: B2C για πεζοπόρους/ορειβάτες και B2G για Ένοπλες Δυνάμεις ή ειδικές μονάδες που μεταφέρουν βαρύ εξοπλισμό.</p>
+          <p>Το Kestrel έχει διπλή εμπορική κατεύθυνση: B2C για πεζοπόρους/ορειβάτες και B2G για Ένοπλες Δυνάμεις ή ειδικές μονάδες.</p>
         </div>
-
         <div class="market-grid">
           <article class="persona-card hidden-el">
-            <div class="icon">⛰</div>
-            <h3>B2C · Ορειβάτες & πεζοπόροι</h3>
+            <div class="icon">⛰</div><h3>B2C · Ορειβάτες & πεζοπόροι</h3>
             <p class="lead">Για χρήστες που αναζητούν premium εξοπλισμό, ασφάλεια, αυτονομία και καλύτερη εμπειρία σε ανώμαλες διαδρομές.</p>
             <div class="persona-list">
               <div class="persona-item"><b>Jobs</b><span>Μεταφορά εξοπλισμού, ρύθμιση σακιδίου, σταθερότητα σε απαιτητικό έδαφος.</span></div>
@@ -1548,10 +1171,8 @@
               <div class="persona-item"><b>Gains</b><span>Real-time guidance, καλύτερη αντοχή, αίσθηση ασφάλειας και high-tech status.</span></div>
             </div>
           </article>
-
           <article class="persona-card hidden-el">
-            <div class="icon">🎖</div>
-            <h3>B2G · Ένοπλες Δυνάμεις</h3>
+            <div class="icon">🎖</div><h3>B2G · Ένοπλες Δυνάμεις</h3>
             <p class="lead">Για περιβάλλοντα όπου η μεταφορά φορτίου είναι επιχειρησιακή ανάγκη και η πρόληψη καταπόνησης επηρεάζει ετοιμότητα και κόστος.</p>
             <div class="persona-list">
               <div class="persona-item"><b>Jobs</b><span>Μεταφορά tactical εξοπλισμού σε μεγάλες αποστάσεις και δύσκολες συνθήκες.</span></div>
@@ -1568,33 +1189,19 @@
         <div class="section-head hidden-el">
           <div class="section-kicker">Interactive feature</div>
           <h2>Load balance simulator</h2>
-          <p>Ένα demo στοιχείο για την ιστοσελίδα: ο χρήστης αλλάζει την πίεση αριστερού/δεξιού ιμάντα και βλέπει άμεσα προτεινόμενη ενέργεια.</p>
+          <p>Ο χρήστης αλλάζει την πίεση αριστερού/δεξιού ιμάντα και βλέπει άμεσα προτεινόμενη ενέργεια.</p>
         </div>
-
         <div class="panel simulator hidden-el">
           <div class="slider-group">
-            <div class="range-line">
-              <label for="leftLoad"><span>Left strap pressure</span><b id="leftVal">48%</b></label>
-              <input id="leftLoad" type="range" min="0" max="100" value="48" />
-            </div>
-            <div class="range-line">
-              <label for="rightLoad"><span>Right strap pressure</span><b id="rightVal">52%</b></label>
-              <input id="rightLoad" type="range" min="0" max="100" value="52" />
-            </div>
-            <div class="range-line">
-              <label for="lumbarLoad"><span>Lumbar support engagement</span><b id="lumbarVal">64%</b></label>
-              <input id="lumbarLoad" type="range" min="0" max="100" value="64" />
-            </div>
+            <div class="range-line"><label for="leftLoad"><span>Left strap pressure</span><b id="leftVal">48%</b></label><input id="leftLoad" type="range" min="0" max="100" value="48" /></div>
+            <div class="range-line"><label for="rightLoad"><span>Right strap pressure</span><b id="rightVal">52%</b></label><input id="rightLoad" type="range" min="0" max="100" value="52" /></div>
+            <div class="range-line"><label for="lumbarLoad"><span>Lumbar support engagement</span><b id="lumbarVal">64%</b></label><input id="lumbarLoad" type="range" min="0" max="100" value="64" /></div>
           </div>
-
           <div class="balance-output">
             <div>
               <div class="eyebrow" style="margin-bottom:10px;"><span class="pulse-dot"></span><span id="riskLabel">Balanced</span></div>
               <h3 id="balanceTitle" style="font-size:2rem; letter-spacing:-0.04em; margin-bottom:0;">Stable distribution</h3>
-              <div class="balance-meter">
-                <span class="balance-fill" id="balanceFill"></span>
-                <span class="balance-indicator" id="balanceIndicator"></span>
-              </div>
+              <div class="balance-meter"><span class="balance-fill" id="balanceFill"></span><span class="balance-indicator" id="balanceIndicator"></span></div>
               <p class="advice" id="adviceText">Η κατανομή είναι σχεδόν ισορροπημένη. Διατήρησε τη ρύθμιση και έλεγξε ξανά μετά από αλλαγή εδάφους.</p>
             </div>
           </div>
@@ -1603,48 +1210,6 @@
     </section>
 
     <section class="section" id="business">
-      <div class="page-shell">
-        <div class="section-head hidden-el">
-          <div class="section-kicker">Business model</div>
-          <h2>Ένα προϊόν. Πολλαπλές ροές αξίας.</h2>
-          <p>Η εμπορική στρατηγική του Kestrel συνδυάζει πώληση hardware, freemium/premium software, αδειοδότηση τεχνολογίας και B2G συμβόλαια.</p>
-        </div>
-
-        <div class="tabs hidden-el" role="tablist" aria-label="Business model tabs">
-          <button class="tab-btn active" data-tab="value">Value Proposition</button>
-          <button class="tab-btn" data-tab="canvas">Business Model</button>
-          <button class="tab-btn" data-tab="innovation">Ten Types of Innovation</button>
-        </div>
-
-        <div class="panel hidden-el">
-          <div class="tab-content active" id="tab-value">
-            <div class="cards-grid">
-              <article class="card"><div class="icon">🧠</div><h3>Active ergonomics</h3><p>Το Kestrel δεν βασίζεται μόνο στον σχεδιασμό του σακιδίου. Ανιχνεύει πραγματική πίεση και παρεμβαίνει με οδηγίες.</p></article>
-              <article class="card"><div class="icon">📲</div><h3>Real-time app guidance</h3><p>Η εφαρμογή δείχνει στον χρήστη τι ακριβώς πρέπει να διορθώσει: αριστερό/δεξί ιμάντα, ζώνη μέσης, στάση.</p></article>
-              <article class="card"><div class="icon">🔁</div><h3>Expandable system</h3><p>Η τεχνολογία μπορεί να εξελιχθεί σε add-on kit, integration με fitness apps ή licensing σε κατασκευαστές σακιδίων.</p></article>
-            </div>
-          </div>
-
-          <div class="tab-content" id="tab-canvas">
-            <div class="cards-grid">
-              <article class="card"><h3>Customer Segments</h3><p>Premium πεζοπόροι, αλπινιστές, ορειβάτες μεγάλων αποστάσεων, Ένοπλες Δυνάμεις και ειδικές μονάδες.</p></article>
-              <article class="card"><h3>Revenue Streams</h3><p>Πώληση σακιδίου, Pro εφαρμογή, advanced analytics, B2G συμβόλαια και πιθανή αδειοδότηση τεχνολογίας.</p></article>
-              <article class="card"><h3>Key Resources</h3><p>Αλγόριθμος ανίχνευσης ασυμμετρίας, αισθητήρες, mobile app, R&D ομάδα, brand και δεδομένα βελτίωσης.</p></article>
-            </div>
-          </div>
-
-          <div class="tab-content" id="tab-innovation">
-            <div class="cards-grid">
-              <article class="card"><h3>Product Performance</h3><p>Ενσωμάτωση αισθητήρων, buzzer και επεξεργασίας δεδομένων για ανώτερη λειτουργικότητα.</p></article>
-              <article class="card"><h3>Customer Engagement</h3><p>Ergo-scores, badges, κοινότητα χρηστών και απλοποίηση μιας σύνθετης ανάλυσης σε άμεσο feedback.</p></article>
-              <article class="card"><h3>Network</h3><p>Συνεργασίες με outdoor brands, ορειβατικούς συλλόγους, προμηθευτές hardware και tactical equipment partners.</p></article>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
       <div class="page-shell finance-board">
         <div class="panel hidden-el">
           <div class="section-kicker">Year 1 financial snapshot</div>
@@ -1657,12 +1222,13 @@
             <div class="metric"><span>Break-even</span><b>1,033</b><small>Estimated total units to cover fixed costs.</small></div>
           </div>
         </div>
-        <div class="panel chart-card hidden-el">
-          <div class="donut"><span>Revenue<br/>mix</span></div>
-          <div class="legend">
-            <div class="legend-item"><span class="legend-left"><span class="swatch"></span>B2C backpack sales</span><b>€250K</b></div>
-            <div class="legend-item"><span class="legend-left"><span class="swatch blue"></span>B2G tactical contract</span><b>€200K</b></div>
-            <div class="legend-item"><span class="legend-left"><span class="swatch gold"></span>Pro app subscription</span><b>€12K</b></div>
+        <div class="panel hidden-el">
+          <div class="section-kicker">Business model</div>
+          <h2>Ένα προϊόν. Πολλαπλές ροές αξίας.</h2>
+          <div class="cards-grid" style="grid-template-columns:1fr;">
+            <article class="card"><h3>Hardware sales</h3><p>Πώληση premium smart backpack σε B2C και tactical backpack σε B2G.</p></article>
+            <article class="card"><h3>Software subscription</h3><p>Freemium εφαρμογή με δυνατότητα Pro analytics, fatigue insights και custom guidance.</p></article>
+            <article class="card"><h3>Licensing</h3><p>Μελλοντική αδειοδότηση της τεχνολογίας σε κατασκευαστές σακιδίων ή tactical εξοπλισμού.</p></article>
           </div>
         </div>
       </div>
@@ -1675,7 +1241,6 @@
           <h2>Proof of value μέσα από παρουσίαση, demo και αξιολόγηση χρηστών.</h2>
           <p>Η επικύρωση στηρίζεται στην παρουσίαση του προβλήματος, την πρακτική επίδειξη λειτουργίας των αισθητήρων και τη συλλογή αντιδράσεων από πιθανούς χρήστες.</p>
         </div>
-
         <div class="roadmap">
           <div class="roadmap-item hidden-el"><h3>Problem interview</h3><p>Καταγραφή εμπειριών πόνου, κόπωσης ή κακής κατανομής βάρους.</p></div>
           <div class="roadmap-item hidden-el"><h3>Prototype demo</h3><p>Επίδειξη αισθητήρων, buzzer και μεταβολής πίεσης σε πραγματικό χρόνο.</p></div>
@@ -1685,41 +1250,14 @@
       </div>
     </section>
 
-    <section class="section" id="demo">
-      <div class="page-shell">
-        <div class="section-head hidden-el">
-          <div class="section-kicker">FAQ</div>
-          <h2>Συχνές ερωτήσεις για παρουσίαση ή pitch.</h2>
-        </div>
-        <div class="faq hidden-el">
-          <div class="faq-item open">
-            <button class="faq-q">Τι κάνει το Kestrel διαφορετικό από ένα εργονομικό σακίδιο;<span>+</span></button>
-            <div class="faq-a"><p>Ένα εργονομικό σακίδιο προσφέρει παθητική άνεση μέσω σχεδίασης. Το Kestrel προσθέτει ενεργητική εργονομία: μετρά πίεση, εντοπίζει ασυμμετρία και ειδοποιεί τον χρήστη με πρακτικές οδηγίες.</p></div>
-          </div>
-          <div class="faq-item">
-            <button class="faq-q">Γιατί χρειάζεται και buzzer αφού υπάρχει εφαρμογή;<span>+</span></button>
-            <div class="faq-a"><p>Σε πεζοπορία ή επιχειρησιακό περιβάλλον ο χρήστης δεν μπορεί πάντα να κοιτάζει κινητό. Το buzzer δίνει άμεσο σήμα, ενώ η εφαρμογή προσφέρει λεπτομερή ανάλυση.</p></div>
-          </div>
-          <div class="faq-item">
-            <button class="faq-q">Μπορεί να χρησιμοποιηθεί και εκτός πεζοπορίας;<span>+</span></button>
-            <div class="faq-a"><p>Ναι. Η ίδια τεχνολογία μπορεί να επεκταθεί σε σχολικές τσάντες, επαγγελματικά σακίδια, tactical εξοπλισμό ή heavy-duty carrying systems.</p></div>
-          </div>
-          <div class="faq-item">
-            <button class="faq-q">Τι δεδομένα δείχνει η εφαρμογή;<span>+</span></button>
-            <div class="faq-a"><p>Δείχνει ισορροπία αριστερής/δεξιάς πλευράς, συνολικό ergo-score, επίπεδο καταπόνησης, ιστορικό διαδρομής και συγκεκριμένες οδηγίες ρύθμισης ιμάντων.</p></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="cta">
+    <section class="cta" id="demo">
       <div class="page-shell">
         <div class="cta-box hidden-el">
           <div class="section-kicker">Kestrel</div>
           <h2>Carry smarter. Move safer. Balance till the skies.</h2>
           <p>Το Kestrel μετατρέπει ένα καθημερινό αντικείμενο σε έξυπνο εργαλείο πρόληψης, αντοχής και αυτοπεποίθησης. Από το βουνό μέχρι το tactical πεδίο, η ισορροπία γίνεται δεδομένο.</p>
           <div class="hero-actions" style="justify-content:center; margin-bottom:0;">
-            <a class="pill-btn primary-btn" href="#home">Back to top ↑</a>
+            <a class="pill-btn primary-btn" href="about.html">Go to About →</a>
             <button class="pill-btn" id="copyPitch">Copy 20-sec pitch</button>
           </div>
         </div>
@@ -1779,17 +1317,6 @@
     }, { threshold: 0.12 });
     hiddenEls.forEach(el => observer.observe(el));
 
-    const tabs = document.querySelectorAll('.tab-btn');
-    const contents = document.querySelectorAll('.tab-content');
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
-        contents.forEach(c => c.classList.remove('active'));
-        tab.classList.add('active');
-        document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
-      });
-    });
-
     const leftLoad = document.getElementById('leftLoad');
     const rightLoad = document.getElementById('rightLoad');
     const lumbarLoad = document.getElementById('lumbarLoad');
@@ -1808,6 +1335,7 @@
       const lumbar = Number(lumbarLoad.value);
       const diff = right - left;
       const absDiff = Math.abs(diff);
+
       leftVal.textContent = left + '%';
       rightVal.textContent = right + '%';
       lumbarVal.textContent = lumbar + '%';
@@ -1845,12 +1373,6 @@
     [leftLoad, rightLoad, lumbarLoad].forEach(input => input.addEventListener('input', updateSimulator));
     updateSimulator();
 
-    document.querySelectorAll('.faq-q').forEach(btn => {
-      btn.addEventListener('click', () => {
-        btn.parentElement.classList.toggle('open');
-      });
-    });
-
     function showToast(message) {
       toast.textContent = message;
       toast.classList.add('show');
@@ -1865,19 +1387,6 @@
       } catch (err) {
         showToast('Pitch: ' + pitch);
       }
-    });
-
-    const sections = document.querySelectorAll('section[id]');
-    const navAnchors = document.querySelectorAll('.nav-links a');
-    window.addEventListener('scroll', () => {
-      let current = '';
-      sections.forEach(section => {
-        const top = section.offsetTop - 130;
-        if (scrollY >= top) current = section.id;
-      });
-      navAnchors.forEach(a => {
-        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
-      });
     });
   </script>
 </body>
